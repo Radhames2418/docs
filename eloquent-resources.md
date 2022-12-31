@@ -1,39 +1,42 @@
-# Eloquent: API Resources
+# Eloquent: Recursos API
 
-- [Introduction](#introduction)
-- [Generating Resources](#generating-resources)
-- [Concept Overview](#concept-overview)
-    - [Resource Collections](#resource-collections)
-- [Writing Resources](#writing-resources)
-    - [Data Wrapping](#data-wrapping)
-    - [Pagination](#pagination)
-    - [Conditional Attributes](#conditional-attributes)
-    - [Conditional Relationships](#conditional-relationships)
-    - [Adding Meta Data](#adding-meta-data)
-- [Resource Responses](#resource-responses)
+- [Introducción](#introduction)
+- [Generación de recursos](#generating-resources)
+- [Resumen de conceptos](#concept-overview)
+  - [Colecciones de recursos](#resource-collections)
+- [Escritura de recursos](#writing-resources)
+  - [Envoltura de datos](#data-wrapping)
+  - [Paginación](#pagination)
+  - [Atributos Condicionales](#conditional-attributes)
+  - [Relaciones condicionales](#conditional-relationships)
+  - [Añadir metadatos](#adding-meta-data)
+- [Respuestas de Recursos](#resource-responses)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-When building an API, you may need a transformation layer that sits between your Eloquent models and the JSON responses that are actually returned to your application's users. For example, you may wish to display certain attributes for a subset of users and not others, or you may wish to always include certain relationships in the JSON representation of your models. Eloquent's resource classes allow you to expressively and easily transform your models and model collections into JSON.
+## Introducción
 
-Of course, you may always convert Eloquent models or collections to JSON using their `toJson` methods; however, Eloquent resources provide more granular and robust control over the JSON serialization of your models and their relationships.
+Al crear una API, es posible que necesites una capa de transformación que se sitúe entre tus modelos de Eloquent y las respuestas JSON que se devuelven realmente a los usuarios de tu aplicación. Por ejemplo, puede que desees mostrar ciertos atributos a un subconjunto de usuarios y no a otros, o puede que quieras incluir siempre ciertas relaciones en la representación JSON de tus modelos. Las clases de recursos de Eloquent te permiten transformar de forma expresiva y sencilla tus modelos y colecciones de modelos en JSON.
 
-<a name="generating-resources"></a>
-## Generating Resources
+Por supuesto, siempre puedes convertir modelos o colecciones de Eloquent a JSON utilizando sus métodos `toJson`; sin embargo, los recursos de Eloquent proporcionan un control más granular y robusto sobre la serialización JSON de tus modelos y sus relaciones.
 
-To generate a resource class, you may use the `make:resource` Artisan command. By default, resources will be placed in the `app/Http/Resources` directory of your application. Resources extend the `Illuminate\Http\Resources\Json\JsonResource` class:
+[]()
+
+## Generación de recursos
+
+Para generar una clase de recurso, puede utilizar el comando `make:resource` de Artisan. Por defecto, los recursos se colocarán en el directorio `app/Http/Resources` de tu aplicación. Los recursos extienden la clase `Illuminate\Http\Resources\Json\JsonResource`:
 
 ```shell
 php artisan make:resource UserResource
 ```
 
-<a name="generating-resource-collections"></a>
-#### Resource Collections
+[]()
 
-In addition to generating resources that transform individual models, you may generate resources that are responsible for transforming collections of models. This allows your JSON responses to include links and other meta information that is relevant to an entire collection of a given resource.
+#### Colecciones de recursos
 
-To create a resource collection, you should use the `--collection` flag when creating the resource. Or, including the word `Collection` in the resource name will indicate to Laravel that it should create a collection resource. Collection resources extend the `Illuminate\Http\Resources\Json\ResourceCollection` class:
+Además de generar recursos que transformen modelos individuales, puedes generar recursos que se encarguen de transformar colecciones de modelos. Esto permite que tus respuestas JSON incluyan enlaces y otra meta información que sea relevante para toda una colección de un recurso dado.
+
+Para crear una colección de recursos, debe utilizar el indicador `--collection` al crear el recurso. O, incluyendo la palabra `Collection` en el nombre del recurso indicará a Laravel que debe crear un recurso de colección. Los recursos de colección extienden la clase `Illuminate\Http\Resources\Json\ResourceCollection`:
 
 ```shell
 php artisan make:resource User --collection
@@ -41,13 +44,14 @@ php artisan make:resource User --collection
 php artisan make:resource UserCollection
 ```
 
-<a name="concept-overview"></a>
-## Concept Overview
+[]()
 
-> **Note**  
-> This is a high-level overview of resources and resource collections. You are highly encouraged to read the other sections of this documentation to gain a deeper understanding of the customization and power offered to you by resources.
+## Concepto
 
-Before diving into all of the options available to you when writing resources, let's first take a high-level look at how resources are used within Laravel. A resource class represents a single model that needs to be transformed into a JSON structure. For example, here is a simple `UserResource` resource class:
+> **Nota**  
+> Esta es una descripción general de alto nivel de los recursos y las colecciones de recursos. Le recomendamos encarecidamente que lea las demás secciones de esta documentación para comprender mejor la personalización y la potencia que le ofrecen los recursos.
+
+Antes de sumergirnos en todas las opciones disponibles al escribir recursos, echemos un vistazo de alto nivel a cómo se utilizan los recursos dentro de Laravel. Una clase resource representa un único modelo que necesita ser transformado en una estructura JSON. Por ejemplo, aquí hay una simple clase de recurso `UserResource`:
 
     <?php
 
@@ -75,9 +79,9 @@ Before diving into all of the options available to you when writing resources, l
         }
     }
 
-Every resource class defines a `toArray` method which returns the array of attributes that should be converted to JSON when the resource is returned as a response from a route or controller method.
+Cada clase resource define un método `toArray` que devuelve el array de atributos que deben ser convertidos a JSON cuando el recurso es devuelto como respuesta desde un método de ruta o controlador.
 
-Note that we can access model properties directly from the `$this` variable. This is because a resource class will automatically proxy property and method access down to the underlying model for convenient access. Once the resource is defined, it may be returned from a route or controller. The resource accepts the underlying model instance via its constructor:
+Observa que podemos acceder a las propiedades del modelo directamente desde la variable `$this`. Esto se debe a que una clase de recurso proxy automáticamente la propiedad y el método de acceso hasta el modelo subyacente para el acceso conveniente. Una vez definido el recurso, puede ser devuelto desde una ruta o controlador. El recurso acepta la instancia del modelo subyacente a través de su constructor:
 
     use App\Http\Resources\UserResource;
     use App\Models\User;
@@ -86,10 +90,11 @@ Note that we can access model properties directly from the `$this` variable. Thi
         return new UserResource(User::findOrFail($id));
     });
 
-<a name="resource-collections"></a>
-### Resource Collections
+[]()
 
-If you are returning a collection of resources or a paginated response, you should use the `collection` method provided by your resource class when creating the resource instance in your route or controller:
+### Colecciones de recursos
+
+Si está devolviendo una colección de recursos o una respuesta paginada, debe utilizar el método de `colección` proporcionado por su clase de recurso al crear la instancia del recurso en su ruta o controlador:
 
     use App\Http\Resources\UserResource;
     use App\Models\User;
@@ -98,13 +103,13 @@ If you are returning a collection of resources or a paginated response, you shou
         return UserResource::collection(User::all());
     });
 
-Note that this does not allow any addition of custom meta data that may need to be returned with your collection. If you would like to customize the resource collection response, you may create a dedicated resource to represent the collection:
+Tenga en cuenta que esto no permite ninguna adición de metadatos personalizados que puedan necesitar ser devueltos con su colección. Si desea personalizar la respuesta de la colección de recursos, puede crear un recurso dedicado para representar la colección:
 
 ```shell
 php artisan make:resource UserCollection
 ```
 
-Once the resource collection class has been generated, you may easily define any meta data that should be included with the response:
+Una vez generada la clase de la colección de recursos, puede definir fácilmente cualquier metadato que deba incluirse en la respuesta:
 
     <?php
 
@@ -131,7 +136,7 @@ Once the resource collection class has been generated, you may easily define any
         }
     }
 
-After defining your resource collection, it may be returned from a route or controller:
+Después de definir tu colección de recursos, puede ser devuelta desde una ruta o controlador:
 
     use App\Http\Resources\UserCollection;
     use App\Models\User;
@@ -140,10 +145,11 @@ After defining your resource collection, it may be returned from a route or cont
         return new UserCollection(User::all());
     });
 
-<a name="preserving-collection-keys"></a>
-#### Preserving Collection Keys
+[]()
 
-When returning a resource collection from a route, Laravel resets the collection's keys so that they are in numerical order. However, you may add a `preserveKeys` property to your resource class indicating whether a collection's original keys should be preserved:
+#### Conservación de las claves de la colección
+
+Cuando se devuelve una colección de recursos desde una ruta, Laravel restablece las claves de la colección para que estén en orden numérico. Sin embargo, puedes añadir una propiedad `preserveKeys` a tu clase resource indicando si las claves originales de una colección deben ser preservadas:
 
     <?php
 
@@ -161,7 +167,7 @@ When returning a resource collection from a route, Laravel resets the collection
         public $preserveKeys = true;
     }
 
-When the `preserveKeys` property is set to `true`, collection keys will be preserved when the collection is returned from a route or controller:
+Cuando la propiedad `preserveKeys` está establecida a `true`, las claves de la colección serán preservadas cuando la colección sea devuelta desde una ruta o controlador:
 
     use App\Http\Resources\UserResource;
     use App\Models\User;
@@ -170,12 +176,13 @@ When the `preserveKeys` property is set to `true`, collection keys will be prese
         return UserResource::collection(User::all()->keyBy->id);
     });
 
-<a name="customizing-the-underlying-resource-class"></a>
-#### Customizing The Underlying Resource Class
+[]()
 
-Typically, the `$this->collection` property of a resource collection is automatically populated with the result of mapping each item of the collection to its singular resource class. The singular resource class is assumed to be the collection's class name without the trailing `Collection` portion of the class name. In addition, depending on your personal preference, the singular resource class may or may not be suffixed with `Resource`.
+#### Personalización de la clase de recurso subyacente
 
-For example, `UserCollection` will attempt to map the given user instances into the `UserResource` resource. To customize this behavior, you may override the `$collects` property of your resource collection:
+Normalmente, la propiedad `$this->collection` de una colección de recursos se rellena automáticamente con el resultado de asignar cada elemento de la colección a su clase de recurso singular. Se supone que la clase de recurso singular es el nombre de clase de la colección sin la parte final `Collection` del nombre de clase. Además, dependiendo de sus preferencias personales, la clase de recurso singular puede o no tener el sufijo `Resource`.
+
+Por ejemplo, `UserCollection` intentará asignar las instancias de usuario dadas al recurso `UserResource`. Para personalizar este comportamiento, puede anular la propiedad `$collects` de su colección de recursos:
 
     <?php
 
@@ -193,13 +200,14 @@ For example, `UserCollection` will attempt to map the given user instances into 
         public $collects = Member::class;
     }
 
-<a name="writing-resources"></a>
-## Writing Resources
+[]()
 
-> **Note**  
-> If you have not read the [concept overview](#concept-overview), you are highly encouraged to do so before proceeding with this documentation.
+## Escritura de recursos
 
-In essence, resources are simple. They only need to transform a given model into an array. So, each resource contains a `toArray` method which translates your model's attributes into an API friendly array that can be returned from your application's routes or controllers:
+> **Nota**  
+> Si no has leído la [descripción general del concepto](#concept-overview), te recomendamos que lo hagas antes de continuar con esta documentación.
+
+En esencia, los recursos son simples. Sólo necesitan transformar un modelo dado en un array. Así, cada recurso contiene un método `toArray` que traduce los atributos de tu modelo en un array amigable con la API que puede ser devuelto desde las rutas o controladores de tu aplicación:
 
     <?php
 
@@ -227,7 +235,7 @@ In essence, resources are simple. They only need to transform a given model into
         }
     }
 
-Once a resource has been defined, it may be returned directly from a route or controller:
+Una vez definido un recurso, puede ser devuelto directamente desde una ruta o controlador:
 
     use App\Http\Resources\UserResource;
     use App\Models\User;
@@ -236,10 +244,11 @@ Once a resource has been defined, it may be returned directly from a route or co
         return new UserResource(User::findOrFail($id));
     });
 
-<a name="relationships"></a>
-#### Relationships
+[]()
 
-If you would like to include related resources in your response, you may add them to the array returned by your resource's `toArray` method. In this example, we will use the `PostResource` resource's `collection` method to add the user's blog posts to the resource response:
+#### Relaciones
+
+Si quieres incluir recursos relacionados en tu respuesta, puedes añadirlos al array devuelto por el método `toArray` de tu recurso. En este ejemplo, utilizaremos el método `collection` del recurso `PostResource` para añadir las entradas del blog del usuario a la respuesta del recurso:
 
     use App\Http\Resources\PostResource;
 
@@ -261,13 +270,14 @@ If you would like to include related resources in your response, you may add the
         ];
     }
 
-> **Note**  
-> If you would like to include relationships only when they have already been loaded, check out the documentation on [conditional relationships](#conditional-relationships).
+> **Nota**  
+> Si desea incluir relaciones sólo cuando ya se han cargado, consulte la documentación sobre [relaciones condicionales](#conditional-relationships).
 
-<a name="writing-resource-collections"></a>
-#### Resource Collections
+[]()
 
-While resources transform a single model into an array, resource collections transform a collection of models into an array. However, it is not absolutely necessary to define a resource collection class for each one of your models since all resources provide a `collection` method to generate an "ad-hoc" resource collection on the fly:
+#### Colecciones de recursos
+
+Mientras que los recursos transforman un único modelo en una array, las colecciones de recursos transforman una colección de modelos en una array. Sin embargo, no es absolutamente necesario definir una clase de colección de recursos para cada uno de sus modelos, ya que todos los recursos proporcionan un método de `colección` para generar una colección de recursos "ad-hoc" sobre la marcha:
 
     use App\Http\Resources\UserResource;
     use App\Models\User;
@@ -276,7 +286,7 @@ While resources transform a single model into an array, resource collections tra
         return UserResource::collection(User::all());
     });
 
-However, if you need to customize the meta data returned with the collection, it is necessary to define your own resource collection:
+Sin embargo, si necesita personalizar los metadatos devueltos con la colección, es necesario definir su propia colección de recursos:
 
     <?php
 
@@ -303,7 +313,7 @@ However, if you need to customize the meta data returned with the collection, it
         }
     }
 
-Like singular resources, resource collections may be returned directly from routes or controllers:
+Al igual que los recursos singulares, las colecciones de recursos pueden ser devueltas directamente desde rutas o controladores:
 
     use App\Http\Resources\UserCollection;
     use App\Models\User;
@@ -312,10 +322,11 @@ Like singular resources, resource collections may be returned directly from rout
         return new UserCollection(User::all());
     });
 
-<a name="data-wrapping"></a>
-### Data Wrapping
+[]()
 
-By default, your outermost resource is wrapped in a `data` key when the resource response is converted to JSON. So, for example, a typical resource collection response looks like the following:
+### Envoltura de datos
+
+Por defecto, su recurso más externo se envuelve en una clave de `datos` cuando la respuesta del recurso se convierte a JSON. Así, por ejemplo, una respuesta de colección de recursos típica tiene el siguiente aspecto:
 
 ```json
 {
@@ -334,7 +345,7 @@ By default, your outermost resource is wrapped in a `data` key when the resource
 }
 ```
 
-If you would like to use a custom key instead of `data`, you may define a `$wrap` attribute on the resource class:
+Si desea utilizar una clave personalizada en lugar de `datos`, puede definir un atributo `$wrap` en la clase de recurso:
 
     <?php
 
@@ -352,7 +363,7 @@ If you would like to use a custom key instead of `data`, you may define a `$wrap
         public static $wrap = 'user';
     }
 
-If you would like to disable the wrapping of the outermost resource, you should invoke the `withoutWrapping` method on the base `Illuminate\Http\Resources\Json\JsonResource` class. Typically, you should call this method from your `AppServiceProvider` or another [service provider](/docs/{{version}}/providers) that is loaded on every request to your application:
+Si desea desactivar la envoltura del recurso más externo, debe invocar el método `withoutWrapping` en la clase base `Illuminate\Http\Resources\Json\JsonResource`. Normalmente, debe llamar a este método desde su `AppServiceProvider` u otro [proveedor de servicios](/docs/%7B%7Bversion%7D%7D/providers) que se carga en cada solicitud a su aplicación:
 
     <?php
 
@@ -384,15 +395,16 @@ If you would like to disable the wrapping of the outermost resource, you should 
         }
     }
 
-> **Warning**  
-> The `withoutWrapping` method only affects the outermost response and will not remove `data` keys that you manually add to your own resource collections.
+> **Advertencia**  
+> El método `withoutWrapping` sólo afecta a la respuesta más externa y no eliminará las claves de `datos` que añadas manualmente a tus propias colecciones de recursos.
 
-<a name="wrapping-nested-resources"></a>
-#### Wrapping Nested Resources
+[]()
 
-You have total freedom to determine how your resource's relationships are wrapped. If you would like all resource collections to be wrapped in a `data` key, regardless of their nesting, you should define a resource collection class for each resource and return the collection within a `data` key.
+#### Envoltura de recursos anidados
 
-You may be wondering if this will cause your outermost resource to be wrapped in two `data` keys. Don't worry, Laravel will never let your resources be accidentally double-wrapped, so you don't have to be concerned about the nesting level of the resource collection you are transforming:
+Tienes total libertad para determinar cómo se envuelven las relaciones de tus recursos. Si desea que todas las colecciones de recursos se envuelvan en una clave de `datos`, independientemente de su anidamiento, debe definir una clase de colección de recursos para cada recurso y devolver la colección dentro de una clave de `datos`.
+
+Puede que te preguntes si esto hará que tu recurso más externo esté envuelto en dos claves de `datos`. No te preocupes, Laravel nunca dejará que tus recursos se envuelvan dos veces accidentalmente, así que no tienes que preocuparte por el nivel de anidamiento de la colección de recursos que estás transformando:
 
     <?php
 
@@ -414,10 +426,11 @@ You may be wondering if this will cause your outermost resource to be wrapped in
         }
     }
 
-<a name="data-wrapping-and-pagination"></a>
-#### Data Wrapping And Pagination
+[]()
 
-When returning paginated collections via a resource response, Laravel will wrap your resource data in a `data` key even if the `withoutWrapping` method has been called. This is because paginated responses always contain `meta` and `links` keys with information about the paginator's state:
+#### Envoltura de datos y paginación
+
+Cuando se devuelven colecciones paginadas a través de una respuesta de recurso, Laravel envolverá los datos de tu recurso en una clave de `datos` incluso si se ha llamado al método `withoutWrapping`. Esto se debe a que las respuestas paginadas siempre contienen claves `meta` y `links` con información sobre el estado del paginador:
 
 ```json
 {
@@ -451,10 +464,11 @@ When returning paginated collections via a resource response, Laravel will wrap 
 }
 ```
 
-<a name="pagination"></a>
-### Pagination
+[]()
 
-You may pass a Laravel paginator instance to the `collection` method of a resource or to a custom resource collection:
+### Paginación
+
+Puedes pasar una instancia de paginador Laravel al método `collection` de un recurso o a una colección de recursos personalizada:
 
     use App\Http\Resources\UserCollection;
     use App\Models\User;
@@ -463,7 +477,7 @@ You may pass a Laravel paginator instance to the `collection` method of a resour
         return new UserCollection(User::paginate());
     });
 
-Paginated responses always contain `meta` and `links` keys with information about the paginator's state:
+Las respuestas paginadas siempre contienen claves `meta` y `links` con información sobre el estado del paginador:
 
 ```json
 {
@@ -497,10 +511,11 @@ Paginated responses always contain `meta` and `links` keys with information abou
 }
 ```
 
-<a name="conditional-attributes"></a>
-### Conditional Attributes
+[]()
 
-Sometimes you may wish to only include an attribute in a resource response if a given condition is met. For example, you may wish to only include a value if the current user is an "administrator". Laravel provides a variety of helper methods to assist you in this situation. The `when` method may be used to conditionally add an attribute to a resource response:
+### Atributos condicionales
+
+A veces es posible que desee incluir un atributo en la respuesta de un recurso sólo si se cumple una condición determinada. Por ejemplo, es posible que sólo desee incluir un valor si el usuario actual es un "administrador". Laravel proporciona una variedad de métodos de ayuda para ayudarle en esta situación. El método `when` puede utilizarse para añadir condicionalmente un atributo a la respuesta de un recurso:
 
     /**
      * Transform the resource into an array.
@@ -520,22 +535,23 @@ Sometimes you may wish to only include an attribute in a resource response if a 
         ];
     }
 
-In this example, the `secret` key will only be returned in the final resource response if the authenticated user's `isAdmin` method returns `true`. If the method returns `false`, the `secret` key will be removed from the resource response before it is sent to the client. The `when` method allows you to expressively define your resources without resorting to conditional statements when building the array.
+En este ejemplo, la clave `secreta` sólo se devolverá en la respuesta final del recurso si el método `isAdmin` del usuario autenticado devuelve `true`. Si el método devuelve `false`, la clave `secreta` se eliminará de la respuesta del recurso antes de que se envíe al cliente. El método `when` permite definir de forma expresa los recursos sin recurrir a sentencias condicionales al construir el array.
 
-The `when` method also accepts a closure as its second argument, allowing you to calculate the resulting value only if the given condition is `true`:
+El método `when` también acepta un closure como segundo argumento, lo que le permite calcular el valor resultante sólo si la condición dada es `verdadera`:
 
     'secret' => $this->when($request->user()->isAdmin(), function () {
         return 'secret-value';
     }),
 
-Additionally, the `whenNotNull` method may be used to include an attribute in the resource response if the attribute is not null:
+Además, el método `whenNotNull` puede utilizarse para incluir un atributo en la respuesta del recurso si el atributo no es nulo:
 
     'name' => $this->whenNotNull($this->name),
 
-<a name="merging-conditional-attributes"></a>
-#### Merging Conditional Attributes
+[]()
 
-Sometimes you may have several attributes that should only be included in the resource response based on the same condition. In this case, you may use the `mergeWhen` method to include the attributes in the response only when the given condition is `true`:
+#### Fusión de atributos condicionales
+
+A veces puede haber varios atributos que sólo deben incluirse en la respuesta de recurso basándose en la misma condición. En este caso, puede utilizar el método `mergeWhen` para incluir los atributos en la respuesta sólo cuando la condición dada sea `verdadera`:
 
     /**
      * Transform the resource into an array.
@@ -558,17 +574,18 @@ Sometimes you may have several attributes that should only be included in the re
         ];
     }
 
-Again, if the given condition is `false`, these attributes will be removed from the resource response before it is sent to the client.
+De nuevo, si la condición dada es `falsa`, estos atributos serán eliminados de la respuesta del recurso antes de ser enviada al cliente.
 
-> **Warning**  
-> The `mergeWhen` method should not be used within arrays that mix string and numeric keys. Furthermore, it should not be used within arrays with numeric keys that are not ordered sequentially.
+> **Advertencia**  
+> El método `mergeWhen` no debe utilizarse en matrices que mezclen claves numéricas y de cadena. Además, no debe utilizarse en matrices con claves numéricas que no estén ordenadas secuencialmente.
 
-<a name="conditional-relationships"></a>
-### Conditional Relationships
+[]()
 
-In addition to conditionally loading attributes, you may conditionally include relationships on your resource responses based on if the relationship has already been loaded on the model. This allows your controller to decide which relationships should be loaded on the model and your resource can easily include them only when they have actually been loaded. Ultimately, this makes it easier to avoid "N+1" query problems within your resources.
+### Relaciones condicionales
 
-The `whenLoaded` method may be used to conditionally load a relationship. In order to avoid unnecessarily loading relationships, this method accepts the name of the relationship instead of the relationship itself:
+Además de cargar atributos condicionalmente, puedes incluir relaciones condicionalmente en tus respuestas de recursos basándote en si la relación ya ha sido cargada en el modelo. Esto permite a tu controlador decidir qué relaciones deben cargarse en el modelo y tu recurso puede incluirlas fácilmente sólo cuando se hayan cargado realmente. En última instancia, esto hace que sea más fácil evitar "N + 1" problemas de consulta dentro de sus recursos.
+
+El método `whenLoaded` puede utilizarse para cargar condicionalmente una relación. Para evitar cargar relaciones innecesariamente, este método acepta el nombre de la relación en lugar de la relación en sí:
 
     use App\Http\Resources\PostResource;
 
@@ -590,16 +607,17 @@ The `whenLoaded` method may be used to conditionally load a relationship. In ord
         ];
     }
 
-In this example, if the relationship has not been loaded, the `posts` key will be removed from the resource response before it is sent to the client.
+En este ejemplo, si la relación no se ha cargado, la clave `posts` se eliminará de la respuesta del recurso antes de que se envíe al cliente.
 
-<a name="conditional-relationship-counts"></a>
-#### Conditional Relationship Counts
+[]()
 
-In addition to conditionally including relationships, you may conditionally include relationship "counts" on your resource responses based on if the relationship's count has been loaded on the model:
+#### Recuentos condicionales de relaciones
+
+Además de incluir relaciones condicionalmente, puede incluir "recuentos" de relaciones condicionalmente en las respuestas de sus recursos basándose en si el recuento de la relación se ha cargado en el modelo:
 
     new UserResource($user->loadCount('posts'));
 
-The `whenCounted` method may be used to conditionally include a relationship's count in your resource response. This method avoids unnecessarily including the attribute if the relationships' count is not present:
+El método `whenCounted` puede utilizarse para incluir condicionalmente el recuento de una relación en la respuesta del recurso. Este método evita incluir innecesariamente el atributo si el recuento de relaciones no está presente:
 
     /**
      * Transform the resource into an array.
@@ -619,12 +637,13 @@ The `whenCounted` method may be used to conditionally include a relationship's c
         ];
     }
 
-In this example, if the `posts` relationship's count has not been loaded, the `posts_count` key will be removed from the resource response before it is sent to the client.
+En este ejemplo, si el recuento de la relación `posts` no se ha cargado, la clave `posts_count` se eliminará de la respuesta del recurso antes de que se envíe al cliente.
 
-<a name="conditional-pivot-information"></a>
-#### Conditional Pivot Information
+[]()
 
-In addition to conditionally including relationship information in your resource responses, you may conditionally include data from the intermediate tables of many-to-many relationships using the `whenPivotLoaded` method. The `whenPivotLoaded` method accepts the name of the pivot table as its first argument. The second argument should be a closure that returns the value to be returned if the pivot information is available on the model:
+#### Información pivotante condicional
+
+Además de incluir condicionalmente información de relaciones en las respuestas de recursos, puede incluir condicionalmente datos de las tablas intermedias de relaciones de muchos a muchos utilizando el método `whenPivotLoaded`. El método `whenPivotLoaded` acepta el nombre de la tabla pivotante como primer argumento. El segundo argumento debe ser un closure que devuelva el valor a devolver si la información pivotante está disponible en el modelo:
 
     /**
      * Transform the resource into an array.
@@ -643,13 +662,13 @@ In addition to conditionally including relationship information in your resource
         ];
     }
 
-If your relationship is using a [custom intermediate table model](/docs/{{version}}/eloquent-relationships#defining-custom-intermediate-table-models), you may pass an instance of the intermediate table model as the first argument to the `whenPivotLoaded` method:
+Si su relación utiliza un [modelo de tabla intermedia personalizado](/docs/%7B%7Bversion%7D%7D/eloquent-relationships#defining-custom-intermediate-table-models), puede pasar una instancia del modelo de tabla intermedia como primer argumento al método `whenPivotLoaded`:
 
     'expires_at' => $this->whenPivotLoaded(new Membership, function () {
         return $this->pivot->expires_at;
     }),
 
-If your intermediate table is using an accessor other than `pivot`, you may use the `whenPivotLoadedAs` method:
+Si la tabla intermedia utiliza un accesor distinto de `pivot`, puede utilizar el método `whenPivotLoadedAs`:
 
     /**
      * Transform the resource into an array.
@@ -668,10 +687,11 @@ If your intermediate table is using an accessor other than `pivot`, you may use 
         ];
     }
 
-<a name="adding-meta-data"></a>
-### Adding Meta Data
+[]()
 
-Some JSON API standards require the addition of meta data to your resource and resource collections responses. This often includes things like `links` to the resource or related resources, or meta data about the resource itself. If you need to return additional meta data about a resource, include it in your `toArray` method. For example, you might include `link` information when transforming a resource collection:
+### Añadir metadatos
+
+Algunos estándares de la API JSON requieren que se añadan metadatos a las respuestas de recursos y colecciones de recursos. Esto a menudo incluye cosas como `enlaces` al recurso o a recursos relacionados, o metadatos sobre el propio recurso. Si necesitas devolver metadatos adicionales sobre un recurso, inclúyelos en tu método `toArray`. Por ejemplo, puedes incluir información sobre `enlaces` al transformar una colección de recursos:
 
     /**
      * Transform the resource into an array.
@@ -689,12 +709,13 @@ Some JSON API standards require the addition of meta data to your resource and r
         ];
     }
 
-When returning additional meta data from your resources, you never have to worry about accidentally overriding the `links` or `meta` keys that are automatically added by Laravel when returning paginated responses. Any additional `links` you define will be merged with the links provided by the paginator.
+Cuando devuelvas metadatos adicionales de tus recursos, nunca tendrás que preocuparte de anular accidentalmente los `enlaces` o las `metateclas` que Laravel añade automáticamente cuando devuelve respuestas paginadas. Cualquier `enlace` adicional que defina se fusionará con los enlaces proporcionados por el paginador.
 
-<a name="top-level-meta-data"></a>
-#### Top Level Meta Data
+[]()
 
-Sometimes you may wish to only include certain meta data with a resource response if the resource is the outermost resource being returned. Typically, this includes meta information about the response as a whole. To define this meta data, add a `with` method to your resource class. This method should return an array of meta data to be included with the resource response only when the resource is the outermost resource being transformed:
+#### Metadatos de nivel superior
+
+A veces es posible que sólo desee incluir ciertos metadatos con una respuesta de recurso si el recurso es el recurso más externo que se devuelve. Normalmente, esto incluye metadatos sobre la respuesta en su conjunto. Para definir estos metadatos, añada un método `with` a su clase de recurso. Este método debe devolver una array de metadatos que se incluirán en la respuesta de recurso sólo cuando el recurso sea el recurso más externo que se transforma:
 
     <?php
 
@@ -731,20 +752,22 @@ Sometimes you may wish to only include certain meta data with a resource respons
         }
     }
 
-<a name="adding-meta-data-when-constructing-resources"></a>
-#### Adding Meta Data When Constructing Resources
+[]()
 
-You may also add top-level data when constructing resource instances in your route or controller. The `additional` method, which is available on all resources, accepts an array of data that should be added to the resource response:
+#### Añadir metadatos al construir recursos
+
+También puede añadir datos de nivel superior al construir instancias de recursos en su ruta o controlador. El método `additional`, disponible en todos los recursos, acepta un array de datos que deben añadirse a la respuesta del recurso:
 
     return (new UserCollection(User::all()->load('roles')))
                     ->additional(['meta' => [
                         'key' => 'value',
                     ]]);
 
-<a name="resource-responses"></a>
-## Resource Responses
+[]()
 
-As you have already read, resources may be returned directly from routes and controllers:
+## Respuestas de recursos
+
+Como ya has leído, los recursos pueden ser devueltos directamente desde rutas y controladores:
 
     use App\Http\Resources\UserResource;
     use App\Models\User;
@@ -753,7 +776,7 @@ As you have already read, resources may be returned directly from routes and con
         return new UserResource(User::findOrFail($id));
     });
 
-However, sometimes you may need to customize the outgoing HTTP response before it is sent to the client. There are two ways to accomplish this. First, you may chain the `response` method onto the resource. This method will return an `Illuminate\Http\JsonResponse` instance, giving you full control over the response's headers:
+Sin embargo, a veces puede que necesite personalizar la respuesta HTTP saliente antes de que se envíe al cliente. Hay dos formas de hacerlo. En primer lugar, puede encadenar el método de `respuesta` en el recurso. Este método devolverá una instancia `Illuminate\Http\JsonResponse`, dándole un control total sobre las cabeceras de la respuesta:
 
     use App\Http\Resources\UserResource;
     use App\Models\User;
@@ -764,7 +787,7 @@ However, sometimes you may need to customize the outgoing HTTP response before i
                     ->header('X-Value', 'True');
     });
 
-Alternatively, you may define a `withResponse` method within the resource itself. This method will be called when the resource is returned as the outermost resource in a response:
+Alternativamente, puede definir un método `withResponse` dentro del propio recurso. Este método será llamado cuando el recurso sea devuelto como el recurso más externo en una respuesta:
 
     <?php
 

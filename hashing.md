@@ -1,31 +1,35 @@
 # Hashing
 
-- [Introduction](#introduction)
-- [Configuration](#configuration)
-- [Basic Usage](#basic-usage)
-    - [Hashing Passwords](#hashing-passwords)
-    - [Verifying That A Password Matches A Hash](#verifying-that-a-password-matches-a-hash)
-    - [Determining If A Password Needs To Be Rehashed](#determining-if-a-password-needs-to-be-rehashed)
+- [Introducción](#introduction)
+- [Configuración](#configuration)
+- [Uso básico](#basic-usage)
+  - [Cifrado de contraseñas](#hashing-passwords)
+  - [Verificación de la coincidencia de una contraseña con un hash](#verifying-that-a-password-matches-a-hash)
+  - [Determinar si una contraseña necesita ser reutilizada](#determining-if-a-password-needs-to-be-rehashed)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-The Laravel `Hash` [facade](/docs/{{version}}/facades) provides secure Bcrypt and Argon2 hashing for storing user passwords. If you are using one of the [Laravel application starter kits](/docs/{{version}}/starter-kits), Bcrypt will be used for registration and authentication by default.
+## Introducción
 
-Bcrypt is a great choice for hashing passwords because its "work factor" is adjustable, which means that the time it takes to generate a hash can be increased as hardware power increases. When hashing passwords, slow is good. The longer an algorithm takes to hash a password, the longer it takes malicious users to generate "rainbow tables" of all possible string hash values that may be used in brute force attacks against applications.
+La [facade](/docs/%7B%7Bversion%7D%7D/facades) Laravel `Hash` proporciona hashing seguro Bcrypt y Argon2 para almacenar contraseñas de usuario. Si estás utilizando uno de los [kits de inicio de aplicaciones Lar](/docs/%7B%7Bversion%7D%7D/starter-kits)avel, Bcrypt se utilizará por defecto para el registro y la autenticación.
 
-<a name="configuration"></a>
-## Configuration
+Bcrypt es una gran elección para el hash de contraseñas porque su "factor de trabajo" es ajustable, lo que significa que el tiempo que tarda en generar un hash puede incrementarse a medida que aumenta la potencia del hardware. En el hash de contraseñas, la lentitud es buena. Cuanto más tarde un algoritmo en generar el hash de una contraseña, más tiempo tardarán los usuarios malintencionados en generar "tablas arco iris" con todos los posibles valores hash de cadenas que pueden utilizarse en ataques de fuerza bruta contra las aplicaciones.
 
-The default hashing driver for your application is configured in your application's `config/hashing.php` configuration file. There are currently several supported drivers: [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) and [Argon2](https://en.wikipedia.org/wiki/Argon2) (Argon2i and Argon2id variants).
+[]()
 
-<a name="basic-usage"></a>
-## Basic Usage
+## Configuración
 
-<a name="hashing-passwords"></a>
-### Hashing Passwords
+El controlador hash predeterminado para su aplicación se configura en el archivo de configuración `config/hashing.php` de su aplicación. Actualmente hay varios controladores soportados: [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) y [Argon2](https://en.wikipedia.org/wiki/Argon2) (variantes Argon2i y Argon2id).
 
-You may hash a password by calling the `make` method on the `Hash` facade:
+[]()
+
+## Uso Básico
+
+[]()
+
+### Cifrado de Contraseñas
+
+Puede hacer un hash de una contraseña llamando al método `make` de la facade `Hash`:
 
     <?php
 
@@ -53,19 +57,21 @@ You may hash a password by calling the `make` method on the `Hash` facade:
         }
     }
 
-<a name="adjusting-the-bcrypt-work-factor"></a>
-#### Adjusting The Bcrypt Work Factor
+[]()
 
-If you are using the Bcrypt algorithm, the `make` method allows you to manage the work factor of the algorithm using the `rounds` option; however, the default work factor managed by Laravel is acceptable for most applications:
+#### Ajuste del factor de trabajo de Bcrypt
+
+Si está utilizando el algoritmo Bcrypt, el método `make` le permite gestionar el factor de trabajo del algoritmo utilizando la opción `rounds`; sin embargo, el factor de trabajo por defecto gestionado por Laravel es aceptable para la mayoría de las aplicaciones:
 
     $hashed = Hash::make('password', [
         'rounds' => 12,
     ]);
 
-<a name="adjusting-the-argon2-work-factor"></a>
-#### Adjusting The Argon2 Work Factor
+[]()
 
-If you are using the Argon2 algorithm, the `make` method allows you to manage the work factor of the algorithm using the `memory`, `time`, and `threads` options; however, the default values managed by Laravel are acceptable for most applications:
+#### Ajustando el factor de trabajo de Argon2
+
+Si estás utilizando el algoritmo Argon2, el método `make` te permite gestionar el factor de trabajo del algoritmo utilizando las opciones `memory`, `time` y `threads`; sin embargo, los valores por defecto gestionados por Laravel son aceptables para la mayoría de las aplicaciones:
 
     $hashed = Hash::make('password', [
         'memory' => 1024,
@@ -73,22 +79,24 @@ If you are using the Argon2 algorithm, the `make` method allows you to manage th
         'threads' => 2,
     ]);
 
-> **Note**  
-> For more information on these options, please refer to the [official PHP documentation regarding Argon hashing](https://secure.php.net/manual/en/function.password-hash.php).
+> **Nota**  
+> Para más información sobre estas opciones, por favor consulte la [documentación oficial de PHP referente al hashing Argon](https://secure.php.net/manual/en/function.password-hash.php).
 
-<a name="verifying-that-a-password-matches-a-hash"></a>
-### Verifying That A Password Matches A Hash
+[]()
 
-The `check` method provided by the `Hash` facade allows you to verify that a given plain-text string corresponds to a given hash:
+### Verificación de que una contraseña coincide con un hash
+
+El método `check` proporcionado por la facade `Hash` permite verificar que una cadena de texto plano dada se corresponde con un hash dado:
 
     if (Hash::check('plain-text', $hashedPassword)) {
         // The passwords match...
     }
 
-<a name="determining-if-a-password-needs-to-be-rehashed"></a>
-### Determining If A Password Needs To Be Rehashed
+[]()
 
-The `needsRehash` method provided by the `Hash` facade allows you to determine if the work factor used by the hasher has changed since the password was hashed. Some applications choose to perform this check during the application's authentication process:
+### Determinar si una contraseña necesita ser reutilizada
+
+El método `needsRehash` proporcionado por la facade `Hash` permite determinar si el factor de trabajo utilizado por el hasher ha cambiado desde que se realizó el hash de la contraseña. Algunas aplicaciones optan por realizar esta comprobación durante el proceso de autenticación de la aplicación:
 
     if (Hash::needsRehash($hashed)) {
         $hashed = Hash::make('plain-text');

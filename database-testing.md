@@ -1,20 +1,22 @@
-# Database Testing
+# Pruebas de bases de datos
 
-- [Introduction](#introduction)
-    - [Resetting The Database After Each Test](#resetting-the-database-after-each-test)
-- [Model Factories](#model-factories)
-- [Running Seeders](#running-seeders)
-- [Available Assertions](#available-assertions)
+- [Introducción](#introduction)
+  - [Restablecer la base de datos después de cada test](#resetting-the-database-after-each-test)
+- [Fábricas de modelos](#model-factories)
+- [Ejecución de sembradoras](#running-seeders)
+- [Aserciones disponibles](#available-assertions)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-Laravel provides a variety of helpful tools and assertions to make it easier to test your database driven applications. In addition, Laravel model factories and seeders make it painless to create test database records using your application's Eloquent models and relationships. We'll discuss all of these powerful features in the following documentation.
+## Introducción
 
-<a name="resetting-the-database-after-each-test"></a>
-### Resetting The Database After Each Test
+Laravel proporciona una variedad de herramientas útiles y aserciones para hacer más fácil la test de sus aplicaciones basadas en bases de datos. Además, las fábricas de modelos y los sembradores de Laravel facilitan la creación de registros de base de datos test utilizando los modelos y relaciones Eloquent de tu aplicación. Vamos a discutir todas estas características de gran alcance en la siguiente documentación.
 
-Before proceeding much further, let's discuss how to reset your database after each of your tests so that data from a previous test does not interfere with subsequent tests. Laravel's included `Illuminate\Foundation\Testing\RefreshDatabase` trait will take care of this for you. Simply use the trait on your test class:
+[]()
+
+### Restablecimiento de la base de datos después de cada test
+
+Antes de seguir adelante, vamos a discutir cómo restablecer la base de datos después de cada una de las tests para que los datos de una test anterior no interfiera con las tests posteriores. El rasgo `Illuminate\Foundation\Testing\RefreshDatabase` incluido en Laravel se encargará de esto por usted. Basta con utilizar el rasgo en su clase de test:
 
     <?php
 
@@ -41,16 +43,17 @@ Before proceeding much further, let's discuss how to reset your database after e
         }
     }
 
-The `Illuminate\Foundation\Testing\RefreshDatabase` trait does not migrate your database if your schema is up to date. Instead, it will only execute the test within a database transaction. Therefore, any records added to the database by test cases that do not use this trait may still exist in the database.
+El rasgo `Illuminate\Foundation\Testing\RefreshDatabase` no migra su base de datos si su esquema está actualizado. En su lugar, sólo ejecutará la test dentro de una transacción de base de datos. Por lo tanto, cualquier registro añadido a la base de datos por casos de test que no utilicen este rasgo puede seguir existiendo en la base de datos.
 
-If you would like to totally reset the database using migrations, you may use the `Illuminate\Foundation\Testing\DatabaseMigrations` trait instead. However, the `DatabaseMigrations` trait is significantly slower than the `RefreshDatabase` trait.
+Si desea restablecer totalmente la base de datos mediante migraciones, puede utilizar el rasgo `Illuminate\Foundation\Testing\DatabaseMigrations` en su lugar. Sin embargo, el rasgo `DatabaseMigrations` es significativamente más lento que el rasgo `RefreshDatabase`.
 
-<a name="model-factories"></a>
-## Model Factories
+[]()
 
-When testing, you may need to insert a few records into your database before executing your test. Instead of manually specifying the value of each column when you create this test data, Laravel allows you to define a set of default attributes for each of your [Eloquent models](/docs/{{version}}/eloquent) using [model factories](/docs/{{version}}/eloquent-factories).
+## Fábricas de modelos
 
-To learn more about creating and utilizing model factories to create models, please consult the complete [model factory documentation](/docs/{{version}}/eloquent-factories). Once you have defined a model factory, you may utilize the factory within your test to create models:
+Al realizar pruebas, es posible que necesite insertar algunos registros en la base de datos antes de ejecutar la test. En lugar de especificar manualmente el valor de cada columna cuando creas estos datos de test, Laravel te permite definir un conjunto de atributos por defecto para cada uno de tus [modelos Eloquent](/docs/%7B%7Bversion%7D%7D/eloquent) utilizando [fábricas de modelos](/docs/%7B%7Bversion%7D%7D/eloquent-factories).
+
+Para saber más sobre cómo crear y utilizar fábricas de modelos para crear modelos, consulta la [documentación](/docs/%7B%7Bversion%7D%7D/eloquent-factories) completa sobre [fábricas](/docs/%7B%7Bversion%7D%7D/eloquent-factories) de modelos. Una vez que haya definido una fábrica de modelos, puede utilizar la fábrica dentro de su test para crear modelos:
 
     use App\Models\User;
 
@@ -61,10 +64,11 @@ To learn more about creating and utilizing model factories to create models, ple
         // ...
     }
 
-<a name="running-seeders"></a>
-## Running Seeders
+[]()
 
-If you would like to use [database seeders](/docs/{{version}}/seeding) to populate your database during a feature test, you may invoke the `seed` method. By default, the `seed` method will execute the `DatabaseSeeder`, which should execute all of your other seeders. Alternatively, you pass a specific seeder class name to the `seed` method:
+## Ejecución de sembradoras
+
+Si desea utilizar [sembradoras de base de datos](/docs/%7B%7Bversion%7D%7D/seeding) para poblar su base de datos durante una test características, puede invocar el método `seed`. Por defecto, el método `seed` ejecutará el `DatabaseSeeder`, que debería ejecutar todos sus otros seeders. Alternativamente, puede pasar un nombre de clase de sembrador específico al método `seed`:
 
     <?php
 
@@ -104,7 +108,7 @@ If you would like to use [database seeders](/docs/{{version}}/seeding) to popula
         }
     }
 
-Alternatively, you may instruct Laravel to automatically seed the database before each test that uses the `RefreshDatabase` trait. You may accomplish this by defining a `$seed` property on your base test class:
+Alternativamente, puedes instruir a Laravel para que siembre automáticamente la base de datos antes de cada test que utilice el rasgo `RefreshDatabase`. Para ello, defina una propiedad `$seed` en su clase base de test:
 
     <?php
 
@@ -124,7 +128,7 @@ Alternatively, you may instruct Laravel to automatically seed the database befor
         protected $seed = true;
     }
 
-When the `$seed` property is `true`, the test will run the `Database\Seeders\DatabaseSeeder` class before each test that uses the `RefreshDatabase` trait. However, you may specify a specific seeder that should be executed by defining a `$seeder` property on your test class:
+Cuando la propiedad `$seed` es `true`, la test ejecutará la clase `Database\Seeders\DatabaseSeeder` antes de cada test que utilice el rasgo `RefreshDatabase`. Sin embargo, puedes especificar un seeder específico que deba ejecutarse definiendo una propiedad `$seeder` en tu clase de test:
 
     use Database\Seeders\OrderStatusSeeder;
 
@@ -135,54 +139,61 @@ When the `$seed` property is `true`, the test will run the `Database\Seeders\Dat
      */
     protected $seeder = OrderStatusSeeder::class;
 
-<a name="available-assertions"></a>
-## Available Assertions
+[]()
 
-Laravel provides several database assertions for your [PHPUnit](https://phpunit.de/) feature tests. We'll discuss each of these assertions below.
+## Aserciones disponibles
 
-<a name="assert-database-count"></a>
+Laravel proporciona varias aserciones de base de datos para tus pruebas tests rasgo [PHPUnit](https://phpunit.de/). Discutiremos cada una de estas aserciones a continuación.
+
+[]()
+
 #### assertDatabaseCount
 
-Assert that a table in the database contains the given number of records:
+Comprueba que una tabla de la base de datos contiene el número de registros dado:
 
     $this->assertDatabaseCount('users', 5);
 
-<a name="assert-database-has"></a>
+[]()
+
 #### assertDatabaseHas
 
-Assert that a table in the database contains records matching the given key / value query constraints:
+Comprueba que una tabla de la base de datos contiene registros que coinciden con las restricciones de consulta clave/valor dadas:
 
     $this->assertDatabaseHas('users', [
         'email' => 'sally@example.com',
     ]);
 
-<a name="assert-database-missing"></a>
+[]()
+
 #### assertDatabaseMissing
 
-Assert that a table in the database does not contain records matching the given key / value query constraints:
+Comprobar que una tabla de la base de datos no contiene registros que coincidan con las restricciones de consulta de clave/valor dadas:
 
     $this->assertDatabaseMissing('users', [
         'email' => 'sally@example.com',
     ]);
 
-<a name="assert-deleted"></a>
+[]()
+
 #### assertSoftDeleted
 
-The `assertSoftDeleted` method may be used to assert a given Eloquent model has been "soft deleted":
+El método `assertSoftDeleted` se puede utilizar para afirmar que un determinado modelo de Eloquent ha sido "borrado suavemente":
 
     $this->assertSoftDeleted($user);
-    
-<a name="assert-not-deleted"></a>
+
+[]()
+
 #### assertNotSoftDeleted
 
-The `assertNotSoftDeleted` method may be used to assert a given Eloquent model hasn't been "soft deleted":
+El método `assertNotSoftDeleted` puede usarse para afirmar que un modelo Eloquent dado no ha sido "borrado suavemente":
 
     $this->assertNotSoftDeleted($user);
 
-<a name="assert-model-exists"></a>
+[]()
+
 #### assertModelExists
 
-Assert that a given model exists in the database:
+Compruebe que un modelo determinado existe en la base de datos:
 
     use App\Models\User;
 
@@ -190,10 +201,11 @@ Assert that a given model exists in the database:
 
     $this->assertModelExists($user);
 
-<a name="assert-model-missing"></a>
+[]()
+
 #### assertModelMissing
 
-Assert that a given model does not exist in the database:
+Compruebe que un modelo determinado no existe en la base de datos:
 
     use App\Models\User;
 

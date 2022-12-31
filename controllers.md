@@ -1,38 +1,41 @@
-# Controllers
+# Controladores
 
-- [Introduction](#introduction)
-- [Writing Controllers](#writing-controllers)
-    - [Basic Controllers](#basic-controllers)
-    - [Single Action Controllers](#single-action-controllers)
-- [Controller Middleware](#controller-middleware)
-- [Resource Controllers](#resource-controllers)
-    - [Partial Resource Routes](#restful-partial-resource-routes)
-    - [Nested Resources](#restful-nested-resources)
-    - [Naming Resource Routes](#restful-naming-resource-routes)
-    - [Naming Resource Route Parameters](#restful-naming-resource-route-parameters)
-    - [Scoping Resource Routes](#restful-scoping-resource-routes)
-    - [Localizing Resource URIs](#restful-localizing-resource-uris)
-    - [Supplementing Resource Controllers](#restful-supplementing-resource-controllers)
-    - [Singleton Resource Controllers](#singleton-resource-controllers)
-- [Dependency Injection & Controllers](#dependency-injection-and-controllers)
+- [Introducción](#introduction)
+- [Escritura de controladores](#writing-controllers)
+  - [Controladores básicos](#basic-controllers)
+  - [Controladores de acción única](#single-action-controllers)
+- [Controladores middleware](#controller-middleware)
+- [Controladores de recursos](#resource-controllers)
+  - [Rutas parciales de recursos](#restful-partial-resource-routes)
+  - [Recursos anidados](#restful-nested-resources)
+  - [Nomenclatura de rutas de recursos](#restful-naming-resource-routes)
+  - [Cómo nombrar los parámetros de las rutas de recursos](#restful-naming-resource-route-parameters)
+  - [Alcance de las rutas de recursos](#restful-scoping-resource-routes)
+  - [Localización de URI de recursos](#restful-localizing-resource-uris)
+  - [Complementación de controladores de recursos](#restful-supplementing-resource-controllers)
+  - [Controladores de Recursos Singleton](#singleton-resource-controllers)
+- [Inyección de dependencia y controladores](#dependency-injection-and-controllers)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-Instead of defining all of your request handling logic as closures in your route files, you may wish to organize this behavior using "controller" classes. Controllers can group related request handling logic into a single class. For example, a `UserController` class might handle all incoming requests related to users, including showing, creating, updating, and deleting users. By default, controllers are stored in the `app/Http/Controllers` directory.
+## Introducción
 
-<a name="writing-controllers"></a>
-## Writing Controllers
+En lugar de definir toda su lógica de gestión de peticiones como closures en sus archivos de ruta, puede que desee organizar este comportamiento utilizando clases "controlador". Los controladores pueden agrupar la lógica de gestión de peticiones relacionadas en una única clase. Por ejemplo, una clase `UserController` podría manejar todas las peticiones entrantes relacionadas con usuarios, incluyendo mostrar, crear, actualizar y borrar usuarios. Por defecto, los controladores se almacenan en el directorio `app/Http/Controllers`.
 
-<a name="basic-controllers"></a>
-### Basic Controllers
+[]()
 
-Let's take a look at an example of a basic controller. Note that the controller extends the base controller class included with Laravel: `App\Http\Controllers\Controller`:
+## Escribiendo Controladores
+
+[]()
+
+### Controladores básicos
+
+Veamos un ejemplo de controlador básico. Ten en cuenta que el controlador extiende la clase base de controladores incluida con Laravel: `App/Http\Controllers\Controller`:
 
     <?php
 
     namespace App\Http\Controllers;
-    
+
     use App\Models\User;
 
     class UserController extends Controller
@@ -51,26 +54,27 @@ Let's take a look at an example of a basic controller. Note that the controller 
         }
     }
 
-You can define a route to this controller method like so:
+Puedes definir una ruta a este método controlador de la siguiente manera:
 
     use App\Http\Controllers\UserController;
 
     Route::get('/user/{id}', [UserController::class, 'show']);
 
-When an incoming request matches the specified route URI, the `show` method on the `App\Http\Controllers\UserController` class will be invoked and the route parameters will be passed to the method.
+Cuando una petición entrante coincide con la ruta URI especificada, el método `show` de la clase `App\Http\Controllers\UserController` será invocado y los parámetros de la ruta serán pasados al método.
 
-> **Note**  
-> Controllers are not **required** to extend a base class. However, you will not have access to convenient features such as the `middleware` and `authorize` methods.
+> **Nota**  
+> No **es necesario** que los controladores extiendan una clase base. Sin embargo, no tendrán acceso a características convenientes como los métodos `middleware` y `authorize`.
 
-<a name="single-action-controllers"></a>
-### Single Action Controllers
+[]()
 
-If a controller action is particularly complex, you might find it convenient to dedicate an entire controller class to that single action. To accomplish this, you may define a single `__invoke` method within the controller:
+### Controladores de acción única
+
+Si una acción de controlador es particularmente compleja, puede que te resulte conveniente dedicar una clase de controlador entera a esa única acción. Para ello, puede definir un único método `__invoke` dentro del controlador:
 
     <?php
 
     namespace App\Http\Controllers;
-    
+
     use App\Models\User;
 
     class ProvisionServer extends Controller
@@ -86,29 +90,30 @@ If a controller action is particularly complex, you might find it convenient to 
         }
     }
 
-When registering routes for single action controllers, you do not need to specify a controller method. Instead, you may simply pass the name of the controller to the router:
+Al registrar rutas para controladores de acción única, no es necesario especificar un método de controlador. En su lugar, puede simplemente pasar el nombre del controlador al enrutador:
 
     use App\Http\Controllers\ProvisionServer;
 
     Route::post('/server', ProvisionServer::class);
 
-You may generate an invokable controller by using the `--invokable` option of the `make:controller` Artisan command:
+Puedes generar un controlador invocable utilizando la opción `--invokable` del comando `make:controller` de Artisan:
 
 ```shell
 php artisan make:controller ProvisionServer --invokable
 ```
 
-> **Note**  
-> Controller stubs may be customized using [stub publishing](/docs/{{version}}/artisan#stub-customization).
+> **Nota**  
+> stubs controlador pueden personalizarse utilizando [stub-customization">la publicación destub](</docs/%7B%7Bversion%7D%7D/artisan#\<glossary variable=>).
 
-<a name="controller-middleware"></a>
-## Controller Middleware
+[]()
 
-[Middleware](/docs/{{version}}/middleware) may be assigned to the controller's routes in your route files:
+## Controlador middleware
+
+El[middleware](/docs/%7B%7Bversion%7D%7D/middleware) puede ser asignado a las rutas del controlador en sus archivos de ruta:
 
     Route::get('profile', [UserController::class, 'show'])->middleware('auth');
 
-Or, you may find it convenient to specify middleware within your controller's constructor. Using the `middleware` method within your controller's constructor, you can assign middleware to the controller's actions:
+O, puedes encontrar conveniente especificar middleware dentro del constructor de tu controlador. Usando el método `middleware` dentro del constructor de tu controlador, puedes asignar middleware a las acciones del controlador:
 
     class UserController extends Controller
     {
@@ -125,55 +130,58 @@ Or, you may find it convenient to specify middleware within your controller's co
         }
     }
 
-Controllers also allow you to register middleware using a closure. This provides a convenient way to define an inline middleware for a single controller without defining an entire middleware class:
+Los controladores también permiten registrar middleware utilizando un closure. Esto proporciona una manera conveniente de definir un middleware en línea para un solo controlador sin definir una clase entera de middleware:
 
     $this->middleware(function ($request, $next) {
         return $next($request);
     });
 
-<a name="resource-controllers"></a>
-## Resource Controllers
+[]()
 
-If you think of each Eloquent model in your application as a "resource", it is typical to perform the same sets of actions against each resource in your application. For example, imagine your application contains a `Photo` model and a `Movie` model. It is likely that users can create, read, update, or delete these resources.
+## Controladores de recursos
 
-Because of this common use case, Laravel resource routing assigns the typical create, read, update, and delete ("CRUD") routes to a controller with a single line of code. To get started, we can use the `make:controller` Artisan command's `--resource` option to quickly create a controller to handle these actions:
+Si piensas en cada modelo Eloquent de tu aplicación como un "recurso", es típico realizar los mismos conjuntos de acciones contra cada recurso de tu aplicación. Por ejemplo, imagine que su aplicación contiene un modelo de `Foto` y un modelo de `Película`. Es probable que los usuarios puedan crear, leer, actualizar o eliminar estos recursos.
+
+Debido a este caso de uso común, el enrutamiento de recursos de Laravel asigna las típicas rutas de creación, lectura, actualización y eliminación ("CRUD") a un controlador con una sola línea de código. Para empezar, podemos utilizar la opción `--resource` del comando `make:` controller de Artisan para crear rápidamente un controlador que gestione estas acciones:
 
 ```shell
 php artisan make:controller PhotoController --resource
 ```
 
-This command will generate a controller at `app/Http/Controllers/PhotoController.php`. The controller will contain a method for each of the available resource operations. Next, you may register a resource route that points to the controller:
+Este comando generará un controlador en `app/Http/Controllers/PhotoController.php`. El controlador contendrá un método para cada una de las operaciones de recursos disponibles. A continuación, puede registrar una ruta de recursos que apunte al controlador:
 
     use App\Http\Controllers\PhotoController;
 
     Route::resource('photos', PhotoController::class);
 
-This single route declaration creates multiple routes to handle a variety of actions on the resource. The generated controller will already have methods stubbed for each of these actions. Remember, you can always get a quick overview of your application's routes by running the `route:list` Artisan command.
+Esta única declaración de ruta crea múltiples rutas para manejar una variedad de acciones sobre el recurso. El controlador generado ya tendrá métodos para cada una de estas acciones. Recuerda, siempre puedes obtener una rápida visión general de las rutas de tu aplicación ejecutando el comando `route:list` de Artisan.
 
-You may even register many resource controllers at once by passing an array to the `resources` method:
+Incluso puedes registrar muchos controladores de recursos a la vez pasando un array al método `resources`:
 
     Route::resources([
         'photos' => PhotoController::class,
         'posts' => PostController::class,
     ]);
 
-<a name="actions-handled-by-resource-controller"></a>
-#### Actions Handled By Resource Controller
+[]()
 
-Verb      | URI                    | Action       | Route Name
-----------|------------------------|--------------|---------------------
-GET       | `/photos`              | index        | photos.index
-GET       | `/photos/create`       | create       | photos.create
-POST      | `/photos`              | store        | photos.store
-GET       | `/photos/{photo}`      | show         | photos.show
-GET       | `/photos/{photo}/edit` | edit         | photos.edit
-PUT/PATCH | `/photos/{photo}`      | update       | photos.update
-DELETE    | `/photos/{photo}`      | destroy      | photos.destroy
+#### Acciones Manejadas por el Controlador de Recursos
 
-<a name="customizing-missing-model-behavior"></a>
-#### Customizing Missing Model Behavior
+|Verbo    |URI                   |Acción    |Nombre de la ruta|
+|---------|----------------------|----------|-----------------|
+|GET      |`/photos`             |índice    |fotos.index      |
+|GET      |`/photos/create`      |crear     |fotos.crear      |
+|POST     |`/photos`             |almacenar |fotos.almacenar  |
+|GET      |`/photos/{photo}`     |mostrar   |fotos.mostrar    |
+|GET      |`/photos/{photo}/edit`|editar    |fotos.editar     |
+|PUT/PATCH|`/photos/{photo}`     |actualizar|fotos.actualizar |
+|BORRAR   |`/photos/{photo}`     |destruir  |fotos.destruir   |
 
-Typically, a 404 HTTP response will be generated if an implicitly bound resource model is not found. However, you may customize this behavior by calling the `missing` method when defining your resource route. The `missing` method accepts a closure that will be invoked if an implicitly bound model can not be found for any of the resource's routes:
+[]()
+
+#### Personalización del comportamiento del modelo no encontrado
+
+Normalmente, se generará una respuesta HTTP 404 si no se encuentra un modelo de recurso vinculado implícitamente. Sin embargo, puede personalizar este comportamiento llamando al método `missing` cuando defina su ruta de recursos. El método `missing` acepta un closure que se invocará si no se encuentra un modelo vinculado implícitamente para ninguna de las rutas del recurso:
 
     use App\Http\Controllers\PhotoController;
     use Illuminate\Http\Request;
@@ -184,41 +192,45 @@ Typically, a 404 HTTP response will be generated if an implicitly bound resource
                 return Redirect::route('photos.index');
             });
 
-<a name="soft-deleted-models"></a>
-#### Soft Deleted Models
+[]()
 
-Typically, implicit model binding will not retrieve models that have been [soft deleted](/docs/{{version}}/eloquent#soft-deleting), and will instead return a 404 HTTP response. However, you can instruct the framework to allow soft deleted models by invoking the `withTrashed` method when defining your resource route:
+#### Modelos borrados
+
+Típicamente, la vinculación implícita de modelos no recuperará modelos que han sido [borrados suavemente](/docs/%7B%7Bversion%7D%7D/eloquent#soft-deleting), y en su lugar devolverá una respuesta HTTP 404. Sin embargo, puedes indicar al framework que permita modelos borrados soft invocando el método `withTrashed` al definir tu ruta de recursos:
 
     use App\Http\Controllers\PhotoController;
 
     Route::resource('photos', PhotoController::class)->withTrashed();
 
-Calling `withTrashed` with no arguments will allow soft deleted models for the `show`, `edit`, and `update` resource routes. You may specify a subset of these routes by passing an array to the `withTrashed` method:
+Si se llama a `withTrashed` sin argumentos, se permitirán los modelos borrados por software para las rutas de recursos `show`, `edit` y `update`. Puede especificar un subconjunto de estas rutas pasando un array al método `withTrashed`:
 
     Route::resource('photos', PhotoController::class)->withTrashed(['show']);
 
-<a name="specifying-the-resource-model"></a>
-#### Specifying The Resource Model
+[]()
 
-If you are using [route model binding](/docs/{{version}}/routing#route-model-binding) and would like the resource controller's methods to type-hint a model instance, you may use the `--model` option when generating the controller:
+#### Especificación del Modelo de Recurso
+
+Si utiliza el [enlace de modelo](/docs/%7B%7Bversion%7D%7D/routing#route-model-binding) de ruta y desea que los métodos del controlador de recursos indiquen una instancia de modelo, puede utilizar la opción `--model` al generar el controlador:
 
 ```shell
 php artisan make:controller PhotoController --model=Photo --resource
 ```
 
-<a name="generating-form-requests"></a>
-#### Generating Form Requests
+[]()
 
-You may provide the `--requests` option when generating a resource controller to instruct Artisan to generate [form request classes](/docs/{{version}}/validation#form-request-validation) for the controller's storage and update methods:
+#### Generación de peticiones de formulario
+
+Puedes proporcionar la opción `--requests` cuando generes un controlador de recursos para instruir a Artisan a generar [clases de solicitud de formularios](/docs/%7B%7Bversion%7D%7D/validation#form-request-validation) para los métodos de almacenamiento y actualización del controlador:
 
 ```shell
 php artisan make:controller PhotoController --model=Photo --resource --requests
 ```
 
-<a name="restful-partial-resource-routes"></a>
-### Partial Resource Routes
+[]()
 
-When declaring a resource route, you may specify a subset of actions the controller should handle instead of the full set of default actions:
+### Rutas parciales de recursos
+
+Al declarar una ruta de recursos, puede especificar un subconjunto de acciones que el controlador debe manejar en lugar del conjunto completo de acciones por defecto:
 
     use App\Http\Controllers\PhotoController;
 
@@ -230,16 +242,17 @@ When declaring a resource route, you may specify a subset of actions the control
         'create', 'store', 'update', 'destroy'
     ]);
 
-<a name="api-resource-routes"></a>
-#### API Resource Routes
+[]()
 
-When declaring resource routes that will be consumed by APIs, you will commonly want to exclude routes that present HTML templates such as `create` and `edit`. For convenience, you may use the `apiResource` method to automatically exclude these two routes:
+#### Rutas de recursos API
+
+Al declarar rutas de recursos que serán consumidas por APIs, comúnmente querrá excluir rutas que presentan plantillas HTML como `crear` y `editar`. Por comodidad, puede utilizar el método `apiResource` para excluir automáticamente estas dos rutas:
 
     use App\Http\Controllers\PhotoController;
 
     Route::apiResource('photos', PhotoController::class);
 
-You may register many API resource controllers at once by passing an array to the `apiResources` method:
+Puede registrar muchos controladores de recursos de API a la vez pasando una array al método `apiResources`:
 
     use App\Http\Controllers\PhotoController;
     use App\Http\Controllers\PostController;
@@ -249,55 +262,59 @@ You may register many API resource controllers at once by passing an array to th
         'posts' => PostController::class,
     ]);
 
-To quickly generate an API resource controller that does not include the `create` or `edit` methods, use the `--api` switch when executing the `make:controller` command:
+Para generar rápidamente un controlador de recursos de API que no incluya los métodos `create` o `edit`, utilice el modificador `--api` al ejecutar el comando `make:controller`:
 
 ```shell
 php artisan make:controller PhotoController --api
 ```
 
-<a name="restful-nested-resources"></a>
-### Nested Resources
+[]()
 
-Sometimes you may need to define routes to a nested resource. For example, a photo resource may have multiple comments that may be attached to the photo. To nest the resource controllers, you may use "dot" notation in your route declaration:
+### Recursos anidados
+
+Algunas veces puedes necesitar definir rutas a un recurso anidado. Por ejemplo, un recurso foto puede tener múltiples comentarios que pueden ser adjuntados a la foto. Para anidar los controladores de recursos, puede utilizar la notación "punto" en su declaración de ruta:
 
     use App\Http\Controllers\PhotoCommentController;
 
     Route::resource('photos.comments', PhotoCommentController::class);
 
-This route will register a nested resource that may be accessed with URIs like the following:
+Esta ruta registrará un recurso anidado al que se podrá acceder con URIs como las siguientes:
 
     /photos/{photo}/comments/{comment}
 
-<a name="scoping-nested-resources"></a>
-#### Scoping Nested Resources
+[]()
 
-Laravel's [implicit model binding](/docs/{{version}}/routing#implicit-model-binding-scoping) feature can automatically scope nested bindings such that the resolved child model is confirmed to belong to the parent model. By using the `scoped` method when defining your nested resource, you may enable automatic scoping as well as instruct Laravel which field the child resource should be retrieved by. For more information on how to accomplish this, please see the documentation on [scoping resource routes](#restful-scoping-resource-routes).
+#### Alcance de los recursos anidados
 
-<a name="shallow-nesting"></a>
-#### Shallow Nesting
+La función de [vinculación implícita de modelos](/docs/%7B%7Bversion%7D%7D/routing#implicit-model-binding-scoping) de Laravel puede delimitar automáticamente las vinculaciones anidadas de forma que se confirme que el modelo hijo resuelto pertenece al modelo padre. Utilizando el método `scoped` al definir tu recurso anidado, puedes habilitar el alcance automático así como indicar a Laravel por qué campo debe recuperarse el recurso hijo. Para obtener más información sobre cómo lograr esto, consulte la documentación sobre [el ámbito de las rutas de recursos](#restful-scoping-resource-routes).
 
-Often, it is not entirely necessary to have both the parent and the child IDs within a URI since the child ID is already a unique identifier. When using unique identifiers such as auto-incrementing primary keys to identify your models in URI segments, you may choose to use "shallow nesting":
+[]()
+
+#### Anidamiento superficial
+
+A menudo, no es del todo necesario tener los IDs padre e hijo dentro de un URI ya que el ID hijo ya es un identificador único. Cuando utilice identificadores únicos como claves primarias autoincrementadas para identificar sus modelos en segmentos URI, puede optar por utilizar un "anidamiento superficial":
 
     use App\Http\Controllers\CommentController;
 
     Route::resource('photos.comments', CommentController::class)->shallow();
 
-This route definition will define the following routes:
+Esta definición de ruta definirá las siguientes rutas
 
-Verb      | URI                               | Action       | Route Name
-----------|-----------------------------------|--------------|---------------------
-GET       | `/photos/{photo}/comments`        | index        | photos.comments.index
-GET       | `/photos/{photo}/comments/create` | create       | photos.comments.create
-POST      | `/photos/{photo}/comments`        | store        | photos.comments.store
-GET       | `/comments/{comment}`             | show         | comments.show
-GET       | `/comments/{comment}/edit`        | edit         | comments.edit
-PUT/PATCH | `/comments/{comment}`             | update       | comments.update
-DELETE    | `/comments/{comment}`             | destroy      | comments.destroy
+|Verbo    |URI                              |Acción    |Nombre de la ruta      |
+|---------|---------------------------------|----------|-----------------------|
+|GET      |`/photos/{photo}/comments`       |índice    |photos.comments.index  |
+|GET      |`/photos/{photo}/comments/create`|crear     |fotos.comentarios.crear|
+|POST     |`/photos/{photo}/comments`       |almacenar |photos.comments.store  |
+|GET      |`/comments/{comment}`            |mostrar   |comentarios.mostrar    |
+|GET      |`/comments/{comment}/edit`       |editar    |comentarios.editar     |
+|PUT/PATCH|`/comments/{comment}`            |actualizar|comentarios.actualizar |
+|BORRAR   |`/comments/{comment}`            |destruir  |comentarios.destruir   |
 
-<a name="restful-naming-resource-routes"></a>
-### Naming Resource Routes
+[]()
 
-By default, all resource controller actions have a route name; however, you can override these names by passing a `names` array with your desired route names:
+### Nomenclatura de rutas de recursos
+
+Por defecto, todas las acciones del controlador de recursos tienen un nombre de ruta; sin embargo, puedes sobrescribir estos nombres pasando un array `names` con los nombres de ruta que desees:
 
     use App\Http\Controllers\PhotoController;
 
@@ -305,10 +322,11 @@ By default, all resource controller actions have a route name; however, you can 
         'create' => 'photos.build'
     ]);
 
-<a name="restful-naming-resource-route-parameters"></a>
-### Naming Resource Route Parameters
+[]()
 
-By default, `Route::resource` will create the route parameters for your resource routes based on the "singularized" version of the resource name. You can easily override this on a per resource basis using the `parameters` method. The array passed into the `parameters` method should be an associative array of resource names and parameter names:
+### Cómo nombrar los parámetros de las rutas de recursos
+
+Por defecto, `Route::` resource creará los parámetros de ruta para sus rutas de recursos basándose en la versión "singularizada" del nombre del recurso. Puedes anular esto fácilmente para cada recurso utilizando el método `parameters`. El array pasado al método `parameters` debería ser un array asociativo de nombres de recursos y nombres de parámetros:
 
     use App\Http\Controllers\AdminUserController;
 
@@ -316,14 +334,15 @@ By default, `Route::resource` will create the route parameters for your resource
         'users' => 'admin_user'
     ]);
 
- The example above generates the following URI for the resource's `show` route:
+El ejemplo anterior genera el siguiente URI para la ruta `show` del recurso:
 
     /users/{admin_user}
 
-<a name="restful-scoping-resource-routes"></a>
-### Scoping Resource Routes
+[]()
 
-Laravel's [scoped implicit model binding](/docs/{{version}}/routing#implicit-model-binding-scoping) feature can automatically scope nested bindings such that the resolved child model is confirmed to belong to the parent model. By using the `scoped` method when defining your nested resource, you may enable automatic scoping as well as instruct Laravel which field the child resource should be retrieved by:
+### Alcance de las rutas de recursos
+
+La característica scoped [implicit model binding](/docs/%7B%7Bversion%7D%7D/routing#implicit-model-binding-scoping) de Laravel puede automáticamente hacer scoped bindings anidados de tal forma que se confirme que el modelo hijo resuelto pertenece al modelo padre. Utilizando el método `scoped` al definir tu recurso anidado, puedes habilitar el scoping automático así como indicar a Laravel por qué campo debe recuperarse el recurso hijo:
 
     use App\Http\Controllers\PhotoCommentController;
 
@@ -331,16 +350,17 @@ Laravel's [scoped implicit model binding](/docs/{{version}}/routing#implicit-mod
         'comment' => 'slug',
     ]);
 
-This route will register a scoped nested resource that may be accessed with URIs like the following:
+Esta ruta registrará un recurso anidado de ámbito al que se puede acceder con URI como el siguiente:
 
     /photos/{photo}/comments/{comment:slug}
 
-When using a custom keyed implicit binding as a nested route parameter, Laravel will automatically scope the query to retrieve the nested model by its parent using conventions to guess the relationship name on the parent. In this case, it will be assumed that the `Photo` model has a relationship named `comments` (the plural of the route parameter name) which can be used to retrieve the `Comment` model.
+Cuando se utiliza un enlace implícito con clave personalizada como parámetro de ruta anidada, Laravel automáticamente delimitará la consulta para recuperar el modelo anidado por su padre utilizando convenciones para adivinar el nombre de la relación en el padre. En este caso, se asumirá que el modelo `Photo` tiene una relación llamada `comments` (el plural del nombre del parámetro de ruta) que puede utilizarse para recuperar el modelo `Comment`.
 
-<a name="restful-localizing-resource-uris"></a>
-### Localizing Resource URIs
+[]()
 
-By default, `Route::resource` will create resource URIs using English verbs and plural rules. If you need to localize the `create` and `edit` action verbs, you may use the `Route::resourceVerbs` method. This may be done at the beginning of the `boot` method within your application's `App\Providers\RouteServiceProvider`:
+### Localización de URI de recursos
+
+Por defecto, `Route::` resource creará URIs de recursos utilizando verbos en inglés y reglas de plural. Si necesita localizar los verbos de las acciones de `creación` y `edición`, puede utilizar el método Route `::resourceVerbs`. Esto puede hacerse al principio del método de `arranque` dentro del `App\Providers\RouteServiceProvider` de tu aplicación:
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -357,29 +377,31 @@ By default, `Route::resource` will create resource URIs using English verbs and 
         // ...
     }
 
-Laravel's pluralizer supports [several different languages which you may configure based on your needs](/docs/{{version}}/localization#pluralization-language). Once the verbs and pluralization language have been customized, a resource route registration such as `Route::resource('publicacion', PublicacionController::class)` will produce the following URIs:
+El pluralizador de Laravel soporta [varios idiomas diferentes que puedes configurar en función de tus necesidades](/docs/%7B%7Bversion%7D%7D/localization#pluralization-language). Una vez personalizados los verbos y el idioma de pluralización, un registro de ruta de recursos como `Route::resource('publicacion', PublicacionController::class)` producirá las siguientes URIs:
 
     /publicacion/crear
 
     /publicacion/{publicaciones}/editar
 
-<a name="restful-supplementing-resource-controllers"></a>
-### Supplementing Resource Controllers
+[]()
 
-If you need to add additional routes to a resource controller beyond the default set of resource routes, you should define those routes before your call to the `Route::resource` method; otherwise, the routes defined by the `resource` method may unintentionally take precedence over your supplemental routes:
+### Controladores de recursos complementarios
+
+Si necesitas añadir rutas adicionales a un controlador de recursos más allá del conjunto predeterminado de rutas de recursos, debes definir esas rutas antes de tu llamada al método `Route::` resource; de lo contrario, las rutas definidas por el método `resource` pueden tener prioridad involuntariamente sobre tus rutas suplementarias:
 
     use App\Http\Controller\PhotoController;
 
     Route::get('/photos/popular', [PhotoController::class, 'popular']);
     Route::resource('photos', PhotoController::class);
 
-> **Note**  
-> Remember to keep your controllers focused. If you find yourself routinely needing methods outside of the typical set of resource actions, consider splitting your controller into two, smaller controllers.
+> **Nota**  
+> Recuerda mantener tus controladores enfocados. Si te encuentras necesitando rutinariamente métodos fuera del típico conjunto de acciones resource, considera dividir tu controlador en dos controladores más pequeños.
 
-<a name="singleton-resource-controllers"></a>
-### Singleton Resource Controllers
+[]()
 
-Sometimes, your application will have resources that may only have a single instance. For example, a user's "profile" can be edited or updated, but a user may not have more than one "profile". Likewise, an image may have a single "thumbnail". These resources are called "singleton resources", meaning one and only one instance of the resource may exist. In these scenarios, you may register a "singleton" resource controller:
+### Controladores de Recursos Singleton
+
+A veces, tu aplicación tendrá recursos que pueden tener una única instancia. Por ejemplo, el "perfil" de un usuario puede ser editado o actualizado, pero un usuario no puede tener más de un "perfil". Del mismo modo, una imagen puede tener una única "miniatura". Estos recursos se denominan "recursos singleton", lo que significa que sólo puede existir una instancia del recurso. En estos casos, puede registrar un controlador de recursos "singleton":
 
 ```php
 use App\Http\Controllers\ProfileController;
@@ -388,70 +410,74 @@ use Illuminate\Support\Facades\Route;
 Route::singleton('profile', ProfileController::class);
 ```
 
-The singleton resource definition above will register the following routes. As you can see, "creation" routes are not registered for singleton resources, and the registered routes do not accept an identifier since only one instance of the resource may exist:
+La definición de recurso singleton anterior registrará las siguientes rutas. Como puede ver, las rutas de "creación" no se registran para los recursos singleton, y las rutas registradas no aceptan un identificador ya que sólo puede existir una instancia del recurso:
 
-Verb      | URI                               | Action       | Route Name
-----------|-----------------------------------|--------------|---------------------
-GET       | `/profile`                        | show         | profile.show
-GET       | `/profile/edit`                   | edit         | profile.edit
-PUT/PATCH | `/profile`                        | update       | profile.update
+|Verbo    |URI            |Acción    |Nombre de la ruta|
+|---------|---------------|----------|-----------------|
+|GET      |`/profile`     |mostrar   |perfil.mostrar   |
+|GET      |`/profile/edit`|editar    |perfil.editar    |
+|PUT/PATCH|`/profile`     |actualizar|profile.update   |
 
-Singleton resources may also be nested within a standard resource:
+Los recursos Singleton también pueden anidarse dentro de un recurso estándar:
 
 ```php
 Route::singleton('photos.thumbnail', ThumbnailController::class);
 ```
 
-In this example, the `photos` resource would receive all of the [standard resource routes](#actions-handled-by-resource-controller); however, the `thumbnail` resource would be a singleton resource with the following routes:
+En este ejemplo, el recurso `fotos` recibiría todas las [rutas de recursos estándar](#actions-handled-by-resource-controller); sin embargo, el recurso `miniatura` sería un recurso singleton con las siguientes rutas:
 
-| Verb      | URI                              | Action  | Route Name               |
-|-----------|----------------------------------|---------|--------------------------|
-| GET       | `/photos/{photo}/thumbnail`      | show    | photos.thumbnail.show    |
-| GET       | `/photos/{photo}/thumbnail/edit` | edit    | photos.thumbnail.edit    |
-| PUT/PATCH | `/photos/{photo}/thumbnail`      | update  | photos.thumbnail.update  |
+|Verbo    |URI                             |Acción    |Nombre de la ruta      |
+|---------|--------------------------------|----------|-----------------------|
+|GET      |`/photos/{photo}/thumbnail`     |mostrar   |photos.thumbnail.show  |
+|GET      |`/photos/{photo}/thumbnail/edit`|editar    |fotos.miniatura.editar |
+|PUT/PATCH|`/photos/{photo}/thumbnail`     |actualizar|photos.thumbnail.update|
 
-<a name="creatable-singleton-resources"></a>
-#### Creatable Singleton Resources
+[]()
 
-Occasionally, you may want to define creation and storage routes for a singleton resource. To accomplish this, you may invoke the `creatable` method when registering the singleton resource route:
+#### Recursos Singleton creables
+
+En ocasiones, es posible que desee definir rutas de creación y almacenamiento para un recurso singleton. Para ello, puede invocar el método `creatable` al registrar la ruta del recurso singleton:
 
 ```php
 Route::singleton('photos.thumbnail', ThumbnailController::class)->creatable();
 ```
 
-In this example, the following routes will be registered. As you can see, a `DELETE` route will also be registered for creatable singleton resources:
+En este ejemplo, se registrarán las siguientes rutas. Como puede ver, también se registrará una ruta `DELETE` para los recursos singleton creables:
 
-| Verb      | URI                                | Action  | Route Name               |
-|-----------|------------------------------------|---------|--------------------------|
-| GET       | `/photos/{photo}/thumbnail/create` | create  | photos.thumbnail.create  |
-| POST      | `/photos/{photo}/thumbnail`        | store   | photos.thumbnail.store   |
-| GET       | `/photos/{photo}/thumbnail`        | show    | photos.thumbnail.show    |
-| GET       | `/photos/{photo}/thumbnail/edit`   | edit    | photos.thumbnail.edit    |
-| PUT/PATCH | `/photos/{photo}/thumbnail`        | update  | photos.thumbnail.update  |
-| DELETE    | `/photos/{photo}/thumbnail`        | destroy | photos.thumbnail.destroy |
+|Verb     |URI                               |Acción    |Nombre de la ruta       |
+|---------|----------------------------------|----------|------------------------|
+|GET      |`/photos/{photo}/thumbnail/create`|crear     |photos.thumbnail.create |
+|POST     |`/photos/{photo}/thumbnail`       |almacenar |photos.thumbnail.store  |
+|GET      |`/photos/{photo}/thumbnail`       |mostrar   |photos.thumbnail.show   |
+|GET      |`/photos/{photo}/thumbnail/edit`  |editar    |photos.thumbnail.edit   |
+|PUT/PATCH|`/photos/{photo}/thumbnail`       |actualizar|photos.thumbnail.update |
+|BORRAR   |`/photos/{photo}/thumbnail`       |destruir  |photos.thumbnail.destroy|
 
-<a name="api-singleton-resources"></a>
-#### API Singleton Resources
+[]()
 
-The `apiSingleton` method may be used to register a singleton resource that will be manipulated via an API, thus rendering the `create` and `edit` routes unnecessary:
+#### Recursos API Singleton
+
+El método `apiSingleton` puede utilizarse para registrar un recurso singleton que se manipulará a través de una API, haciendo innecesarias las rutas `create` y `edit`:
 
 ```php
 Route::apiSingleton('profile', ProfileController::class);
 ```
 
-Of course, API singleton resources may also be `creatable`, which will register `store` and `destroy` routes for the resource:
+Por supuesto, los recursos API singleton también pueden ser `creables`, lo que registrará las rutas `store` y `destroy` para el recurso:
 
 ```php
 Route::apiSingleton('photos.thumbnail', ProfileController::class)->creatable();
 ```
 
-<a name="dependency-injection-and-controllers"></a>
-## Dependency Injection & Controllers
+[]()
 
-<a name="constructor-injection"></a>
-#### Constructor Injection
+## Inyección de dependencia y controladores
 
-The Laravel [service container](/docs/{{version}}/container) is used to resolve all Laravel controllers. As a result, you are able to type-hint any dependencies your controller may need in its constructor. The declared dependencies will automatically be resolved and injected into the controller instance:
+[]()
+
+#### Inyección de constructor
+
+El [contenedor de servicios](/docs/%7B%7Bversion%7D%7D/container) de Laravel se utiliza para resolver todos los controladores de Laravel. Como resultado, usted es capaz de tipo-indicar cualquier dependencia de su controlador puede necesitar en su constructor. Las dependencias declaradas se resolverán automáticamente y se inyectarán en la instancia del controlador:
 
     <?php
 
@@ -478,10 +504,11 @@ The Laravel [service container](/docs/{{version}}/container) is used to resolve 
         }
     }
 
-<a name="method-injection"></a>
-#### Method Injection
+[]()
 
-In addition to constructor injection, you may also type-hint dependencies on your controller's methods. A common use-case for method injection is injecting the `Illuminate\Http\Request` instance into your controller methods:
+#### Inyección de métodos
+
+Además de la inyección en el constructor, también puedes indicar dependencias en los métodos de tu controlador. Un caso de uso común para la inyección de métodos es inyectar la instancia `Illuminate\Http\Request` en los métodos de su controlador:
 
     <?php
 
@@ -505,13 +532,13 @@ In addition to constructor injection, you may also type-hint dependencies on you
         }
     }
 
-If your controller method is also expecting input from a route parameter, list your route arguments after your other dependencies. For example, if your route is defined like so:
+Si su método de controlador también espera la entrada de un parámetro de ruta, liste los argumentos de su ruta después de sus otras dependencias. Por ejemplo, si tu ruta está definida así:
 
     use App\Http\Controllers\UserController;
 
     Route::put('/user/{id}', [UserController::class, 'update']);
 
-You may still type-hint the `Illuminate\Http\Request` and access your `id` parameter by defining your controller method as follows:
+Usted todavía puede tipo-hint el `Illuminate\Http\Request` y acceder a su parámetro `id` mediante la definición de su método de controlador de la siguiente manera:
 
     <?php
 

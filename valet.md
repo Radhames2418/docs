@@ -1,43 +1,44 @@
 # Laravel Valet
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-    - [Upgrading Valet](#upgrading-valet)
-- [Serving Sites](#serving-sites)
-    - [The "Park" Command](#the-park-command)
-    - [The "Link" Command](#the-link-command)
-    - [Securing Sites With TLS](#securing-sites)
-    - [Serving a Default Site](#serving-a-default-site)
-    - [Per-Site PHP Versions](#per-site-php-versions)
-- [Sharing Sites](#sharing-sites)
-    - [Sharing Sites Via Ngrok](#sharing-sites-via-ngrok)
-    - [Sharing Sites Via Expose](#sharing-sites-via-expose)
-    - [Sharing Sites On Your Local Network](#sharing-sites-on-your-local-network)
-- [Site Specific Environment Variables](#site-specific-environment-variables)
-- [Proxying Services](#proxying-services)
-- [Custom Valet Drivers](#custom-valet-drivers)
-    - [Local Drivers](#local-drivers)
-- [Other Valet Commands](#other-valet-commands)
-- [Valet Directories & Files](#valet-directories-and-files)
-    - [Disk Access](#disk-access)
+- [Introducción](#introduction)
+- [Instalación](#installation)
+  - [Mejora de Valet](#upgrading-valet)
+- [Sitios de servicio](#serving-sites)
+  - [El comando "Aparcar](#the-park-command)
+  - [El comando "Link](#the-link-command)
+  - [Seguridad de sitios con TLS](#securing-sites)
+  - [Servir un sitio por defecto](#serving-a-default-site)
+  - [Versiones PHP por sitio](#per-site-php-versions)
+- [Compartir sitios](#sharing-sites)
+  - [Compartiendo Sitios con Ngrok](#sharing-sites-via-ngrok)
+  - [Compartir sitios a través de Expose](#sharing-sites-via-expose)
+  - [Compartiendo Sitios en su Red Local](#sharing-sites-on-your-local-network)
+- [Variables de entorno específicas del sitio](#site-specific-environment-variables)
+- [Servicios de proxy](#proxying-services)
+- [Controladores Valet personalizados](#custom-valet-drivers)
+  - [Controladores locales](#local-drivers)
+- [Otros comandos de Valet](#other-valet-commands)
+- [Directorios y archivos de Valet](#valet-directories-and-files)
+  - [Acceso a disco](#disk-access)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-[Laravel Valet](https://github.com/laravel/valet) is a development environment for macOS minimalists. Laravel Valet configures your Mac to always run [Nginx](https://www.nginx.com/) in the background when your machine starts. Then, using [DnsMasq](https://en.wikipedia.org/wiki/Dnsmasq), Valet proxies all requests on the `*.test` domain to point to sites installed on your local machine.
+## Introducción
 
-In other words, Valet is a blazing fast Laravel development environment that uses roughly 7 MB of RAM. Valet isn't a complete replacement for [Sail](/docs/{{version}}/sail) or [Homestead](/docs/{{version}}/homestead), but provides a great alternative if you want flexible basics, prefer extreme speed, or are working on a machine with a limited amount of RAM.
+Laravel[Valet](https://github.com/laravel/valet) es un entorno de desarrollo para los minimalistas de macOS. Laravel Valet configura tu Mac para ejecutar siempre [Nginx](https://www.nginx.com/) en segundo plano cuando se inicia la máquina. A continuación, utilizando [DnsMasq](https://en.wikipedia.org/wiki/Dnsmasq), Valet proxy todas las peticiones en el dominio `*.test` para apuntar a los sitios instalados en su máquina local.
 
-Out of the box, Valet support includes, but is not limited to:
+En otras palabras, Valet es un entorno de desarrollo de Laravel rapidísimo que utiliza aproximadamente 7 MB de RAM. Valet no es un reemplazo completo para [Sail](/docs/%7B%7Bversion%7D%7D/sail) o [Homestead](/docs/%7B%7Bversion%7D%7D/homestead), pero proporciona una gran alternativa si quieres bases flexibles, prefieres velocidad extrema, o estás trabajando en una máquina con una cantidad limitada de RAM.
+
+Valet incluye, entre otras, las siguientes funciones:
 
 <style>
-    #valet-support > ul {
+    #valet-soporte &gt; ul {
         column-count: 3; -moz-column-count: 3; -webkit-column-count: 3;
-        line-height: 1.9;
+        altura de línea: 1.9;
     }
 </style>
 
-<div id="valet-support" markdown="1">
+<div id="valet-support" markdown="1"/>
 
 - [Laravel](https://laravel.com)
 - [Bedrock](https://roots.io/bedrock/)
@@ -56,53 +57,55 @@ Out of the box, Valet support includes, but is not limited to:
 - [Sculpin](https://sculpin.io/)
 - [Slim](https://www.slimframework.com)
 - [Statamic](https://statamic.com)
-- Static HTML
+- HTML estático
 - [Symfony](https://symfony.com)
 - [WordPress](https://wordpress.org)
 - [Zend](https://framework.zend.com)
 
-</div>
+[object Object]
 
-However, you may extend Valet with your own [custom drivers](#custom-valet-drivers).
+No obstante, puedes ampliar Valet con tus [propios controladores personalizados](#custom-valet-drivers).
 
-<a name="installation"></a>
-## Installation
+[]()
 
-> **Warning**  
-> Valet requires macOS and [Homebrew](https://brew.sh/). Before installation, you should make sure that no other programs such as Apache or Nginx are binding to your local machine's port 80.
+## Instalación
 
-To get started, you first need to ensure that Homebrew is up to date using the `update` command:
+> **Advertencia**  
+> Valet requiere macOS y [Homebrew](https://brew.sh/). Antes de la instalación, debes asegurarte de que ningún otro programa como Apache o Nginx esté enlazado al puerto 80 de tu máquina local.
+
+Para empezar, primero necesitas asegurarte de que Homebrew está actualizado usando el comando `update`:
 
 ```shell
 brew update
 ```
 
-Next, you should use Homebrew to install PHP:
+A continuación, debe utilizar Homebrew para instalar PHP:
 
 ```shell
 brew install php
 ```
 
-After installing PHP, you are ready to install the [Composer package manager](https://getcomposer.org). In addition, you should make sure the `~/.composer/vendor/bin` directory is in your system's "PATH". After Composer has been installed, you may install Laravel Valet as a global Composer package:
+Después de instalar PHP, estás listo para instalar el [gestor de paquetes Composer](https://getcomposer.org). Además, debe asegurarse de que el directorio `~/.composer/vendor/bin` está en el "PATH" de su sistema. Una vez instalado Composer, puedes instalar Laravel Valet como un paquete global de Composer:
 
 ```shell
 composer global require laravel/valet
 ```
 
-Finally, you may execute Valet's `install` command. This will configure and install Valet and DnsMasq. In addition, the daemons Valet depends on will be configured to launch when your system starts:
+Por último, puede ejecutar el comando `install` de Valet. Esto configurará e instalará Valet y DnsMasq. Además, los demonios de los que depende Valet se configurarán para ejecutarse cuando se inicie el sistema:
 
 ```shell
 valet install
 ```
 
-Once Valet is installed, try pinging any `*.test` domain on your terminal using a command such as `ping foobar.test`. If Valet is installed correctly you should see this domain responding on `127.0.0.1`.
+Una vez instalado Valet, intenta hacer ping a cualquier dominio `*.test` en tu terminal usando un comando como `ping foobar.test`. Si Valet está instalado correctamente, debería ver que este dominio responde en `127.0.0.1`.
 
-Valet will automatically start its required services each time your machine boots.
+Valet iniciará automáticamente los servicios necesarios cada vez que arranque su máquina.
 
-<a name="php-versions"></a>
-#### PHP Versions
+[]()
 
-Valet allows you to switch PHP versions using the `valet use php@version` command. Valet will install the specified PHP version via Homebrew if it is not already installed:
+#### Versiones PHP
+
+Valet te permite cambiar la versión de PHP usando el comando `valet use php@version`. Valet instalará la versión de PHP especificada a través de Homebrew si no está ya instalada:
 
 ```shell
 valet use php@7.2
@@ -110,41 +113,46 @@ valet use php@7.2
 valet use php
 ```
 
-You may also create a `.valetphprc` file in the root of your project. The `.valetphprc` file should contain the PHP version the site should use:
+También puede crear un archivo `.val` etphprc en la raíz de su proyecto. El archivo . `valetphprc` debe contener la versión de PHP que el sitio debe utilizar:
 
 ```shell
 php@7.2
 ```
 
-Once this file has been created, you may simply execute the `valet use` command and the command will determine the site's preferred PHP version by reading the file.
+Una vez creado este archivo, sólo tiene que ejecutar el comando `valet use` y el comando determinará la versión de PHP preferida del sitio leyendo el archivo.
 
-> **Warning**  
-> Valet only serves one PHP version at a time, even if you have multiple PHP versions installed.
+> **Advertencia**  
+> Valet sólo sirve una versión de PHP a la vez, incluso si tiene varias versiones de PHP instaladas.
 
-<a name="database"></a>
-#### Database
+[]()
 
-If your application needs a database, check out [DBngin](https://dbngin.com). DBngin provides a free, all-in-one database management tool that includes MySQL, PostgreSQL, and Redis. After DBngin has been installed, you can connect to your database at `127.0.0.1` using the `root` username and an empty string for the password.
+#### Base de datos
 
-<a name="resetting-your-installation"></a>
-#### Resetting Your Installation
+Si tu aplicación necesita una base de datos, echa un vistazo a [DBngin](https://dbngin.com). DBngin proporciona una herramienta gratuita de gestión de bases de datos todo en uno que incluye MySQL, PostgreSQL y Redis. Una vez instalado DBngin, puedes conectarte a tu base de datos en `127.0.0.1` utilizando el nombre de usuario `root` y una cadena vacía para la contraseña.
 
-If you are having trouble getting your Valet installation to run properly, executing the `composer global update` command followed by `valet install` will reset your installation and can solve a variety of problems. In rare cases, it may be necessary to "hard reset" Valet by executing `valet uninstall --force` followed by `valet install`.
+[]()
 
-<a name="upgrading-valet"></a>
-### Upgrading Valet
+#### Restablecimiento de la instalación
 
-You may update your Valet installation by executing the `composer global update` command in your terminal. After upgrading, it is good practice to run the `valet install` command so Valet can make additional upgrades to your configuration files if necessary.
+Si tienes problemas para que la instalación de Valet funcione correctamente, ejecuta el comando `composer global update` seguido de `valet install` para restablecer la instalación y solucionar diversos problemas. En casos excepcionales, puede ser necesario "reiniciar" Valet ejecutando `valet uninstall --force` seguido de `valet install`.
 
-<a name="serving-sites"></a>
-## Serving Sites
+[]()
 
-Once Valet is installed, you're ready to start serving your Laravel applications. Valet provides two commands to help you serve your applications: `park` and `link`.
+### Actualización de Valet
 
-<a name="the-park-command"></a>
-### The `park` Command
+Puede actualizar su instalación de Valet ejecutando el comando `composer global update` en su terminal. Después de actualizar, es una buena práctica ejecutar el comando `valet install` para que Valet pueda hacer actualizaciones adicionales a tus archivos de configuración si es necesario.
 
-The `park` command registers a directory on your machine that contains your applications. Once the directory has been "parked" with Valet, all of the directories within that directory will be accessible in your web browser at `http://<directory-name>.test`:
+[]()
+
+## Servir sitios
+
+Una vez que Valet está instalado, estás listo para empezar a servir tus aplicaciones Laravel. Valet proporciona dos comandos para ayudarte a servir tus aplicaciones: `park` y `link`.
+
+[]()
+
+### El comando `park`
+
+El comando `park` registra un directorio en tu máquina que contiene tus aplicaciones. Una vez que el directorio ha sido "aparcado" con Valet, todos los directorios dentro de ese directorio serán accesibles en su navegador web en `http://<directory-name>.test`:
 
 ```shell
 cd ~/Sites
@@ -152,12 +160,13 @@ cd ~/Sites
 valet park
 ```
 
-That's all there is to it. Now, any application you create within your "parked" directory will automatically be served using the `http://<directory-name>.test` convention. So, if your parked directory contains a directory named "laravel", the application within that directory will be accessible at `http://laravel.test`. In addition, Valet automatically allows you to access the site using wildcard subdomains (`http://foo.laravel.test`).
+Eso es todo. Ahora, cualquier aplicación que crees dentro de tu directorio "aparcado" se servirá automáticamente utilizando la convención `http://<nombre-directorio>.` `test` `test`. Así, si tu directorio aparcado contiene un directorio llamado "laravel", la aplicación dentro de ese directorio será accesible en `http://laravel`. `test` `test`. Además, Valet permite acceder automáticamente al sitio mediante subdominios comodín`(http://foo.laravel.``test``test`).
 
-<a name="the-link-command"></a>
-### The `link` Command
+[]()
 
-The `link` command can also be used to serve your Laravel applications. This command is useful if you want to serve a single site in a directory and not the entire directory:
+### El comando `link`
+
+El comando `link` también se puede utilizar para servir tus aplicaciones Laravel. Este comando es útil si quieres servir un único sitio en un directorio y no todo el directorio:
 
 ```shell
 cd ~/Sites/laravel
@@ -165,9 +174,9 @@ cd ~/Sites/laravel
 valet link
 ```
 
-Once an application has been linked to Valet using the `link` command, you may access the application using its directory name. So, the site that was linked in the example above may be accessed at `http://laravel.test`. In addition, Valet automatically allows you to access the site using wildcard sub-domains (`http://foo.laravel.test`).
+Una vez que una aplicación ha sido enlazada a Valet usando el comando `link`, puedes acceder a la aplicación usando su nombre de directorio. Así, se puede acceder al sitio vinculado en el ejemplo anterior en `http://laravel.test`. Además, Valet permite acceder automáticamente al sitio utilizando subdominios comodín`(http://foo.laravel.``test``test`).
 
-If you would like to serve the application at a different hostname, you may pass the hostname to the `link` command. For example, you may run the following command to make an application available at `http://application.test`:
+Si desea servir la aplicación en un nombre de host diferente, puede pasar el nombre de host al comando de `enlace`. Por ejemplo, puede ejecutar el siguiente comando para que una aplicación esté disponible en `http://application.` `test` `test`:
 
 ```shell
 cd ~/Sites/laravel
@@ -175,19 +184,19 @@ cd ~/Sites/laravel
 valet link application
 ```
 
-Of course, you may also serve applications on subdomains using the `link` command:
+Por supuesto, también puede servir aplicaciones en subdominios utilizando el comando `link`:
 
 ```shell
 valet link api.application
 ```
 
-You may execute the `links` command to display a list of all of your linked directories:
+Puede ejecutar el comando `links` para mostrar una lista de todos sus directorios enlazados:
 
 ```shell
 valet links
 ```
 
-The `unlink` command may be used to destroy the symbolic link for a site:
+El comando `unlink` puede utilizarse para destruir el enlace simbólico de un sitio:
 
 ```shell
 cd ~/Sites/laravel
@@ -195,32 +204,35 @@ cd ~/Sites/laravel
 valet unlink
 ```
 
-<a name="securing-sites"></a>
-### Securing Sites With TLS
+[]()
 
-By default, Valet serves sites over HTTP. However, if you would like to serve a site over encrypted TLS using HTTP/2, you may use the `secure` command. For example, if your site is being served by Valet on the `laravel.test` domain, you should run the following command to secure it:
+### Seguridad de sitios con TLS
+
+Por defecto, Valet sirve sitios a través de HTTP. Sin embargo, si desea servir un sitio a través de TLS cifrado utilizando HTTP/2, puede utilizar el comando `secure`. Por ejemplo, si Valet sirve tu sitio en el dominio `laravel.test`, ejecuta el siguiente comando para protegerlo:
 
 ```shell
 valet secure laravel
 ```
 
-To "unsecure" a site and revert back to serving its traffic over plain HTTP, use the `unsecure` command. Like the `secure` command, this command accepts the hostname that you wish to unsecure:
+Para "desproteger" un sitio y volver a servir su tráfico a través de HTTP plano, utilice el comando `unsecure`. Al igual que el comando `secure`, este comando acepta el nombre de host que desea desproteger:
 
 ```shell
 valet unsecure laravel
 ```
 
-<a name="serving-a-default-site"></a>
-### Serving A Default Site
+[]()
 
-Sometimes, you may wish to configure Valet to serve a "default" site instead of a `404` when visiting an unknown `test` domain. To accomplish this, you may add a `default` option to your `~/.config/valet/config.json` configuration file containing the path to the site that should serve as your default site:
+### Servir un sitio por defecto
+
+A veces, puede que desee configurar Valet para que sirva un sitio "predeterminado" en lugar de un `404` cuando visite un dominio `test` desconocido. Para ello, puede añadir una opción `predeterminada` a su archivo de configuración `~/.config/valet/config.json` que contenga la ruta al sitio que debe servir como sitio predeterminado:
 
     "default": "/Users/Sally/Sites/example-site",
 
-<a name="per-site-php-versions"></a>
-### Per-Site PHP Versions
+[]()
 
-By default, Valet uses your global PHP installation to serve your sites. However, if you need to support multiple PHP versions across various sites, you may use the `isolate` command to specify which PHP version a particular site should use. The `isolate` command configures Valet to use the specified PHP version for the site located in your current working directory:
+### Versiones PHP por sitio
+
+Por defecto, Valet utiliza tu instalación global de PHP para servir tus sitios. Sin embargo, si necesita admitir varias versiones de PHP en varios sitios, puede utilizar el comando `isolate` para especificar qué versión de PHP debe utilizar un sitio concreto. El comando `isolate` configura Valet para que utilice la versión de PHP especificada para el sitio ubicado en el directorio de trabajo actual:
 
 ```shell
 cd ~/Sites/example-site
@@ -228,13 +240,13 @@ cd ~/Sites/example-site
 valet isolate php@8.0
 ```
 
-If your site name does not match the name of the directory that contains it, you may specify the site name using the `--site` option:
+Si el nombre de su sitio no coincide con el nombre del directorio que lo contiene, puede especificar el nombre del sitio utilizando la opción `--site`:
 
 ```shell
 valet isolate php@8.0 --site="site-name"
 ```
 
-For convenience, you may use the `valet php`, `composer`, and `which-php` commands to proxy calls to the appropriate PHP CLI or tool based on the site's configured PHP version:
+Por conveniencia, puede usar los comandos `valet php`, `composer`, y `which-php` para proxyar llamadas a la CLI o herramienta PHP apropiada basada en la versión PHP configurada del sitio:
 
 ```shell
 valet php
@@ -242,27 +254,29 @@ valet composer
 valet which-php
 ```
 
-You may execute the `isolated` command to display a list of all of your isolated sites and their PHP versions:
+Puede ejecutar el comando `isolated` para mostrar una lista de todos sus sitios aislados y sus versiones de PHP:
 
 ```shell
 valet isolated
 ```
 
-To revert a site back to Valet's globally installed PHP version, you may invoke the `unisolate` command from the site's root directory:
+Para revertir un sitio a la versión de PHP instalada globalmente en Valet, puedes invocar el comando `unisolate` desde el directorio raíz del sitio:
 
 ```shell
 valet unisolate
 ```
 
-<a name="sharing-sites"></a>
-## Sharing Sites
+[]()
 
-Valet even includes a command to share your local sites with the world, providing an easy way to test your site on mobile devices or share it with team members and clients.
+## Compartir sitios
 
-<a name="sharing-sites-via-ngrok"></a>
-### Sharing Sites Via Ngrok
+Valet incluye incluso un comando para compartir tus sitios locales con el mundo, proporcionando una manera fácil de test tu sitio en dispositivos móviles o compartirlo con miembros del equipo y clientes.
 
-To share a site, navigate to the site's directory in your terminal and run Valet's `share` command. A publicly accessible URL will be inserted into your clipboard and is ready to paste directly into your browser or share with your team:
+[]()
+
+### Compartiendo Sitios con Ngrok
+
+Para compartir un sitio, navega hasta el directorio del sitio en tu terminal y ejecuta el comando `share` de Valet. Una URL de acceso público se insertará en tu portapapeles y estará lista para pegarla directamente en tu navegador o compartirla con tu equipo:
 
 ```shell
 cd ~/Sites/laravel
@@ -270,15 +284,16 @@ cd ~/Sites/laravel
 valet share
 ```
 
-To stop sharing your site, you may press `Control + C`. Sharing your site using Ngrok requires you to [create an Ngrok account](https://dashboard.ngrok.com/signup) and [setup an authentication token](https://dashboard.ngrok.com/get-started/your-authtoken).
+Para dejar de compartir tu sitio, puedes pulsar `Control + C`. Compartir tu sitio usando Ngrok requiere que [crees una cuenta Ngrok](https://dashboard.ngrok.com/signup) y [configures un token de autenticación](https://dashboard.ngrok.com/get-started/your-authtoken).
 
-> **Note**  
-> You may pass additional Ngrok parameters to the share command, such as `valet share --region=eu`. For more information, consult the [ngrok documentation](https://ngrok.com/docs).
+> **Nota**  
+> Puede pasar parámetros Ngrok adicionales al comando share, como `valet share --region=eu`. Para obtener más información, consulte la [documentación de ngrok](https://ngrok.com/docs).
 
-<a name="sharing-sites-via-expose"></a>
-### Sharing Sites Via Expose
+[]()
 
-If you have [Expose](https://expose.dev) installed, you can share your site by navigating to the site's directory in your terminal and running the `expose` command. Consult the [Expose documentation](https://expose.dev/docs) for information regarding the additional command-line parameters it supports. After sharing the site, Expose will display the sharable URL that you may use on your other devices or amongst team members:
+### Compartir sitios a través de Expose
+
+Si tiene instalado [Expose](https://expose.dev), puede compartir su sitio navegando hasta el directorio del sitio en su terminal y ejecutando el comando `expose`. Consulte la documentación de [Expose](https://expose.dev/docs) para obtener información sobre los parámetros adicionales de línea de comandos que admite. Después de compartir el sitio, Expose mostrará la URL compartible que podrá utilizar en sus otros dispositivos o entre los miembros de su equipo:
 
 ```shell
 cd ~/Sites/laravel
@@ -286,23 +301,25 @@ cd ~/Sites/laravel
 expose
 ```
 
-To stop sharing your site, you may press `Control + C`.
+Para dejar de compartir su sitio, puede pulsar `Control + C`.
 
-<a name="sharing-sites-on-your-local-network"></a>
-### Sharing Sites On Your Local Network
+[]()
 
-Valet restricts incoming traffic to the internal `127.0.0.1` interface by default so that your development machine isn't exposed to security risks from the Internet.
+### Compartir sitios en su red local
 
-If you wish to allow other devices on your local network to access the Valet sites on your machine via your machine's IP address (eg: `192.168.1.10/application.test`), you will need to manually edit the appropriate Nginx configuration file for that site to remove the restriction on the `listen` directive. You should remove the `127.0.0.1:` prefix on the `listen` directive for ports 80 and 443.
+Valet restringe por defecto el tráfico entrante a la interfaz interna `127.0.0.1` para que tu máquina de desarrollo no esté expuesta a riesgos de seguridad procedentes de Internet.
 
-If you have not run `valet secure` on the project, you can open up network access for all non-HTTPS sites by editing the `/usr/local/etc/nginx/valet/valet.conf` file. However, if you're serving the project site over HTTPS (you have run `valet secure` for the site) then you should edit the `~/.config/valet/Nginx/app-name.test` file.
+Si deseas permitir que otros dispositivos de tu red local accedan a los sitios Valet de tu máquina a través de la dirección IP de tu máquina (p. ej.: `192.168.1.10/aplicación.test`), deberás editar manualmente el archivo de configuración Nginx correspondiente a ese sitio para eliminar la restricción de la directiva `listen`. Deberá eliminar el prefijo `127.0.0.1:` en la directiva `listen` para los puertos 80 y 443.
 
-Once you have updated your Nginx configuration, run the `valet restart` command to apply the configuration changes.
+Si no ha ejecutado `valet secure` en el proyecto, puede abrir el acceso a la red para todos los sitios no HTTPS editando el archivo `/usr/local/etc/nginx/valet/valet.conf`. Sin embargo, si estás sirviendo el sitio del proyecto sobre HTTPS (has ejecutado `valet secure` para el sitio) entonces debes editar el archivo `~/.config/valet/Nginx/app-name.test.`
 
-<a name="site-specific-environment-variables"></a>
-## Site Specific Environment Variables
+Una vez que hayas actualizado la configuración de Nginx, ejecuta el comando `valet restart` para aplicar los cambios de configuración.
 
-Some applications using other frameworks may depend on server environment variables but do not provide a way for those variables to be configured within your project. Valet allows you to configure site specific environment variables by adding a `.valet-env.php` file within the root of your project. This file should return an array of site / environment variable pairs which will be added to the global `$_SERVER` array for each site specified in the array:
+[]()
+
+## Variables de entorno específicas del sitio
+
+Algunas aplicaciones que utilizan otros frameworks pueden depender de variables de entorno del servidor pero no proporcionan una forma de configurar esas variables dentro de tu proyecto. Valet permite configurar variables de entorno específicas del sitio añadiendo un archivo `.valet-env.php` en la raíz del proyecto. Este archivo debe devolver un array de pares sitio / variable de entorno que se añadirán al array global `$_SERVER` para cada sitio especificado en el array:
 
     <?php
 
@@ -318,12 +335,13 @@ Some applications using other frameworks may depend on server environment variab
         ],
     ];
 
-<a name="proxying-services"></a>
-## Proxying Services
+[]()
 
-Sometimes you may wish to proxy a Valet domain to another service on your local machine. For example, you may occasionally need to run Valet while also running a separate site in Docker; however, Valet and Docker can't both bind to port 80 at the same time.
+## Servicios de proxy
 
-To solve this, you may use the `proxy` command to generate a proxy. For example, you may proxy all traffic from `http://elasticsearch.test` to `http://127.0.0.1:9200`:
+A veces puede que desee enviar un dominio Valet a otro servicio en su máquina local. Por ejemplo, puede que ocasionalmente necesites ejecutar Valet mientras también ejecutas un sitio separado en Docker; sin embargo, Valet y Docker no pueden enlazarse al puerto 80 al mismo tiempo.
+
+Para resolver esto, puede utilizar el comando `proxy` para generar un proxy. Por ejemplo, puede enviar todo el tráfico de `http://elasticsearch.test` a `http://127.0.0.1:9200:`
 
 ```shell
 # Proxy over HTTP...
@@ -333,35 +351,37 @@ valet proxy elasticsearch http://127.0.0.1:9200
 valet proxy elasticsearch http://127.0.0.1:9200 --secure
 ```
 
-You may remove a proxy using the `unproxy` command:
+Puede eliminar un proxy utilizando el comando `unproxy`:
 
 ```shell
 valet unproxy elasticsearch
 ```
 
-You may use the `proxies` command to list all site configurations that are proxied:
+Puede usar el comando `proxies` para listar todas las configuraciones de sitios que son proxies:
 
 ```shell
 valet proxies
 ```
 
-<a name="custom-valet-drivers"></a>
-## Custom Valet Drivers
+[]()
 
-You can write your own Valet "driver" to serve PHP applications running on a framework or CMS that is not natively supported by Valet. When you install Valet, a `~/.config/valet/Drivers` directory is created which contains a `SampleValetDriver.php` file. This file contains a sample driver implementation to demonstrate how to write a custom driver. Writing a driver only requires you to implement three methods: `serves`, `isStaticFile`, and `frontControllerPath`.
+## Controladores Valet personalizados
 
-All three methods receive the `$sitePath`, `$siteName`, and `$uri` values as their arguments. The `$sitePath` is the fully qualified path to the site being served on your machine, such as `/Users/Lisa/Sites/my-project`. The `$siteName` is the "host" / "site name" portion of the domain (`my-project`). The `$uri` is the incoming request URI (`/foo/bar`).
+Puedes escribir tu propio "controlador" Valet para servir aplicaciones PHP que se ejecuten en un framework o CMS que no esté soportado de forma nativa por Valet. Al instalar Valet, se crea un directorio `~/.config/valet/Drivers` que contiene un archivo `SampleValetDriver.php`. Este archivo contiene una implementación de controlador de ejemplo para demostrar cómo escribir un controlador personalizado. Escribir un controlador sólo requiere implementar tres métodos: `serves`, `isStaticFile` y `frontControllerPath`.
 
-Once you have completed your custom Valet driver, place it in the `~/.config/valet/Drivers` directory using the `FrameworkValetDriver.php` naming convention. For example, if you are writing a custom valet driver for WordPress, your filename should be `WordPressValetDriver.php`.
+Los tres métodos reciben los valores `$sitePath`, `$siteName` y `$uri` como argumentos. `$sitePath` es la ruta completa al sitio que se está sirviendo en su máquina, como `/Usuarios/Lisa/Sitios/mi-proyecto`. `$siteName` es la parte "host" / "nombre del sitio" del dominio`(mi-proyecto`). `$uri` es el URI de la petición entrante`(/foo/bar`).
 
-Let's take a look at a sample implementation of each method your custom Valet driver should implement.
+Una vez que haya completado su controlador Valet personalizado, colóquelo en el directorio `~/.config/valet/Drivers` utilizando la convención de nomenclatura `FrameworkValetDriver.php`. Por ejemplo, si está escribiendo un controlador Valet personalizado para WordPress, el nombre del archivo debe ser `WordPressValetDriver.php`.
 
-<a name="the-serves-method"></a>
-#### The `serves` Method
+Veamos un ejemplo de implementación de cada uno de los métodos que debe implementar su controlador de valet personalizado.
 
-The `serves` method should return `true` if your driver should handle the incoming request. Otherwise, the method should return `false`. So, within this method, you should attempt to determine if the given `$sitePath` contains a project of the type you are trying to serve.
+[]()
 
-For example, let's imagine we are writing a `WordPressValetDriver`. Our `serves` method might look something like this:
+#### El método `serves`
+
+El método `serves` debe devolver `true` si su controlador debe gestionar la petición entrante. De lo contrario, el método debe devolver `false`. Por lo tanto, dentro de este método, debe intentar determinar si el `$sitePath` dado contiene un proyecto del tipo que está intentando servir.
+
+Por ejemplo, imaginemos que estamos escribiendo un `WordPressValetDriver`. Nuestro método `serves` podría ser algo parecido a esto:
 
     /**
      * Determine if the driver serves the request.
@@ -376,10 +396,11 @@ For example, let's imagine we are writing a `WordPressValetDriver`. Our `serves`
         return is_dir($sitePath.'/wp-admin');
     }
 
-<a name="the-isstaticfile-method"></a>
-#### The `isStaticFile` Method
+[]()
 
-The `isStaticFile` should determine if the incoming request is for a file that is "static", such as an image or a stylesheet. If the file is static, the method should return the fully qualified path to the static file on disk. If the incoming request is not for a static file, the method should return `false`:
+#### El método `isStaticFile`
+
+`isStaticFile` debe determinar si la petición entrante es para un archivo "estático", como una imagen o una hoja de estilo. Si el archivo es estático, el método debe devolver la ruta completa del archivo estático en el disco. Si la petición entrante no es para un archivo estático, el método debe devolver `false`:
 
     /**
      * Determine if the incoming request is for a static file.
@@ -398,13 +419,14 @@ The `isStaticFile` should determine if the incoming request is for a file that i
         return false;
     }
 
-> **Warning**  
-> The `isStaticFile` method will only be called if the `serves` method returns `true` for the incoming request and the request URI is not `/`.
+> **Advertencia**  
+> El método `isStaticFile` sólo será llamado si el método `serves` devuelve `true` para la petición entrante y el URI de la petición no es `/`.
 
-<a name="the-frontcontrollerpath-method"></a>
-#### The `frontControllerPath` Method
+[]()
 
-The `frontControllerPath` method should return the fully qualified path to your application's "front controller", which is typically an "index.php" file or equivalent:
+#### El método `frontControllerPath`
+
+El método `frontControllerPath` debe devolver la ruta completa al "controlador frontal" de su aplicación, que normalmente es un archivo "index.php" o equivalente:
 
     /**
      * Get the fully resolved path to the application's front controller.
@@ -419,10 +441,11 @@ The `frontControllerPath` method should return the fully qualified path to your 
         return $sitePath.'/public/index.php';
     }
 
-<a name="local-drivers"></a>
-### Local Drivers
+[]()
 
-If you would like to define a custom Valet driver for a single application, create a `LocalValetDriver.php` file in the application's root directory. Your custom driver may extend the base `ValetDriver` class or extend an existing application specific driver such as the `LaravelValetDriver`:
+### Controladores locales
+
+Si desea definir un controlador Valet personalizado para una única aplicación, cree un archivo `LocalValetDriver.php` en el directorio raíz de la aplicación. El controlador personalizado puede extender la clase `ValetDriver` base o extender un controlador específico de la aplicación existente, como `LaravelValetDriver`:
 
     use Valet\Drivers\LaravelValetDriver;
 
@@ -455,89 +478,92 @@ If you would like to define a custom Valet driver for a single application, crea
         }
     }
 
-<a name="other-valet-commands"></a>
-## Other Valet Commands
+[]()
 
-Command  | Description
-------------- | -------------
-`valet list` | Display a list of all Valet commands.
-`valet forget` | Run this command from a "parked" directory to remove it from the parked directory list.
-`valet log` | View a list of logs which are written by Valet's services.
-`valet paths` | View all of your "parked" paths.
-`valet restart` | Restart the Valet daemons.
-`valet start` | Start the Valet daemons.
-`valet stop` | Stop the Valet daemons.
-`valet trust` | Add sudoers files for Brew and Valet to allow Valet commands to be run without prompting for your password.
-`valet uninstall` | Uninstall Valet: shows instructions for manual uninstall. Pass the `--force` option to aggressively delete all of Valet's resources.
+## Otros comandos de Valet
 
-<a name="valet-directories-and-files"></a>
-## Valet Directories & Files
+|Comando          |Descripción                                                                                                                                           |
+|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+|`valet list`     |Mostrar una lista de todos los comandos de Valet.                                                                                                     |
+|`valet forget`   |Ejecute este comando desde un directorio "aparcado" para eliminarlo de la lista de directorios aparcados.                                             |
+|`valet log`      |Ver una lista de los registros escritos por los servicios de Valet.                                                                                   |
+|`valet paths`    |Vea todas sus rutas "aparcadas".                                                                                                                      |
+|`valet restart`  |Reiniciar los demonios de Valet.                                                                                                                      |
+|`valet start`    |Iniciar los demonios de Valet.                                                                                                                        |
+|`valet stop`     |Detener los demonios de Valet.                                                                                                                        |
+|`valet trust`    |Agregar archivos sudoers para Brew y Valet para permitir que los comandos de Valet se ejecuten sin solicitar su contraseña.                           |
+|`valet uninstall`|Desinstalar Valet: muestra instrucciones para la desinstalación manual. Pasa la `--force` para eliminar de forma agresiva todos los recursos de Valet.|
 
-You may find the following directory and file information helpful while troubleshooting issues with your Valet environment:
+[]()
+
+## Directorios y archivos de Valet
+
+La siguiente información sobre directorios y archivos puede resultarle útil para solucionar problemas con su entorno Valet:
 
 #### `~/.config/valet`
 
-Contains all of Valet's configuration. You may wish to maintain a backup of this directory.
+Contiene toda la configuración de Valet. Puede que desee mantener una copia de seguridad de este directorio.
 
 #### `~/.config/valet/dnsmasq.d/`
 
-This directory contains DNSMasq's configuration.
+Este directorio contiene la configuración de DNSMasq.
 
 #### `~/.config/valet/Drivers/`
 
-This directory contains Valet's drivers. Drivers determine how a particular framework / CMS is served.
+Este directorio contiene los controladores de Valet. Los controladores determinan cómo se sirve un framework / CMS concreto.
 
 #### `~/.config/valet/Extensions/`
 
-This directory contains custom Valet extensions / commands.
+Este directorio contiene extensiones / comandos personalizados de Valet.
 
 #### `~/.config/valet/Nginx/`
 
-This directory contains all of Valet's Nginx site configurations. These files are rebuilt when running the `install` and `secure` commands.
+Este directorio contiene todas las configuraciones del sitio Nginx de Valet. Estos archivos se reconstruyen al ejecutar los comandos `install` y `secure`.
 
-#### `~/.config/valet/Sites/`
+#### `~/.config/valet/Sitios/`
 
-This directory contains all of the symbolic links for your [linked projects](#the-link-command).
+Este directorio contiene todos los enlaces simbólicos de tus [proyectos vinculados](#the-link-command).
 
 #### `~/.config/valet/config.json`
 
-This file is Valet's master configuration file.
+Este archivo es el archivo de configuración principal de Valet.
 
 #### `~/.config/valet/valet.sock`
 
-This file is the PHP-FPM socket used by Valet's Nginx installation. This will only exist if PHP is running properly.
+Este archivo es el socket PHP-FPM utilizado por la instalación Nginx de Valet. Sólo existirá si PHP se ejecuta correctamente.
 
 #### `~/.config/valet/Log/fpm-php.www.log`
 
-This file is the user log for PHP errors.
+Este archivo es el registro de errores de PHP.
 
 #### `~/.config/valet/Log/nginx-error.log`
 
-This file is the user log for Nginx errors.
+Este archivo es el registro de usuario para errores de Nginx.
 
 #### `/usr/local/var/log/php-fpm.log`
 
-This file is the system log for PHP-FPM errors.
+Este archivo es el registro del sistema para errores PHP-FPM.
 
 #### `/usr/local/var/log/nginx`
 
-This directory contains the Nginx access and error logs.
+Este directorio contiene los registros de acceso y errores de Nginx.
 
 #### `/usr/local/etc/php/X.X/conf.d`
 
-This directory contains the `*.ini` files for various PHP configuration settings.
+Este directorio contiene los archivos `*.ini` para varios ajustes de configuración de PHP.
 
 #### `/usr/local/etc/php/X.X/php-fpm.d/valet-fpm.conf`
 
-This file is the PHP-FPM pool configuration file.
+Este archivo es el archivo de configuración del pool PHP-FPM.
 
 #### `~/.composer/vendor/laravel/valet/cli/stubs/secure.valet.conf`
 
-This file is the default Nginx configuration used for building SSL certificates for your sites.
+Este archivo es la configuración predeterminada de Nginx utilizada para crear certificados SSL para sus sitios.
 
-<a name="disk-access"></a>
-### Disk Access
+[]()
 
-Since macOS 10.14, [access to some files and directories is restricted by default](https://manuals.info.apple.com/MANUALS/1000/MA1902/en_US/apple-platform-security-guide.pdf). These restrictions include the Desktop, Documents, and Downloads directories. In addition, network volume and removable volume access is restricted. Therefore, Valet recommends your site folders are located outside of these protected locations.
+### Acceso a disco
 
-However, if you wish to serve sites from within one of those locations, you will need to give Nginx "Full Disk Access". Otherwise, you may encounter server errors or other unpredictable behavior from Nginx, especially when serving static assets. Typically, macOS will automatically prompt you to grant Nginx full access to these locations. Or, you may do so manually via `System Preferences` > `Security & Privacy` > `Privacy` and selecting `Full Disk Access`. Next, enable any `nginx` entries in the main window pane.
+Desde macOS 10.14, el [acceso a algunos archivos y directorios está restringido por defecto](https://manuals.info.apple.com/MANUALS/1000/MA1902/en_US/apple-platform-security-guide.pdf). Estas restricciones incluyen los directorios Escritorio, Documentos y Descargas. Además, el acceso a volúmenes de red y a volúmenes extraíbles está restringido. Por lo tanto, Valet recomienda que las carpetas de su sitio se ubiquen fuera de estas ubicaciones protegidas.
+
+Sin embargo, si desea servir sitios desde una de esas ubicaciones, deberá dar a Nginx "Acceso total al disco". De lo contrario, es posible que se produzcan errores de servidor u otros comportamientos impredecibles de Nginx, especialmente al servir activos estáticos. Normalmente, macOS te pedirá automáticamente que concedas a Nginx acceso completo a estas ubicaciones. También puedes hacerlo manualmente a través de `Preferencias del Sistema` > `Seguridad y privacidad` > `Privacidad` y seleccionando `Acceso total al disco`. A continuación, habilita cualquier entrada de `nginx` en el panel de la ventana principal.

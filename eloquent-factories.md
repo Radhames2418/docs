@@ -1,28 +1,29 @@
-# Eloquent: Factories
+# Eloquent: Fábricas
 
-- [Introduction](#introduction)
-- [Defining Model Factories](#defining-model-factories)
-    - [Generating Factories](#generating-factories)
-    - [Factory States](#factory-states)
-    - [Factory Callbacks](#factory-callbacks)
-- [Creating Models Using Factories](#creating-models-using-factories)
-    - [Instantiating Models](#instantiating-models)
-    - [Persisting Models](#persisting-models)
-    - [Sequences](#sequences)
-- [Factory Relationships](#factory-relationships)
-    - [Has Many Relationships](#has-many-relationships)
-    - [Belongs To Relationships](#belongs-to-relationships)
-    - [Many To Many Relationships](#many-to-many-relationships)
-    - [Polymorphic Relationships](#polymorphic-relationships)
-    - [Defining Relationships Within Factories](#defining-relationships-within-factories)
-    - [Recycling An Existing Model For Relationships](#recycling-an-existing-model-for-relationships)
+- [Introducción](#introduction)
+- [Definición de fábricas modelo](#defining-model-factories)
+  - [Generación de fábricas](#generating-factories)
+  - [Estados de fábrica](#factory-states)
+  - [Devoluciones de llamada de fábrica](#factory-callbacks)
+- [Creación de modelos mediante fábricas](#creating-models-using-factories)
+  - [Instanciación de modelos](#instantiating-models)
+  - [Persistencia de modelos](#persisting-models)
+  - [Secuencias](#sequences)
+- [Relaciones de Fábrica](#factory-relationships)
+  - [Tiene Muchas Relaciones](#has-many-relationships)
+  - [Pertenece a relaciones](#belongs-to-relationships)
+  - [Relaciones de muchos a muchos](#many-to-many-relationships)
+  - [Relaciones polimórficas](#polymorphic-relationships)
+  - [Definición de relaciones dentro de las fábricas](#defining-relationships-within-factories)
+  - [Reciclaje de un Modelo Existente de Relaciones](#recycling-an-existing-model-for-relationships)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-When testing your application or seeding your database, you may need to insert a few records into your database. Instead of manually specifying the value of each column, Laravel allows you to define a set of default attributes for each of your [Eloquent models](/docs/{{version}}/eloquent) using model factories.
+## Introducción
 
-To see an example of how to write a factory, take a look at the `database/factories/UserFactory.php` file in your application. This factory is included with all new Laravel applications and contains the following factory definition:
+Cuando esté probando su aplicación o sembrando su base de datos, puede que necesite insertar algunos registros en su base de datos. En lugar de especificar manualmente el valor de cada columna, Laravel te permite definir un conjunto de atributos por defecto para cada uno de tus [modelos Eloquent](/docs/%7B%7Bversion%7D%7D/eloquent) utilizando fábricas de modelos.
+
+Para ver un ejemplo de cómo escribir una fábrica, echa un vistazo al fichero `database/factories/UserFactory.` php de tu aplicación. Esta fábrica se incluye con todas las nuevas aplicaciones Laravel y contiene la siguiente definición de fábrica:
 
     namespace Database\Factories;
 
@@ -48,33 +49,36 @@ To see an example of how to write a factory, take a look at the `database/factor
         }
     }
 
-As you can see, in their most basic form, factories are classes that extend Laravel's base factory class and define a `definition` method. The `definition` method returns the default set of attribute values that should be applied when creating a model using the factory.
+Como puedes ver, en su forma más básica, las factorías son clases que extienden la clase base factory de Laravel y definen un método de `definición`. El método de `definición` devuelve el conjunto predeterminado de valores de atributo que deben aplicarse al crear un modelo utilizando la fábrica.
 
-Via the `fake` helper, factories have access to the [Faker](https://github.com/FakerPHP/Faker) PHP library, which allows you to conveniently generate various kinds of random data for testing and seeding.
+A través del ayudante `fake`, las fábricas tienen acceso a la librería [Faker](https://github.com/FakerPHP/Faker) PHP, que te permite generar convenientemente varios tipos de datos aleatorios para pruebas y siembra.
 
-> **Note**  
-> You can set your application's Faker locale by adding a `faker_locale` option to your `config/app.php` configuration file.
+> **Nota**  
+> Puedes establecer la localización Faker de tu aplicación añadiendo una opción `faker_locale` a tu fichero de configuración `config/app.` php.
 
-<a name="defining-model-factories"></a>
-## Defining Model Factories
+[]()
 
-<a name="generating-factories"></a>
-### Generating Factories
+## Definición de fábricas de modelos
 
-To create a factory, execute the `make:factory` [Artisan command](/docs/{{version}}/artisan):
+[]()
+
+### Generación de fábricas
+
+Para crear una fábrica, ejecuta el [comando](/docs/%7B%7Bversion%7D%7D/artisan) `make:factory` [Artisan](/docs/%7B%7Bversion%7D%7D/artisan):
 
 ```shell
 php artisan make:factory PostFactory
 ```
 
-The new factory class will be placed in your `database/factories` directory.
+La nueva clase de fábrica se colocará en su directorio `database/factories`.
 
-<a name="factory-and-model-discovery-conventions"></a>
-#### Model & Factory Discovery Conventions
+[]()
 
-Once you have defined your factories, you may use the static `factory` method provided to your models by the `Illuminate\Database\Eloquent\Factories\HasFactory` trait in order to instantiate a factory instance for that model.
+#### Convenciones de descubrimiento de modelos y fábricas
 
-The `HasFactory` trait's `factory` method will use conventions to determine the proper factory for the model the trait is assigned to. Specifically, the method will look for a factory in the `Database\Factories` namespace that has a class name matching the model name and is suffixed with `Factory`. If these conventions do not apply to your particular application or factory, you may overwrite the `newFactory` method on your model to return an instance of the model's corresponding factory directly:
+Una vez que haya definido sus fábricas, puede utilizar el método de `fábrica` estática proporcionada a sus modelos por el `Illuminate\Database\Eloquent\Factories\HasFactory` rasgo con el fin de instanciar una instancia de fábrica para ese modelo.
+
+El método de `fábrica` del rasgo `HasFactory` utilizará convenciones para determinar la fábrica adecuada para el modelo al que se asigna el rasgo. En concreto, el método buscará una fábrica en el espacio de nombres `Database\Factories` que tenga un nombre de clase que coincida con el nombre del modelo y que tenga el sufijo `Factory`. Si estas convenciones no se aplican a su aplicación o fábrica en particular, puede sobrescribir el método `newFactory` en su modelo para devolver directamente una instancia de la fábrica correspondiente del modelo:
 
     use Database\Factories\Administration\FlightFactory;
 
@@ -88,7 +92,7 @@ The `HasFactory` trait's `factory` method will use conventions to determine the 
         return FlightFactory::new();
     }
 
-Next, define a `model` property on the corresponding factory:
+A continuación, defina una propiedad de `modelo` en la fábrica correspondiente:
 
     use App\Administration\Flight;
     use Illuminate\Database\Eloquent\Factories\Factory;
@@ -103,12 +107,13 @@ Next, define a `model` property on the corresponding factory:
         protected $model = Flight::class;
     }
 
-<a name="factory-states"></a>
-### Factory States
+[]()
 
-State manipulation methods allow you to define discrete modifications that can be applied to your model factories in any combination. For example, your `Database\Factories\UserFactory` factory might contain a `suspended` state method that modifies one of its default attribute values.
+### Estados de Fábrica
 
-State transformation methods typically call the `state` method provided by Laravel's base factory class. The `state` method accepts a closure which will receive the array of raw attributes defined for the factory and should return an array of attributes to modify:
+Los métodos de manipulación de estado le permiten definir modificaciones discretas que se pueden aplicar a sus fábricas de modelos en cualquier combinación. Por ejemplo, su fábrica `Database\Factories\UserFactory` podría contener un método de estado `suspendido` que modifique uno de sus valores de atributo por defecto.
+
+Los métodos de transformación de estado suelen llamar al método `state` proporcionado por la clase factory base de Laravel. El método `state` acepta un closure que recibirá el array de atributos raw definidos para la fábrica y debería devolver un array de atributos a modificar:
 
     /**
      * Indicate that the user is suspended.
@@ -124,18 +129,19 @@ State transformation methods typically call the `state` method provided by Larav
         });
     }
 
-#### "Trashed" State
+#### "Estado "Desechado
 
-If your Eloquent model can be [soft deleted](/docs/{{version}}/eloquent#soft-deleting), you may invoke the built-in `trashed` state method to indicate that the created model should already be "soft deleted". You do not need to manually define the `trashed` state as it is automatically available to all factories:
+Si tu modelo Eloquent puede ser [borrado suav](/docs/%7B%7Bversion%7D%7D/eloquent#soft-deleting)emente, puedes invocar el método de estado `"trashed"` incorporado para indicar que el modelo creado ya debe ser "borrado suavemente". No es necesario definir manualmente el estado "trashed `"`, ya que está disponible automáticamente para todas las fábricas:
 
     use App\Models\User;
 
     $user = User::factory()->trashed()->create();
 
-<a name="factory-callbacks"></a>
-### Factory Callbacks
+[]()
 
-Factory callbacks are registered using the `afterMaking` and `afterCreating` methods and allow you to perform additional tasks after making or creating a model. You should register these callbacks by defining a `configure` method on your factory class. This method will be automatically called by Laravel when the factory is instantiated:
+### Devoluciones de Fábrica
+
+Los callbacks de fábrica se registran usando los métodos `afterMaking` y `afterCreating` y permiten realizar tareas adicionales después de crear un modelo. Debes registrar estas retrollamadas definiendo un método `configure` en tu clase factory. Este método será llamado automáticamente por Laravel cuando la fábrica sea instanciada:
 
     namespace Database\Factories;
 
@@ -162,51 +168,56 @@ Factory callbacks are registered using the `afterMaking` and `afterCreating` met
         // ...
     }
 
-<a name="creating-models-using-factories"></a>
-## Creating Models Using Factories
+[]()
 
-<a name="instantiating-models"></a>
-### Instantiating Models
+## Creación de modelos mediante fábricas
 
-Once you have defined your factories, you may use the static `factory` method provided to your models by the `Illuminate\Database\Eloquent\Factories\HasFactory` trait in order to instantiate a factory instance for that model. Let's take a look at a few examples of creating models. First, we'll use the `make` method to create models without persisting them to the database:
+[]()
+
+### Instanciación de modelos
+
+Una vez que haya definido sus fábricas, puede utilizar el método de `fábrica` estática proporcionada a sus modelos por el `Illuminate\Database\Eloquent\Factories\HasFactory` rasgo con el fin de instanciar una instancia de fábrica para ese modelo. Veamos algunos ejemplos de creación de modelos. En primer lugar, vamos a utilizar el método `make` para crear modelos sin persistir en la base de datos:
 
     use App\Models\User;
 
     $user = User::factory()->make();
 
-You may create a collection of many models using the `count` method:
+Puedes crear una colección de muchos modelos usando el método `count`:
 
     $users = User::factory()->count(3)->make();
 
-<a name="applying-states"></a>
-#### Applying States
+[]()
 
-You may also apply any of your [states](#factory-states) to the models. If you would like to apply multiple state transformations to the models, you may simply call the state transformation methods directly:
+#### Aplicando Estados
+
+También puedes aplicar cualquiera de tus [estados](#factory-states) a los modelos. Si desea aplicar múltiples transformaciones de estado a los modelos, puede simplemente llamar directamente a los métodos de transformación de estado:
 
     $users = User::factory()->count(5)->suspended()->make();
 
-<a name="overriding-attributes"></a>
-#### Overriding Attributes
+[]()
 
-If you would like to override some of the default values of your models, you may pass an array of values to the `make` method. Only the specified attributes will be replaced while the rest of the attributes remain set to their default values as specified by the factory:
+#### Sobreescribiendo Atributos
+
+Si quieres sobreescribir algunos de los valores por defecto de tus modelos, puedes pasar un array de valores al método `make`. Sólo los atributos especificados serán reemplazados mientras que el resto de los atributos permanecerán con sus valores por defecto especificados por la fábrica:
 
     $user = User::factory()->make([
         'name' => 'Abigail Otwell',
     ]);
 
-Alternatively, the `state` method may be called directly on the factory instance to perform an inline state transformation:
+Alternativamente, el método `state` puede ser llamado directamente en la instancia de la fábrica para realizar una transformación de estado en línea:
 
     $user = User::factory()->state([
         'name' => 'Abigail Otwell',
     ])->make();
 
-> **Note**  
-> [Mass assignment protection](/docs/{{version}}/eloquent#mass-assignment) is automatically disabled when creating models using factories.
+> **Nota**  
+> [La protección de asignación masiva](/docs/%7B%7Bversion%7D%7D/eloquent#mass-assignment) se desactiva automáticamente al crear modelos utilizando fábricas.
 
-<a name="persisting-models"></a>
-### Persisting Models
+[]()
 
-The `create` method instantiates model instances and persists them to the database using Eloquent's `save` method:
+### Persistencia de modelos
+
+El método `create` crea instancias del modelo y las guarda en la base de datos utilizando el método `save` de Eloquent:
 
     use App\Models\User;
 
@@ -216,16 +227,17 @@ The `create` method instantiates model instances and persists them to the databa
     // Create three App\Models\User instances...
     $users = User::factory()->count(3)->create();
 
-You may override the factory's default model attributes by passing an array of attributes to the `create` method:
+Puedes sobreescribir los atributos de modelo por defecto de la fábrica pasando un array de atributos al método `create`:
 
     $user = User::factory()->create([
         'name' => 'Abigail',
     ]);
 
-<a name="sequences"></a>
-### Sequences
+[]()
 
-Sometimes you may wish to alternate the value of a given model attribute for each created model. You may accomplish this by defining a state transformation as a sequence. For example, you may wish to alternate the value of an `admin` column between `Y` and `N` for each created user:
+### Secuencias
+
+A veces puede que desee alternar el valor de un atributo de modelo dado para cada modelo creado. Esto se consigue definiendo una transformación de estado como una secuencia. Por ejemplo, puede que desee alternar el valor de una columna `admin` entre `Y` y `N` para cada usuario creado:
 
     use App\Models\User;
     use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -238,9 +250,9 @@ Sometimes you may wish to alternate the value of a given model attribute for eac
                     ))
                     ->create();
 
-In this example, five users will be created with an `admin` value of `Y` and five users will be created with an `admin` value of `N`.
+En este ejemplo, cinco usuarios serán creados con un valor `admin` de `Y` y cinco usuarios serán creados con un valor `admin` de `N`.
 
-If necessary, you may include a closure as a sequence value. The closure will be invoked each time the sequence needs a new value:
+Si es necesario, puede incluir un closure como valor de secuencia. El closure se invocará cada vez que la secuencia necesite un nuevo valor:
 
     $users = User::factory()
                     ->count(10)
@@ -249,20 +261,22 @@ If necessary, you may include a closure as a sequence value. The closure will be
                     ))
                     ->create();
 
-Within a sequence closure, you may access the `$index` or `$count` properties on the sequence instance that is injected into the closure. The `$index` property contains the number of iterations through the sequence that have occurred thus far, while the `$count` property contains the total number of times the sequence will be invoked:
+Dentro de un cierre closure secuencia, puede acceder a las propiedades `$index` o `$count` en la instancia de secuencia que se inyecta en el closure. La propiedad `$index` contiene el número de iteraciones a través de la secuencia que se han producido hasta el momento, mientras que la propiedad `$count` contiene el número total de veces que la secuencia será invocada:
 
     $users = User::factory()
                     ->count(10)
                     ->sequence(fn ($sequence) => ['name' => 'Name '.$sequence->index])
                     ->create();
 
-<a name="factory-relationships"></a>
-## Factory Relationships
+[]()
 
-<a name="has-many-relationships"></a>
-### Has Many Relationships
+## Relaciones de Fábrica
 
-Next, let's explore building Eloquent model relationships using Laravel's fluent factory methods. First, let's assume our application has an `App\Models\User` model and an `App\Models\Post` model. Also, let's assume that the `User` model defines a `hasMany` relationship with `Post`. We can create a user that has three posts using the `has` method provided by the Laravel's factories. The `has` method accepts a factory instance:
+[]()
+
+### Tiene Muchas Relaciones
+
+A continuación, vamos a explorar la construcción de relaciones entre modelos Eloquent utilizando los métodos de fábrica fluidos de Laravel. En primer lugar, vamos a suponer que nuestra aplicación tiene un modelo `App\Models\User` y un modelo `App\Models\Post`. Además, supongamos que el modelo `User` define una relación `hasMany` con `Post`. Podemos crear un usuario que tenga tres posts utilizando el método `has` proporcionado por las factorías de Laravel. El método `has` acepta una instancia de fábrica:
 
     use App\Models\Post;
     use App\Models\User;
@@ -271,13 +285,13 @@ Next, let's explore building Eloquent model relationships using Laravel's fluent
                 ->has(Post::factory()->count(3))
                 ->create();
 
-By convention, when passing a `Post` model to the `has` method, Laravel will assume that the `User` model must have a `posts` method that defines the relationship. If necessary, you may explicitly specify the name of the relationship that you would like to manipulate:
+Por convención, al pasar un modelo `Post` al método `has`, Laravel asumirá que el modelo `User` debe tener un método `posts` que defina la relación. Si es necesario, puede especificar explícitamente el nombre de la relación que desea manipular:
 
     $user = User::factory()
                 ->has(Post::factory()->count(3), 'posts')
                 ->create();
 
-Of course, you may perform state manipulations on the related models. In addition, you may pass a closure based state transformation if your state change requires access to the parent model:
+Por supuesto, puedes realizar manipulaciones de estado en los modelos relacionados. Además, puedes pasar una transformación de estado basada en un closure si tu cambio de estado requiere acceso al modelo padre:
 
     $user = User::factory()
                 ->has(
@@ -289,16 +303,17 @@ Of course, you may perform state manipulations on the related models. In additio
                 )
                 ->create();
 
-<a name="has-many-relationships-using-magic-methods"></a>
-#### Using Magic Methods
+[]()
 
-For convenience, you may use Laravel's magic factory relationship methods to build relationships. For example, the following example will use convention to determine that the related models should be created via a `posts` relationship method on the `User` model:
+#### Uso de métodos mágicos
+
+Por conveniencia, puedes usar los métodos mágicos de relación de Laravel para construir relaciones. Por ejemplo, el siguiente ejemplo utilizará la convención para determinar que los modelos relacionados deben ser creados a través de un método de relación `posts` en el modelo `User`:
 
     $user = User::factory()
                 ->hasPosts(3)
                 ->create();
 
-When using magic methods to create factory relationships, you may pass an array of attributes to override on the related models:
+Cuando se utilizan métodos mágicos para crear relaciones de fábrica, puede pasar una array de atributos para anular en los modelos relacionados:
 
     $user = User::factory()
                 ->hasPosts(3, [
@@ -306,7 +321,7 @@ When using magic methods to create factory relationships, you may pass an array 
                 ])
                 ->create();
 
-You may provide a closure based state transformation if your state change requires access to the parent model:
+Puedes proporcionar una transformación de estado basada en un closure si tu cambio de estado requiere acceso al modelo padre:
 
     $user = User::factory()
                 ->hasPosts(3, function (array $attributes, User $user) {
@@ -314,10 +329,11 @@ You may provide a closure based state transformation if your state change requir
                 })
                 ->create();
 
-<a name="belongs-to-relationships"></a>
-### Belongs To Relationships
+[]()
 
-Now that we have explored how to build "has many" relationships using factories, let's explore the inverse of the relationship. The `for` method may be used to define the parent model that factory created models belong to. For example, we can create three `App\Models\Post` model instances that belong to a single user:
+### Pertenece a relaciones
+
+Ahora que hemos explorado cómo construir relaciones "has many" usando fábricas, exploremos la inversa de la relación. El método `for` puede usarse para definir el modelo padre al que pertenecen los modelos creados por la fábrica. Por ejemplo, podemos crear tres instancias del modelo `App\Models\Post` que pertenecen a un único usuario:
 
     use App\Models\Post;
     use App\Models\User;
@@ -329,7 +345,7 @@ Now that we have explored how to build "has many" relationships using factories,
                 ]))
                 ->create();
 
-If you already have a parent model instance that should be associated with the models you are creating, you may pass the model instance to the `for` method:
+Si ya tiene una instancia del modelo padre que debería estar asociada con los modelos que está creando, puede pasar la instancia del modelo al método `for`:
 
     $user = User::factory()->create();
 
@@ -338,10 +354,11 @@ If you already have a parent model instance that should be associated with the m
                 ->for($user)
                 ->create();
 
-<a name="belongs-to-relationships-using-magic-methods"></a>
-#### Using Magic Methods
+[]()
 
-For convenience, you may use Laravel's magic factory relationship methods to define "belongs to" relationships. For example, the following example will use convention to determine that the three posts should belong to the `user` relationship on the `Post` model:
+#### Uso de métodos mágicos
+
+Para mayor comodidad, puedes utilizar los métodos mágicos de relación de fábrica de Laravel para definir las relaciones "belongs to". Por ejemplo, el siguiente ejemplo utilizará la convención para determinar que los tres posts deben pertenecer a la relación `user` en el modelo `Post`:
 
     $posts = Post::factory()
                 ->count(3)
@@ -350,10 +367,11 @@ For convenience, you may use Laravel's magic factory relationship methods to def
                 ])
                 ->create();
 
-<a name="many-to-many-relationships"></a>
-### Many To Many Relationships
+[]()
 
-Like [has many relationships](#has-many-relationships), "many to many" relationships may be created using the `has` method:
+### Relaciones de muchos a muchos
+
+Al igual que las [relaciones has many](#has-many-relationships), las relaciones "many to many" pueden crearse utilizando el método `has`:
 
     use App\Models\Role;
     use App\Models\User;
@@ -362,10 +380,11 @@ Like [has many relationships](#has-many-relationships), "many to many" relations
                 ->has(Role::factory()->count(3))
                 ->create();
 
-<a name="pivot-table-attributes"></a>
-#### Pivot Table Attributes
+[]()
 
-If you need to define attributes that should be set on the pivot / intermediate table linking the models, you may use the `hasAttached` method. This method accepts an array of pivot table attribute names and values as its second argument:
+#### Atributos de la tabla dinámica
+
+Si necesita definir los atributos que deben establecerse en la tabla pivotante / intermedia que vincula los modelos, puede utilizar el método `hasAttached`. Este método acepta una array de nombres y valores de atributos de tabla dinámica como segundo argumento:
 
     use App\Models\Role;
     use App\Models\User;
@@ -377,7 +396,7 @@ If you need to define attributes that should be set on the pivot / intermediate 
                 )
                 ->create();
 
-You may provide a closure based state transformation if your state change requires access to the related model:
+Puede proporcionar una transformación de estado basada en el closure si su cambio de estado requiere el acceso al modelo relacionado:
 
     $user = User::factory()
                 ->hasAttached(
@@ -390,7 +409,7 @@ You may provide a closure based state transformation if your state change requir
                 )
                 ->create();
 
-If you already have model instances that you would like to be attached to the models you are creating, you may pass the model instances to the `hasAttached` method. In this example, the same three roles will be attached to all three users:
+Si ya dispone de instancias de modelo que desea adjuntar a los modelos que está creando, puede pasar las instancias de modelo al método `hasAttached`. En este ejemplo, los mismos tres roles se adjuntarán a los tres usuarios:
 
     $roles = Role::factory()->count(3)->create();
 
@@ -399,10 +418,11 @@ If you already have model instances that you would like to be attached to the mo
                 ->hasAttached($roles, ['active' => true])
                 ->create();
 
-<a name="many-to-many-relationships-using-magic-methods"></a>
-#### Using Magic Methods
+[]()
 
-For convenience, you may use Laravel's magic factory relationship methods to define many to many relationships. For example, the following example will use convention to determine that the related models should be created via a `roles` relationship method on the `User` model:
+#### Uso de métodos mágicos
+
+Por conveniencia, puedes usar los métodos de relación de la fábrica mágica de Laravel para definir relaciones de muchos a muchos. Por ejemplo, el siguiente ejemplo utilizará la convención para determinar que los modelos relacionados deben ser creados a través de un método de relación `roles` en el modelo `User`:
 
     $user = User::factory()
                 ->hasRoles(1, [
@@ -410,28 +430,31 @@ For convenience, you may use Laravel's magic factory relationship methods to def
                 ])
                 ->create();
 
-<a name="polymorphic-relationships"></a>
-### Polymorphic Relationships
+[]()
 
-[Polymorphic relationships](/docs/{{version}}/eloquent-relationships#polymorphic-relationships) may also be created using factories. Polymorphic "morph many" relationships are created in the same way as typical "has many" relationships. For example, if a `App\Models\Post` model has a `morphMany` relationship with a `App\Models\Comment` model:
+### Relaciones polimórficas
+
+Las[relaciones polimórficas](/docs/%7B%7Bversion%7D%7D/eloquent-relationships#polymorphic-relationships) también pueden crearse utilizando fábricas. Las relaciones polimórficas "morph many" se crean de la misma manera que las relaciones típicas "has many". Por ejemplo, si un modelo `App\Models\Post` tiene una relación `morphMany` con un modelo `App\Models\Comment`:
 
     use App\Models\Post;
 
     $post = Post::factory()->hasComments(3)->create();
 
-<a name="morph-to-relationships"></a>
+[]()
+
 #### Morph To Relationships
 
-Magic methods may not be used to create `morphTo` relationships. Instead, the `for` method must be used directly and the name of the relationship must be explicitly provided. For example, imagine that the `Comment` model has a `commentable` method that defines a `morphTo` relationship. In this situation, we may create three comments that belong to a single post by using the `for` method directly:
+No se pueden utilizar métodos mágicos para crear relaciones `morphTo`. En su lugar, se debe utilizar directamente el método `for` y proporcionar explícitamente el nombre de la relación. Por ejemplo, imagine que el modelo `Comment` tiene un método `commentable` que define una relación `morphTo`. En esta situación, podemos crear tres comentarios que pertenezcan a una única entrada utilizando directamente el método `for`:
 
     $comments = Comment::factory()->count(3)->for(
         Post::factory(), 'commentable'
     )->create();
 
-<a name="polymorphic-many-to-many-relationships"></a>
-#### Polymorphic Many To Many Relationships
+[]()
 
-Polymorphic "many to many" (`morphToMany` / `morphedByMany`) relationships may be created just like non-polymorphic "many to many" relationships:
+#### Relaciones polimórficas Many To Many
+
+Las relaciones polimórficas "muchos a muchos"`(morphToMany` / `morphedByMany`) pueden crearse igual que las relaciones no polimórficas "muchos a muchos":
 
     use App\Models\Tag;
     use App\Models\Video;
@@ -443,16 +466,17 @@ Polymorphic "many to many" (`morphToMany` / `morphedByMany`) relationships may b
                 )
                 ->create();
 
-Of course, the magic `has` method may also be used to create polymorphic "many to many" relationships:
+Por supuesto, el método mágico `has` también puede utilizarse para crear relaciones polimórficas "muchos a muchos":
 
     $videos = Video::factory()
                 ->hasTags(3, ['public' => true])
                 ->create();
 
-<a name="defining-relationships-within-factories"></a>
-### Defining Relationships Within Factories
+[]()
 
-To define a relationship within your model factory, you will typically assign a new factory instance to the foreign key of the relationship. This is normally done for the "inverse" relationships such as `belongsTo` and `morphTo` relationships. For example, if you would like to create a new user when creating a post, you may do the following:
+### Definición de relaciones dentro de las fábricas
+
+Para definir una relación dentro de su fábrica de modelos, normalmente asignará una nueva instancia de fábrica a la clave externa de la relación. Esto se hace normalmente para las relaciones "inversas" como las relaciones `belongsTo` y `morphTo`. Por ejemplo, si desea crear un nuevo usuario al crear una entrada, puede hacer lo siguiente:
 
     use App\Models\User;
 
@@ -470,7 +494,7 @@ To define a relationship within your model factory, you will typically assign a 
         ];
     }
 
-If the relationship's columns depend on the factory that defines it you may assign a closure to an attribute. The closure will receive the factory's evaluated attribute array:
+Si las columnas de la relación dependen de la fábrica que la define puedes asignar un closure a un atributo. El closure recibirá el array atributos evaluados de la fábrica:
 
     /**
      * Define the model's default state.
@@ -489,20 +513,21 @@ If the relationship's columns depend on the factory that defines it you may assi
         ];
     }
 
-<a name="recycling-an-existing-model-for-relationships"></a>
-### Recycling An Existing Model For Relationships
+[]()
 
-If you have models that share a common relationship with another model, you may use the `recycle` method to ensure a single instance of the related model is recycled for all of the relationships created by the factory.
+### Reciclaje de un modelo existente de relaciones
 
-For example, imagine you have `Airline`, `Flight`, and `Ticket` models, where the ticket belongs to an airline and a flight, and the flight also belongs to an airline. When creating tickets, you will probably want the same airline for both the ticket and the flight, so you may pass an airline instance to the `recycle` method:
+Si tienes modelos que comparten una relación común con otro modelo, puedes utilizar el método `recycle` para asegurarte de que una única instancia del modelo relacionado se recicla para todas las relaciones creadas por la fábrica.
+
+Por ejemplo, imagine que tiene modelos `Aerolínea`, `Vuelo` y `Billete`, donde el billete pertenece a una aerolínea y a un vuelo, y el vuelo también pertenece a una aerolínea. Al crear billetes, probablemente querrá la misma aerolínea tanto para el billete como para el vuelo, por lo que puede pasar una instancia de aerolínea al método `recycle`:
 
     Ticket::factory()
         ->recycle(Airline::factory()->create())
         ->create();
 
-You may find the `recycle` method particularly useful if you have models belonging to a common user or team.
+El método `recycle` puede resultarle especialmente útil si tiene modelos que pertenecen a un usuario o equipo común.
 
-The `recycle` method also accepts a collection of existing models. When a collection is provided to the `recycle` method, a random model from the collection will be chosen when the factory needs a model of that type:
+El método `recycle` también acepta una colección de modelos existentes. Cuando se proporciona una colección al método `recycle`, se elegirá un modelo aleatorio de la colección cuando la fábrica necesite un modelo de ese tipo:
 
     Ticket::factory()
         ->recycle($airlines)

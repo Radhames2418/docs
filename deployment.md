@@ -1,54 +1,58 @@
-# Deployment
+# Despliegue
 
-- [Introduction](#introduction)
-- [Server Requirements](#server-requirements)
-- [Server Configuration](#server-configuration)
-    - [Nginx](#nginx)
-- [Optimization](#optimization)
-    - [Autoloader Optimization](#autoloader-optimization)
-    - [Optimizing Configuration Loading](#optimizing-configuration-loading)
-    - [Optimizing Route Loading](#optimizing-route-loading)
-    - [Optimizing View Loading](#optimizing-view-loading)
-- [Debug Mode](#debug-mode)
-- [Deploying With Forge / Vapor](#deploying-with-forge-or-vapor)
+- [Introducción](#introduction)
+- [Requisitos del servidor](#server-requirements)
+- [Configuración del servidor](#server-configuration)
+  - [Nginx](#nginx)
+- [Optimización](#optimization)
+  - [Optimización del autocargador](#autoloader-optimization)
+  - [Optimización de la carga de configuraciones](#optimizing-configuration-loading)
+  - [Optimización de la carga de rutas](#optimizing-route-loading)
+  - [Optimización de la carga de vistas](#optimizing-view-loading)
+- [Modo depuración](#debug-mode)
+- [Despliegue con Forge / Vapor](#deploying-with-forge-or-vapor)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-When you're ready to deploy your Laravel application to production, there are some important things you can do to make sure your application is running as efficiently as possible. In this document, we'll cover some great starting points for making sure your Laravel application is deployed properly.
+## Introducción
 
-<a name="server-requirements"></a>
-## Server Requirements
+Cuando estés listo para desplegar tu aplicación Laravel en producción, hay algunas cosas importantes que puedes hacer para asegurarte de que tu aplicación se ejecuta de la manera más eficiente posible. En este documento, vamos a cubrir algunos grandes puntos de partida para asegurarse de que su aplicación Laravel se despliega correctamente.
 
-The Laravel framework has a few system requirements. You should ensure that your web server has the following minimum PHP version and extensions:
+[]()
 
-<div class="content-list" markdown="1">
+## Requisitos del servidor
+
+El framework Laravel tiene algunos requisitos de sistema. Debes asegurarte de que tu servidor web tiene la siguiente versión mínima de PHP y extensiones:
+
+<div class="content-list" markdown="1"/>
 
 - PHP >= 8.0
-- BCMath PHP Extension
-- Ctype PHP Extension
-- cURL PHP Extension
-- DOM PHP Extension
-- Fileinfo PHP Extension
-- JSON PHP Extension
-- Mbstring PHP Extension
-- OpenSSL PHP Extension
-- PCRE PHP Extension
-- PDO PHP Extension
-- Tokenizer PHP Extension
-- XML PHP Extension
+- Extensión PHP BCMath
+- Extensión PHP Ctype
+- Extensión PHP cURL
+- DOM Extensión PHP
+- Fileinfo Extensión PHP
+- JSON Extensión PHP
+- Mbstring Extensión PHP
+- OpenSSL Extensión PHP
+- PCRE Extensión PHP
+- Extensión PHP PDO
+- Extensión PHP Tokenizer
+- Extensión PHP XML
 
-</div>
+[object Object]
 
-<a name="server-configuration"></a>
-## Server Configuration
+[]()
 
-<a name="nginx"></a>
+## Configuración del servidor
+
+[]()
+
 ### Nginx
 
-If you are deploying your application to a server that is running Nginx, you may use the following configuration file as a starting point for configuring your web server. Most likely, this file will need to be customized depending on your server's configuration. **If you would like assistance in managing your server, consider using a first-party Laravel server management and deployment service such as [Laravel Forge](https://forge.laravel.com).**
+Si está desplegando su aplicación en un servidor que ejecuta Nginx, puede utilizar el siguiente archivo de configuración como punto de partida para configurar su servidor web. Lo más probable es que este archivo tenga que ser personalizado dependiendo de la configuración de su servidor. **Si desea asistencia en la gestión de su servidor, considere el uso de un servidor de Laravel de primera parte de gestión y despliegue de servicios como [Laravel Forge](https://forge.laravel.com).**
 
-Please ensure, like the configuration below, your web server directs all requests to your application's `public/index.php` file. You should never attempt to move the `index.php` file to your project's root, as serving the application from the project root will expose many sensitive configuration files to the public Internet:
+Por favor, asegúrese de que, como en la configuración de abajo, su servidor web dirige todas las peticiones al archivo `public/index.` php de su aplicación. Nunca debes intentar mover el archivo `index.` php a la raíz de tu proyecto, ya que servir la aplicación desde la raíz del proyecto expondrá muchos archivos de configuración sensibles a la Internet pública:
 
 ```nginx
 server {
@@ -85,78 +89,86 @@ server {
 }
 ```
 
-<a name="optimization"></a>
-## Optimization
+[]()
 
-<a name="autoloader-optimization"></a>
-### Autoloader Optimization
+## Optimización
 
-When deploying to production, make sure that you are optimizing Composer's class autoloader map so Composer can quickly find the proper file to load for a given class:
+[]()
+
+### Optimización del Autoloader
+
+Cuando despliegues en producción, asegúrate de que estás optimizando el mapa de autocarga de clases de Composer para que Composer pueda encontrar rápidamente el archivo adecuado para cargar una clase determinada:
 
 ```shell
 composer install --optimize-autoloader --no-dev
 ```
 
-> **Note**  
-> In addition to optimizing the autoloader, you should always be sure to include a `composer.lock` file in your project's source control repository. Your project's dependencies can be installed much faster when a `composer.lock` file is present.
+> **Nota**  
+> Además de optimizar el autocargador, asegúrese siempre de incluir un archivo `composer.lock` en el repositorio de control de código fuente de su proyecto. Las dependencias de tu proyecto pueden ser instaladas mucho más rápido cuando un archivo `composer`.lock está presente.
 
-<a name="optimizing-configuration-loading"></a>
-### Optimizing Configuration Loading
+[]()
 
-When deploying your application to production, you should make sure that you run the `config:cache` Artisan command during your deployment process:
+### Optimización de la carga de configuraciones
+
+Cuando despliegues tu aplicación en producción, debes asegurarte de ejecutar el comando `config:cache` Artisan durante el proceso de despliegue:
 
 ```shell
 php artisan config:cache
 ```
 
-This command will combine all of Laravel's configuration files into a single, cached file, which greatly reduces the number of trips the framework must make to the filesystem when loading your configuration values.
+Este comando combinará todos los archivos de configuración de Laravel en un único archivo en caché, lo que reduce en gran medida el número de viajes que el framework debe hacer al sistema de archivos cuando carga tus valores de configuración.
 
-> **Warning**  
-> If you execute the `config:cache` command during your deployment process, you should be sure that you are only calling the `env` function from within your configuration files. Once the configuration has been cached, the `.env` file will not be loaded and all calls to the `env` function for `.env` variables will return `null`.
+> **Advertencia**  
+> Si ejecutas el comando `config:cache` durante tu proceso de despliegue, debes asegurarte de que sólo estás llamando a la función `env` desde dentro de tus archivos de configuración. Una vez que la configuración ha sido cacheada, el archivo `.env` no será cargado y todas las llamadas a la función `env` para variables `.env` devolverán `null`.
 
-<a name="optimizing-route-loading"></a>
-### Optimizing Route Loading
+[]()
 
-If you are building a large application with many routes, you should make sure that you are running the `route:cache` Artisan command during your deployment process:
+### Optimización de la carga de rutas
+
+Si estás construyendo una aplicación grande con muchas rutas, debes asegurarte de que estás ejecutando el comando `route:cache` Artisan durante tu proceso de despliegue:
 
 ```shell
 php artisan route:cache
 ```
 
-This command reduces all of your route registrations into a single method call within a cached file, improving the performance of route registration when registering hundreds of routes.
+Este comando reduce todos tus registros de rutas a una sola llamada de método dentro de un archivo en caché, mejorando el rendimiento del registro de rutas cuando se registran cientos de rutas.
 
-<a name="optimizing-view-loading"></a>
-### Optimizing View Loading
+[]()
 
-When deploying your application to production, you should make sure that you run the `view:cache` Artisan command during your deployment process:
+### Optimización de la carga de vistas
+
+Cuando despliegues tu aplicación a producción, debes asegurarte de ejecutar el comando `view:cache` Artisan durante tu proceso de despliegue:
 
 ```shell
 php artisan view:cache
 ```
 
-This command precompiles all your Blade views so they are not compiled on demand, improving the performance of each request that returns a view.
+Este comando precompila todas tus vistas Blade para que no sean compiladas bajo demanda, mejorando el rendimiento de cada petición que devuelve una vista.
 
-<a name="debug-mode"></a>
-## Debug Mode
+[]()
 
-The debug option in your config/app.php configuration file determines how much information about an error is actually displayed to the user. By default, this option is set to respect the value of the `APP_DEBUG` environment variable, which is stored in your application's `.env` file.
+## Modo depuración
 
-**In your production environment, this value should always be `false`. If the `APP_DEBUG` variable is set to `true` in production, you risk exposing sensitive configuration values to your application's end users.**
+La opción debug en tu archivo de configuración config/app.php determina cuánta información sobre un error se muestra realmente al usuario. Por defecto, esta opción está configurada para respetar el valor de la variable de entorno `APP_DEBUG`, que se almacena en el archivo `.env` de su aplicación.
 
-<a name="deploying-with-forge-or-vapor"></a>
-## Deploying With Forge / Vapor
+**En su entorno de producción, este valor debe ser siempre `falso`. Si la variable `APP_DEBUG` se establece en `true` en producción, corres el riesgo de exponer valores de configuración sensibles a los usuarios finales de tu aplicación.**
 
-<a name="laravel-forge"></a>
+[]()
+
+## Despliegue con Forge / Vapor
+
+[]()
+
 #### Laravel Forge
 
-If you aren't quite ready to manage your own server configuration or aren't comfortable configuring all of the various services needed to run a robust Laravel application, [Laravel Forge](https://forge.laravel.com) is a wonderful alternative.
+Si no estás listo para gestionar tu propia configuración del servidor o no te sientes cómodo configurando todos los servicios necesarios para ejecutar una aplicación Laravel robusta, [Laravel Forge](https://forge.laravel.com) es una alternativa maravillosa.
 
-Laravel Forge can create servers on various infrastructure providers such as DigitalOcean, Linode, AWS, and more. In addition, Forge installs and manages all of the tools needed to build robust Laravel applications, such as Nginx, MySQL, Redis, Memcached, Beanstalk, and more.
+Laravel Forge puede crear servidores en varios proveedores de infraestructura como DigitalOcean, Linode, AWS, y más. Además, Forge instala y gestiona todas las herramientas necesarias para construir aplicaciones Laravel robustas, como Nginx, MySQL, Redis, Memcached, Beanstalk, y más.
 
-> **Note**
-> Want a full guide to deploying with Laravel Forge? Check out the [Laravel Bootcamp](https://bootcamp.laravel.com/deploying) and the Forge [video series available on Laracasts](https://laracasts.com/series/learn-laravel-forge-2022-edition).
+> **Nota¿Quieres**una guía completa para desplegar con Laravel Forge? Echa un vistazo a la [serie de vídeos](https://laracasts.com/series/learn-laravel-forge-2022-edition) [Laravel Bootcamp](https://bootcamp.laravel.com/deploying) y Forge [disponible en Laracasts](https://laracasts.com/series/learn-laravel-forge-2022-edition).
 
-<a name="laravel-vapor"></a>
-#### Laravel Vapor
+[]()
 
-If you would like a totally serverless, auto-scaling deployment platform tuned for Laravel, check out [Laravel Vapor](https://vapor.laravel.com). Laravel Vapor is a serverless deployment platform for Laravel, powered by AWS. Launch your Laravel infrastructure on Vapor and fall in love with the scalable simplicity of serverless. Laravel Vapor is fine-tuned by Laravel's creators to work seamlessly with the framework so you can keep writing your Laravel applications exactly like you're used to.
+#### Vapor Laravel
+
+Si quieres una plataforma de despliegue totalmente sin servidor y autoescalable adaptada a Laravel, echa un vistazo a Laravel [Vapor](https://vapor.laravel.com). Laravel Vapor es una plataforma de despliegue sin servidor para Laravel, impulsada por AWS. Lanza tu infraestructura Laravel en Vapor y enamórate de la simplicidad escalable de serverless. Laravel Vapor está ajustado por los creadores de Laravel para trabajar sin problemas con el framework para que puedas seguir escribiendo tus aplicaciones Laravel exactamente como estás acostumbrado.

@@ -1,85 +1,93 @@
-# Release Notes
+# Notas de la versión
 
-- [Versioning Scheme](#versioning-scheme)
-- [Support Policy](#support-policy)
+- [Sistema de control de versiones](#versioning-scheme)
+- [policy soporte](#support-policy)
 - [Laravel 9](#laravel-9)
 
-<a name="versioning-scheme"></a>
-## Versioning Scheme
+[]()
 
-Laravel and its other first-party packages follow [Semantic Versioning](https://semver.org). Major framework releases are released every year (~February), while minor and patch releases may be released as often as every week. Minor and patch releases should **never** contain breaking changes.
+## Esquema de versiones
 
-When referencing the Laravel framework or its components from your application or package, you should always use a version constraint such as `^9.0`, since major releases of Laravel do include breaking changes. However, we strive to always ensure you may update to a new major release in one day or less.
+Laravel y sus otros paquetes de origen siguen el Versionado [Semántico](https://semver.org). Las versiones mayores del framework se publican cada año (\~Febrero), mientras que las versiones menores y de parche pueden publicarse cada semana. Las versiones menores y de parche **nunca** deben contener cambios de última hora.
 
-<a name="named-arguments"></a>
-#### Named Arguments
+Cuando hagas referencia al framework Laravel o a sus componentes desde tu aplicación o paquete, deberías usar siempre una restricción de versión como `^9.0`, ya que las versiones mayores de Laravel incluyen cambios de última hora. Sin embargo, nos esforzamos para asegurar que siempre se puede actualizar a una nueva versión principal en un día o menos.
 
-[Named arguments](https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments) are not covered by Laravel's backwards compatibility guidelines. We may choose to rename function arguments when necessary in order to improve the Laravel codebase. Therefore, using named arguments when calling Laravel methods should be done cautiously and with the understanding that the parameter names may change in the future.
+[]()
 
-<a name="support-policy"></a>
-## Support Policy
+#### Argumentos con nombre
 
-For all Laravel releases, bug fixes are provided for 18 months and security fixes are provided for 2 years. For all additional libraries, including Lumen, only the latest major release receives bug fixes. In addition, please review the database versions [supported by Laravel](/docs/{{version}}/database#introduction).
+Los[argumentos con nombre](https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments) no están cubiertos por las directrices de retrocompatibilidad de Laravel. Podemos optar por cambiar el nombre de los argumentos de función cuando sea necesario con el fin de mejorar la base de código de Laravel. Por lo tanto, el uso de argumentos con nombre al llamar a métodos Laravel debe hacerse con cautela y con la comprensión de que los nombres de los parámetros pueden cambiar en el futuro.
 
-| Version | PHP (*) | Release | Bug Fixes Until | Security Fixes Until |
-| --- | --- | --- | --- | --- |
-| 6 (LTS) | 7.2 - 8.0 | September 3rd, 2019 | January 25th, 2022 | September 6th, 2022 |
-| 7 | 7.2 - 8.0 | March 3rd, 2020 | October 6th, 2020 | March 3rd, 2021 |
-| 8 | 7.3 - 8.1 | September 8th, 2020 | July 26th, 2022 | January 24th, 2023 |
-| 9 | 8.0 - 8.2 | February 8th, 2022 | August 8th, 2023 | February 6th, 2024 |
-| 10 | 8.1 - 8.2 | February 7th, 2023 | August 6th, 2024 | February 4th, 2025 |
+[]()
+
+## policy soporte
+
+Para todas las versiones de Laravel, las correcciones de errores se proporcionan durante 18 meses y las correcciones de seguridad se proporcionan durante 2 años. Para todas las bibliotecas adicionales, incluyendo Lumen, sólo la última versión principal recibe correcciones de errores. Además, por favor revise las versiones de bases de datos [soportadas por Laravel](/docs/%7B%7Bversion%7D%7D/database#introduction).
+
+| Versión | PHP (*)   | Versión                 | Corrección de errores hasta | Correcciones de seguridad hasta |
+| ------- | --------- | ----------------------- | --------------------------- | ------------------------------- |
+| 6 (LTS) | 7.2 - 8.0 | 3 de septiembre de 2019 | 25 de enero de 2022         | 6 de septiembre de 2022         |
+| 7       | 7.2 - 8.0 | 3 de marzo de 2020      | 6 de octubre de 2020        | 3 de marzo de 2021              |
+| 8       | 7.3 - 8.1 | 8 de septiembre de 2020 | 26 de julio de 2022         | 24 de enero de 2023             |
+| 9       | 8.0 - 8.2 | 8 de febrero de 2022    | 8 de agosto de 2023         | 6 de febrero de 2024            |
+| 10      | 8.1 - 8.2 | 7 de febrero de 2023    | 6 de agosto de 2024         | 4 de febrero de 2025            |
 
 <div class="version-colors">
     <div class="end-of-life">
-        <div class="color-box"></div>
-        <div>End of life</div>
+        <div class="color-box"/>
+        <div>Fin de vida</div>
     </div>
     <div class="security-fixes">
-        <div class="color-box"></div>
-        <div>Security fixes only</div>
+        <div class="color-box"/>
+        <div>Sólo correcciones de seguridad</div>
     </div>
 </div>
 
-(*) Supported PHP versions
+(\*) Versiones PHP soportadas
 
-<a name="laravel-9"></a>
+[]()
+
 ## Laravel 9
 
-As you may know, Laravel transitioned to yearly releases with the release of Laravel 8. Previously, major versions were released every 6 months. This transition is intended to ease the maintenance burden on the community and challenge our development team to ship amazing, powerful new features without introducing breaking changes. Therefore, we have shipped a variety of robust features to Laravel 8 without breaking backwards compatibility, such as parallel testing support, improved Breeze starter kits, HTTP client improvements, and even new Eloquent relationship types such as "has one of many".
+Como ya sabrás, Laravel hizo la transición a versiones anuales con el lanzamiento de Laravel 8. Anteriormente, las versiones principales se lanzaban cada 6 meses. Esta transición tiene por objeto aliviar la carga de mantenimiento de la comunidad y desafiar a nuestro equipo de desarrollo para lanzar nuevas características sorprendentes y potentes sin introducir cambios de última hora. Por lo tanto, hemos enviado una variedad de características robustas a Laravel 8 sin romper la compatibilidad con versiones anteriores, tales como soporte de pruebas paralelas, kits de inicio Breeze mejorados, mejoras en el cliente HTTP, e incluso nuevos tipos de relación Eloquent como "tiene uno de muchos".
 
-Therefore, this commitment to ship great new features during the current release will likely lead to future "major" releases being primarily used for "maintenance" tasks such as upgrading upstream dependencies, which can be seen in these release notes.
+Por lo tanto, este compromiso de enviar grandes nuevas características durante la versión actual probablemente conducirá a futuras versiones "mayores" que se utilizarán principalmente para tareas de "mantenimiento", como la actualización de las dependencias de aguas arriba, que se puede ver en estas notas de la versión.
 
-Laravel 9 continues the improvements made in Laravel 8.x by introducing support for Symfony 6.0 components, Symfony Mailer, Flysystem 3.0, improved `route:list` output, a Laravel Scout database driver, new Eloquent accessor / mutator syntax, implicit route bindings via Enums, and a variety of other bug fixes and usability improvements.
+Laravel 9 continúa las mejoras realizadas en Laravel 8.x introduciendo soporte para componentes Symfony 6.0, Symfony Mailer, Flysystem 3.0, salida mejorada `route:list`, un controlador de base de datos Laravel Scout, nueva sintaxis Eloquent accessor / mutator, enlaces de ruta implícitos a través de Enums, y una variedad de otras correcciones de errores y mejoras de usabilidad.
 
-<a name="php-8"></a>
+[]()
+
 ### PHP 8.0
 
-Laravel 9.x requires a minimum PHP version of 8.0.
+Laravel 9.x requiere una versión mínima de PHP 8.0.
 
-<a name="symfony-mailer"></a>
+[]()
+
 ### Symfony Mailer
 
-_Symfony Mailer support was contributed by [Dries Vints](https://github.com/driesvints)_, [James Brooks](https://github.com/jbrooksuk), and [Julius Kiekbusch](https://github.com/Jubeki).
+_[Dries Vints](https://github.com/driesvints)_, [James Brooks](https://github.com/jbrooksuk) y [Julius Kiekbusch](https://github.com/Jubeki) han_contribuido al soporte de Symfony Mailer_.
 
-Previous releases of Laravel utilized the [Swift Mailer](https://swiftmailer.symfony.com/docs/introduction.html) library to send outgoing email. However, that library is no longer maintained and has been succeeded by Symfony Mailer.
+Versiones anteriores de Laravel utilizaban la librería [Swift Mailer](https://swiftmailer.symfony.com/docs/introduction.html) para enviar correo electrónico. Sin embargo, esa librería ya no se mantiene y ha sido reemplazada por Symfony Mailer.
 
-Please review the [upgrade guide](/docs/{{version}}/upgrade#symfony-mailer) to learn more about ensuring your application is compatible with Symfony Mailer.
+Por favor, revisa la [guía de actualización](/docs/%7B%7Bversion%7D%7D/upgrade#symfony-mailer) para saber más sobre cómo asegurar que tu aplicación es compatible con Symfony Mailer.
 
-<a name="flysystem-3"></a>
+[]()
+
 ### Flysystem 3.x
 
-_Flysystem 3.x support was contributed by [Dries Vints](https://github.com/driesvints)_.
+La_compatibilidad con Flysystem 3.x fue aportada por [Dries Vints](https://github.com/driesvints)_.
 
-Laravel 9.x upgrades our upstream Flysystem dependency to Flysystem 3.x. Flysystem powers all of filesystem interactions offered by the `Storage` facade.
+Laravel 9.x actualiza nuestra dependencia de Flysystem a Flysystem 3.x. Flysystem potencia todas las interacciones del sistema de ficheros ofrecidas por la facade `Storage`.
 
-Please review the [upgrade guide](/docs/{{version}}/upgrade#flysystem-3) to learn more about ensuring your application is compatible with Flysystem 3.x.
+Consulta la [guía](/docs/%7B%7Bversion%7D%7D/upgrade#flysystem-3) de actualización para obtener más información sobre la compatibilidad de tu aplicación con Flysystem 3.x.
 
-<a name="eloquent-accessors-and-mutators"></a>
-### Improved Eloquent Accessors / Mutators
+[]()
 
-_Improved Eloquent accessors / mutators was contributed by [Taylor Otwell](https://github.com/taylorotwell)_.
+### Accesores / Mutadores Eloquent mejorados
 
-Laravel 9.x offers a new way to define Eloquent [accessors and mutators](/docs/{{version}}/eloquent-mutators#accessors-and-mutators). In previous releases of Laravel, the only way to define accessors and mutators was by defining prefixed methods on your model like so:
+_Eloquent accessors / mutators mejorado fue contribu_ido por_ [Taylor Otwell](https://github.com/taylorotwell)_.
+
+Laravel 9.x ofrece una nueva forma de definir Eloquent accessors [y mutators](/docs/%7B%7Bversion%7D%7D/eloquent-mutators#accessors-and-mutators). En versiones anteriores de Laravel, la única manera de definir accessors y mutators era definiendo métodos prefijados en tu modelo de esta manera:
 
 ```php
 public function getNameAttribute($value)
@@ -93,7 +101,7 @@ public function setNameAttribute($value)
 }
 ```
 
-However, in Laravel 9.x you may define an accessor and mutator using a single, non-prefixed method by type-hinting a return type of `Illuminate\Database\Eloquent\Casts\Attribute`:
+Sin embargo, en Laravel 9.x puedes definir un accessor y un mutator utilizando un único método no prefijado, indicando un tipo de retorno `Illuminate\Database\Eloquent\Casts\Attribute`:
 
 ```php
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -107,7 +115,7 @@ public function name(): Attribute
 }
 ```
 
-In addition, this new approach to defining accessors will cache object values that are returned by the attribute, just like [custom cast classes](/docs/{{version}}/eloquent-mutators#custom-casts):
+Además, este nuevo enfoque para la definición de accesores cache los valores de los objetos que son devueltos por el atributo, al igual que las [clases cast personalizadas](/docs/%7B%7Bversion%7D%7D/eloquent-mutators#custom-casts):
 
 ```php
 use App\Support\Address;
@@ -128,15 +136,16 @@ public function address(): Attribute
 }
 ```
 
-<a name="enum-casting"></a>
-### Enum Eloquent Attribute Casting
+[]()
 
-> **Warning**  
-> Enum casting is only available for PHP 8.1+.
+### Atributo Enum Eloquent Casting
 
-_Enum casting was contributed by [Mohamed Said](https://github.com/themsaid)_.
+> **Advertencia**  
+> El casting de Enum sólo está disponible para PHP 8.1+.
 
-Eloquent now allows you to cast your attribute values to PHP ["backed" Enums](https://www.php.net/manual/en/language.enumerations.backed.php). To accomplish this, you may specify the attribute and enum you wish to cast in your model's `$casts` property array:
+_Enum casting fue contribuido por [Mohamed Said](https://github.com/themsaid)_.
+
+Eloquent ahora te permite convertir los valores de tus atributos a [Enums "respaldados" por](https://www.php.net/manual/en/language.enumerations.backed.php) PHP. Para conseguirlo, puedes especificar el atributo y el enum que deseas convertir en el array propiedades `$casts` de tu modelo:
 
     use App\Enums\ServerStatus;
 
@@ -149,7 +158,7 @@ Eloquent now allows you to cast your attribute values to PHP ["backed" Enums](ht
         'status' => ServerStatus::class,
     ];
 
-Once you have defined the cast on your model, the specified attribute will be automatically cast to and from an enum when you interact with the attribute:
+Una vez que haya definido el reparto en su modelo, el atributo especificado será automáticamente convertido a y desde un enum cuando interactúe con el atributo:
 
     if ($server->status == ServerStatus::Provisioned) {
         $server->status = ServerStatus::Ready;
@@ -157,12 +166,13 @@ Once you have defined the cast on your model, the specified attribute will be au
         $server->save();
     }
 
-<a name="implicit-route-bindings-with-enums"></a>
-### Implicit Route Bindings With Enums
+[]()
 
-_Implicit Enum bindings was contributed by [Nuno Maduro](https://github.com/nunomaduro)_.
+### Vinculación Implícita de Rutas con Enums
 
-PHP 8.1 introduces support for [Enums](https://www.php.net/manual/en/language.enumerations.backed.php). Laravel 9.x introduces the ability to type-hint an Enum on your route definition and Laravel will only invoke the route if that route segment is a valid Enum value in the URI. Otherwise, an HTTP 404 response will be returned automatically. For example, given the following Enum:
+_Implicit Enum bindings fue contribuido por [Nuno Maduro](https://github.com/nunomaduro)_.
+
+PHP 8.1 introduce soporte para [Enums](https://www.php.net/manual/en/language.enumerations.backed.php). Laravel 9.x introduce la capacidad de type-hint un Enum en su definición de ruta y Laravel sólo invocará la ruta si ese segmento de ruta es un valor Enum válido en el URI. En caso contrario, se devolverá automáticamente una respuesta HTTP 404. Por ejemplo, dado el siguiente Enum:
 
 ```php
 enum Category: string
@@ -172,7 +182,7 @@ enum Category: string
 }
 ```
 
-You may define a route that will only be invoked if the `{category}` route segment is `fruits` or `people`. Otherwise, an HTTP 404 response will be returned:
+Puede definir una ruta que sólo será invocada si el segmento de ruta `{category}` es `fruits` o `people`. En caso contrario, se devolverá una respuesta HTTP 404:
 
 ```php
 Route::get('/categories/{category}', function (Category $category) {
@@ -180,12 +190,13 @@ Route::get('/categories/{category}', function (Category $category) {
 });
 ```
 
-<a name="forced-scoping-of-route-bindings"></a>
-### Forced Scoping Of Route Bindings
+[]()
 
-_Forced scoped bindings was contributed by [Claudio Dekker](https://github.com/claudiodekker)_.
+### Alcance forzado de los enlaces de ruta
 
-In previous releases of Laravel, you may wish to scope the second Eloquent model in a route definition such that it must be a child of the previous Eloquent model. For example, consider this route definition that retrieves a blog post by slug for a specific user:
+_Forced scoped bindings fue contribuido por [Claudio Dekker](https://github.com/claudiodekker)_.
+
+En versiones anteriores de Laravel, es posible que desees delimitar el segundo modelo Eloquent en una definición de ruta de tal manera que debe ser hijo del modelo Eloquent anterior. Por ejemplo, considere esta definición de ruta que recupera una entrada de blog por slug para un usuario específico:
 
     use App\Models\Post;
     use App\Models\User;
@@ -194,9 +205,9 @@ In previous releases of Laravel, you may wish to scope the second Eloquent model
         return $post;
     });
 
-When using a custom keyed implicit binding as a nested route parameter, Laravel will automatically scope the query to retrieve the nested model by its parent using conventions to guess the relationship name on the parent. However, this behavior was only previously supported by Laravel when a custom key was used for the child route binding.
+Cuando se utiliza un enlace implícito con clave personalizada como parámetro de ruta anidada, Laravel amplía automáticamente la consulta para recuperar el modelo anidado por su padre utilizando convenciones para adivinar el nombre de la relación en el padre. Sin embargo, este comportamiento sólo era soportado anteriormente por Laravel cuando se utilizaba una clave personalizada para el enlace de ruta hijo.
 
-However, in Laravel 9.x, you may now instruct Laravel to scope "child" bindings even when a custom key is not provided. To do so, you may invoke the `scopeBindings` method when defining your route:
+Sin embargo, en Laravel 9.x, ahora puedes ordenar a Laravel que haga scope de los bindings "child" incluso cuando no se proporciona una clave personalizada. Para ello, puedes invocar el método `scopeBindings` al definir tu ruta:
 
     use App\Models\Post;
     use App\Models\User;
@@ -205,7 +216,7 @@ However, in Laravel 9.x, you may now instruct Laravel to scope "child" bindings 
         return $post;
     })->scopeBindings();
 
-Or, you may instruct an entire group of route definitions to use scoped bindings:
+También puede indicar a todo un grupo de definiciones de ruta que utilicen enlaces de ámbito:
 
     Route::scopeBindings()->group(function () {
         Route::get('/users/{user}/posts/{post}', function (User $user, Post $post) {
@@ -213,12 +224,13 @@ Or, you may instruct an entire group of route definitions to use scoped bindings
         });
     });
 
-<a name="controller-route-groups"></a>
-### Controller Route Groups
+[]()
 
-_Route group improvements were contributed by [Luke Downing](https://github.com/lukeraymonddowning)_.
+### Grupos de rutas de controlador
 
-You may now use the `controller` method to define the common controller for all of the routes within the group. Then, when defining the routes, you only need to provide the controller method that they invoke:
+Las_mejoras en los grupos de rutas han sido aportadas por [Luke Downing](https://github.com/lukeraymonddowning)_.
+
+Ahora puede utilizar el método `controlador` para definir el controlador común para todas las rutas dentro del grupo. Luego, al definir las rutas, sólo es necesario proporcionar el método controlador que invocan:
 
     use App\Http\Controllers\OrderController;
 
@@ -227,36 +239,39 @@ You may now use the `controller` method to define the common controller for all 
         Route::post('/orders', 'store');
     });
 
-<a name="full-text"></a>
-### Full Text Indexes / Where Clauses
+[]()
 
-_Full text indexes and "where" clauses were contributed by [Taylor Otwell](https://github.com/taylorotwell) and [Dries Vints](https://github.com/driesvints)_.
+### Índices de Texto Completo / Cláusulas Where
 
-When using MySQL or PostgreSQL, the `fullText` method may now be added to column definitions to generate full text indexes:
+Los_índices de texto completo y las cláusulas "where_" han sido aportados por_ [Taylor Otwell](https://github.com/taylorotwell) y [Dries Vints](https://github.com/driesvints)_.
+
+Cuando se utiliza MySQL o PostgreSQL, ahora se puede añadir el método `fullText` a las definiciones de columna para generar índices de texto completo:
 
     $table->text('bio')->fullText();
 
-In addition, the `whereFullText` and `orWhereFullText` methods may be used to add full text "where" clauses to a query for columns that have [full text indexes](/docs/{{version}}/migrations#available-index-types). These methods will be transformed into the appropriate SQL for the underlying database system by Laravel. For example, a `MATCH AGAINST` clause will be generated for applications utilizing MySQL:
+Además, los métodos `whereFullText` y `orWhereFullText` pueden utilizarse para añadir cláusulas "where" de texto completo a una consulta para columnas que tengan índices de [texto](/docs/%7B%7Bversion%7D%7D/migrations#available-index-types) completo. Laravel transformará estos métodos en el SQL apropiado para el sistema de base de datos subyacente. Por ejemplo, se generará una cláusula `MATCH AGAINST` para las aplicaciones que utilicen MySQL:
 
     $users = DB::table('users')
                ->whereFullText('bio', 'web developer')
                ->get();
 
-<a name="laravel-scout-database-engine"></a>
-### Laravel Scout Database Engine
+[]()
 
-_The Laravel Scout database engine was contributed by [Taylor Otwell](https://github.com/taylorotwell) and [Dries Vints](https://github.com/driesvints)_.
+### Motor de base de datos Laravel Scout
 
-If your application interacts with small to medium sized databases or has a light workload, you may now use Scout's "database" engine instead of a dedicated search service such as Algolia or MeiliSearch. The database engine will use "where like" clauses and full text indexes when filtering results from your existing database to determine the applicable search results for your query.
+_El motor de base de datos Laravel Scout fue contribuido por [Taylor Otwell](https://github.com/taylorotwell) y [Dries Vints](https://github.com/driesvints)_.
 
-To learn more about the Scout database engine, consult the [Scout documentation](/docs/{{version}}/scout).
+Si tu aplicación interactúa con bases de datos pequeñas o medianas o tiene una carga de trabajo ligera, ahora puedes utilizar el motor de "base de datos" de Scout en lugar de un servicio de búsqueda dedicado como Algolia o MeiliSearch. El motor de base de datos utilizará cláusulas "where like" e índices de texto completo al filtrar los resultados de su base de datos existente para determinar los resultados de búsqueda aplicables a su consulta.
 
-<a name="rendering-inline-blade-templates"></a>
-### Rendering Inline Blade Templates
+Para obtener más información sobre el motor de base de datos de Scout, consulte la [documentación de Scout](/docs/%7B%7Bversion%7D%7D/scout).
 
-_Rendering inline Blade templates was contributed by [Jason Beggs](https://github.com/jasonlbeggs). Rendering inline Blade components was contributed by [Toby Zerner](https://github.com/tobyzerner)_.
+[]()
 
-Sometimes you may need to transform a raw Blade template string into valid HTML. You may accomplish this using the `render` method provided by the `Blade` facade. The `render` method accepts the Blade template string and an optional array of data to provide to the template:
+### Renderizado de Plantillas Inline Blade
+
+_Rendering inline Blade templates fue contribuido por [Jason Beggs](https://github.com/jasonlbeggs). [Toby Zerner](https://github.com/tobyzerner)_ ha contribuido a la_creación de componentes Bl_ade en línea.
+
+A veces puede ser necesario transformar una cadena de plantilla Blade sin procesar en HTML válido. Para ello puede utilizar el método `render` proporcionado por la facade `Blade`. El método `render` acepta la cadena de la plantilla Blade y un array opcional de datos para proporcionar a la plantilla:
 
 ```php
 use Illuminate\Support\Facades\Blade;
@@ -264,7 +279,7 @@ use Illuminate\Support\Facades\Blade;
 return Blade::render('Hello, {{ $name }}', ['name' => 'Julian Bashir']);
 ```
 
-Similarly, the `renderComponent` method may be used to render a given class component by passing the component instance to the method:
+De forma similar, el método `renderComponent` puede utilizarse para renderizar un componente de clase determinado pasando la instancia del componente al método:
 
 ```php
 use App\View\Components\HelloComponent;
@@ -272,12 +287,13 @@ use App\View\Components\HelloComponent;
 return Blade::renderComponent(new HelloComponent('Julian Bashir'));
 ```
 
-<a name="slot-name-shortcut"></a>
-### Slot Name Shortcut
+[]()
 
-_Slot name shortcuts were contributed by [Caleb Porzio](https://github.com/calebporzio)._
+### Atajo de nombre de ranura
 
-In previous releases of Laravel, slot names were provided using a `name` attribute on the `x-slot` tag:
+_[Caleb Porzio](https://github.com/calebporzio) ha contribuido a los atajos de nombres de ranuras._
+
+En versiones anteriores de Laravel, los nombres de las ranuras se proporcionaban utilizando un atributo `name` en la etiqueta `x-slot`:
 
 ```blade
 <x-alert>
@@ -289,7 +305,7 @@ In previous releases of Laravel, slot names were provided using a `name` attribu
 </x-alert>
 ```
 
-However, beginning in Laravel 9.x, you may specify the slot's name using a convenient, shorter syntax:
+Sin embargo, a partir de Laravel 9.x, puede especificar el nombre de la ranura utilizando una sintaxis conveniente y más corta:
 
 ```xml
 <x-slot:title>
@@ -297,12 +313,13 @@ However, beginning in Laravel 9.x, you may specify the slot's name using a conve
 </x-slot>
 ```
 
-<a name="checked-selected-blade-directives"></a>
-### Checked / Selected Blade Directives
+[]()
 
-_Checked and selected Blade directives were contributed by [Ash Allen](https://github.com/ash-jc-allen) and [Taylor Otwell](https://github.com/taylorotwell)_.
+### Directivas de Hoja Comprobadas / Seleccionadas
 
-For convenience, you may now use the `@checked` directive to easily indicate if a given HTML checkbox input is "checked". This directive will echo `checked` if the provided condition evaluates to `true`:
+Las_directivas Blade comprobadas y seleccionadas_ han sido creadas por_ [Ash Allen](https://github.com/ash-jc-allen) y [Taylor Otwell](https://github.com/taylorotwell)_.
+
+Para mayor comodidad, ahora puede utilizar la directiva `@checked` para indicar fácilmente si una entrada de casilla de verificación HTML está "marcada". Esta directiva hará eco de " `checked"` si la condición proporcionada se evalúa como `verdadera`:
 
 ```blade
 <input type="checkbox"
@@ -311,7 +328,7 @@ For convenience, you may now use the `@checked` directive to easily indicate if 
         @checked(old('active', $user->active)) />
 ```
 
-Likewise, the `@selected` directive may be used to indicate if a given select option should be "selected":
+Del mismo modo, la directiva `@selected` puede utilizarse para indicar si una opción de selección dada debe estar "seleccionada":
 
 ```blade
 <select name="version">
@@ -323,12 +340,13 @@ Likewise, the `@selected` directive may be used to indicate if a given select op
 </select>
 ```
 
-<a name="bootstrap-5-pagination-views"></a>
-### Bootstrap 5 Pagination Views
+[]()
 
-_Bootstrap 5 pagination views were contributed by [Jared Lewis](https://github.com/jrd-lewis)_.
+### Vistas de paginación de Bootstrap 5
 
-Laravel now includes pagination views built using [Bootstrap 5](https://getbootstrap.com/). To use these views instead of the default Tailwind views, you may call the paginator's `useBootstrapFive` method within the `boot` method of your `App\Providers\AppServiceProvider` class:
+Las vistas de paginación de_Bootstrap 5 fueron aportadas por [Jared Lewis](https://github.com/jrd-lewis)_.
+
+Laravel ahora incluye vistas de paginación construidas usando [Bootstrap 5](https://getbootstrap.com/). Para utilizar estas vistas en lugar de las vistas por defecto de Tailwind, puede llamar al método `useBootstrapFive` del paginador dentro del método `boot` de su clase `App\Providers\AppServiceProvider`:
 
     use Illuminate\Pagination\Paginator;
 
@@ -342,12 +360,13 @@ Laravel now includes pagination views built using [Bootstrap 5](https://getboots
         Paginator::useBootstrapFive();
     }
 
-<a name="improved-validation-of-nested-array-data"></a>
-### Improved Validation Of Nested Array Data
+[array-data">]()
 
-_Improved validation of nested array inputs was contributed by [Steve Bauman](https://github.com/stevebauman)_.
+### Validación mejorada de datos de array anidadas
 
-Sometimes you may need to access the value for a given nested array element when assigning validation rules to the attribute. You may now accomplish this using the `Rule::forEach` method. The `forEach` method accepts a closure that will be invoked for each iteration of the array attribute under validation and will receive the attribute's value and explicit, fully-expanded attribute name. The closure should return an array of rules to assign to the array element:
+_Mejora de la validación de las entradas de array anidada fue contribuido por [Steve Bauman](https://github.com/stevebauman)_.
+
+A veces puede ser necesario acceder al valor de un elemento de array anidada dado al asignar reglas de validación al atributo. Ahora puede hacerlo utilizando el método `Rule::forEach`. El método `forEach` acepta un closure que se invocará para cada iteración del atributo array array bajo validación y recibirá el valor del atributo y el nombre explícito y completamente expandido del atributo. El closure debe devolver un array de reglas para asignar al elemento del array:
 
     use App\Rules\HasPermission;
     use Illuminate\Support\Facades\Validator;
@@ -362,53 +381,57 @@ Sometimes you may need to access the value for a given nested array element when
         }),
     ]);
 
-<a name="laravel-breeze-api"></a>
-### Laravel Breeze API & Next.js
+[]()
 
-_The Laravel Breeze API scaffolding and Next.js starter kit was contributed by [Taylor Otwell](https://github.com/taylorotwell) and [Miguel Piedrafita](https://twitter.com/m1guelpf)_.
+### API Laravel Breeze y Next.js
 
-The [Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-next) starter kit has received an "API" scaffolding mode and complimentary [Next.js](https://nextjs.org) [frontend implementation](https://github.com/laravel/breeze-next). This starter kit scaffolding may be used to jump start your Laravel applications that are serving as a backend, Laravel Sanctum authenticated API for a JavaScript frontend.
+_El andamiaje de la API Laravel Breeze y el kit de inicio Next.js_ han sido creados_por [Taylor Otwell](https://github.com/taylorotwell) y [Miguel Piedrafita](https://twitter.com/m1guelpf)_.
 
-<a name="exception-page"></a>
-### Improved Ignition Exception Page
+El kit de inicio de [Laravel](/docs/%7B%7Bversion%7D%7D/starter-kits#breeze-and-next) Breeze ha recibido un modo de andamiaje "API" y una [implementación frontend](https://github.com/laravel/breeze-next) Next. [js](https://nextjs.org) complementaria. Este kit de inicio de andamiaje puede ser utilizado para poner en marcha sus aplicaciones Laravel que están sirviendo como un backend, Laravel Sanctum autenticado API para un frontend JavaScript.
 
-_Ignition is developed by [Spatie](https://spatie.be/)._
+[]()
 
-Ignition, the open source exception debug page created by Spatie, has been redesigned from the ground up. The new, improved Ignition ships with Laravel 9.x and includes light / dark themes, customizable "open in editor" functionality, and more.
+### Página de excepciones de Ignition mejorada
+
+_Ignition está desarrollado por [Spatie](https://spatie.be/)._
+
+Ignition, la página de depuración de excepciones de código abierto creada por Spatie, ha sido rediseñada desde cero. La nueva y mejorada Ignition se entrega con Laravel 9.x e incluye temas claros / oscuros, funcionalidad personalizable "abrir en editor", y mucho más.
 
 <p align="center">
 <img width="100%" src="https://user-images.githubusercontent.com/483853/149235404-f7caba56-ebdf-499e-9883-cac5d5610369.png"/>
 </p>
 
-<a name="improved-route-list"></a>
-### Improved `route:list` CLI Output
+[]()
 
-_Improved `route:list` CLI output was contributed by [Nuno Maduro](https://github.com/nunomaduro)_.
+### Mejora de la salida CLI de route: `list`
 
-The `route:list` CLI output has been significantly improved for the Laravel 9.x release, offering a beautiful new experience when exploring your route definitions.
+La_mejora de `route:list` CLI output fue contribuida por [Nuno Maduro](https://github.com/nunomaduro)_.
+
+La salida CLI de route `:` list ha sido significativamente mejorada para la versión Laravel 9.x, ofreciendo una nueva y hermosa experiencia al explorar sus definiciones de ruta.
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/5457236/148321982-38c8b869-f188-4f42-a3cc-a03451d5216c.png"/>
 </p>
 
-<a name="test-coverage-support-on-artisan-test-Command"></a>
-### Test Coverage Using Artisan `test` Command
+[test-Command">]()
 
-_Test coverage when using the Artisan `test` command was contributed by [Nuno Maduro](https://github.com/nunomaduro)_.
+### Cobertura detest mediante el comando Artisan `test`
 
-The Artisan `test` command has received a new `--coverage` option that you may use to explore the amount of code coverage your tests are providing to your application:
+La_cobertura detest prueba cuando se utiliza el comando de `test` Artisan_ fue contribuido por_ [Nuno](https://github.com/nunomaduro)__ [](https://github.com/nunomaduro)_[Maduro.](https://github.com/nunomaduro)
+
+El comando Artisan `test` ha recibido una nueva opción `--coverage` que puedes utilizar para explorar la cantidad de cobertura de código que tus tests están proporcionando a tu aplicación:
 
 ```shell
 php artisan test --coverage
 ```
 
-The test coverage results will be displayed directly within the CLI output.
+Los resultados de la cobertura de la test serán mostrados directamente dentro de la salida CLI.
 
 <p align="center">
 <img width="100%" src="https://user-images.githubusercontent.com/5457236/150133237-440290c2-3538-4d8e-8eac-4fdd5ec7bd9e.png"/>
 </p>
 
-In addition, if you would like to specify a minimum threshold that your test coverage percentage must meet, you may use the `--min` option. The test suite will fail if the given minimum threshold is not met:
+Además, si desea especificar un umbral mínimo que debe cumplir el porcentaje de cobertura de las test, puede utilizar la opción `--min`. El conjunto de test fallará si no se alcanza el umbral mínimo especificado:
 
 ```shell
 php artisan test --coverage --min=80.3
@@ -418,53 +441,58 @@ php artisan test --coverage --min=80.3
 <img width="100%" src="https://user-images.githubusercontent.com/5457236/149989853-a29a7629-2bfa-4bf3-bbf7-cdba339ec157.png"/>
 </p>
 
-<a name="soketi-echo-server"></a>
-### Soketi Echo Server
+[]()
 
-_The Soketi Echo server was developed by [Alex Renoki](https://github.com/rennokki)_.
+### Servidor Eco Soketi
 
-Although not exclusive to Laravel 9.x, Laravel has recently assisted with the documentation of Soketi, a [Laravel Echo](/docs/{{version}}/broadcasting) compatible Web Socket server written for Node.js. Soketi provides a great, open source alternative to Pusher and Ably for those applications that prefer to manage their own Web Socket server.
+_El servidor Soketi Echo fue desarrollado_ por_ [Alex Renoki](https://github.com/rennokki)_.
 
-For more information on using Soketi, please consult the [broadcasting documentation](/docs/{{version}}/broadcasting) and [Soketi documentation](https://docs.soketi.app/).
+Aunque no es exclusivo de Laravel 9.x, Laravel ha ayudado recientemente con la documentación de Soketi, un servidor Web Socket compatible con [Laravel Echo](/docs/%7B%7Bversion%7D%7D/broadcasting) escrito para Node.js. Soketi proporciona una gran alternativa de código abierto a Pusher y Ably para aquellas aplicaciones que prefieren gestionar su propio servidor Web Socket.
 
-<a name="improved-collections-ide-support"></a>
-### Improved Collections IDE Support
+Para obtener más información sobre el uso de Soketi, consulte la [documentación de difusión](/docs/%7B%7Bversion%7D%7D/broadcasting) y [la documentación de Soketi](https://docs.soketi.app/).
 
-_Improved collections IDE support was contributed by [Nuno Maduro](https://github.com/nunomaduro)_.
+[]()
 
-Laravel 9.x adds improved, "generic" style type definitions to the collections component, improving IDE and static analysis support. IDEs such as [PHPStorm](https://blog.jetbrains.com/phpstorm/2021/12/phpstorm-2021-3-release/#support_for_future_laravel_collections) or static analysis tools such as [PHPStan](https://phpstan.org) will now better understand Laravel collections natively.
+### Soporte mejorado de Collections IDE
+
+La_mejora del soporte de colecciones IDE ha sido aportada por [Nuno Maduro](https://github.com/nunomaduro)_.
+
+Laravel 9.x añade definiciones de tipo mejoradas y de estilo "genérico" al componente collections, mejorando el soporte IDE y el análisis estático. IDEs como [PHPStorm](https://blog.jetbrains.com/phpstorm/2021/12/phpstorm-2021-3-release/#support_for_future_laravel_collections) o herramientas de análisis estático como [PHPStan](https://phpstan.org) ahora entenderán mejor las colecciones de Laravel de forma nativa.
 
 <p align="center">
 <img width="100%" src="https://user-images.githubusercontent.com/5457236/151783350-ed301660-1e09-44c1-b549-85c6db3f078d.gif"/>
 </p>
 
-<a name="new-helpers"></a>
-### New Helpers
+[]()
 
-Laravel 9.x introduces two new, convenient helper functions that you may use in your own application.
+### Nuevos ayudantes
 
-<a name="new-helpers-str"></a>
+Laravel 9.x introduce dos nuevas y prácticas funciones de ayuda que puede utilizar en su propia aplicación.
+
+[]()
+
 #### `str`
 
-The `str` function returns a new `Illuminate\Support\Stringable` instance for the given string. This function is equivalent to the `Str::of` method:
+La función `str` devuelve una nueva instancia `Illuminate\Support\Stringable` para la cadena dada. Esta función es equivalente al método `Str::of`:
 
     $string = str('Taylor')->append(' Otwell');
 
     // 'Taylor Otwell'
 
-If no argument is provided to the `str` function, the function returns an instance of `Illuminate\Support\Str`:
+Si no se proporciona ningún argumento a la función `str`, la función devuelve una instancia de `Illuminate\Support\Str`:
 
     $snake = str()->snake('LaravelFramework');
 
     // 'laravel_framework'
 
-<a name="new-helpers-to-route"></a>
+[]()
+
 #### `to_route`
 
-The `to_route` function generates a redirect HTTP response for a given named route, providing an expressive way to redirect to named routes from your routes and controllers:
+La función `to_route` genera una respuesta HTTP de redirección para una ruta con nombre dada, proporcionando una forma expresiva de redirigir a rutas con nombre desde tus rutas y controladores:
 
     return to_route('users.show', ['user' => 1]);
 
-If necessary, you may pass the HTTP status code that should be assigned to the redirect and any additional response headers as the third and fourth arguments to the to_route method:
+Si es necesario, puede pasar el código de estado HTTP que debería asignarse a la redirección y cualquier cabecera de respuesta adicional como tercer y cuarto argumento al método to_route:
 
     return to_route('users.show', ['user' => 1], 302, ['X-Framework' => 'Laravel']);

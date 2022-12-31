@@ -1,39 +1,42 @@
 # Laravel Pint
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Running Pint](#running-pint)
-- [Configuring Pint](#configuring-pint)
-    - [Presets](#presets)
-    - [Rules](#rules)
-    - [Excluding Files / Folders](#excluding-files-or-folders)
+- [Introducción](#introduction)
+- [Instalación](#installation)
+- [Ejecutar Pint](#running-pint)
+- [Configurar Pint](#configuring-pint)
+  - [Preconfiguraciones](#presets)
+  - [Reglas](#rules)
+  - [Excluyendo Archivos / Carpetas](#excluding-files-or-folders)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-[Laravel Pint](https://github.com/laravel/pint) is an opinionated PHP code style fixer for minimalists. Pint is built on top of PHP-CS-Fixer and makes it simple to ensure that your code style stays clean and consistent.
+## Introducción
 
-Pint is automatically installed with all new Laravel applications so you may start using it immediately. By default, Pint does not require any configuration and will fix code style issues in your code by following the opinionated coding style of Laravel.
+[Laravel Pint](https://github.com/laravel/pint) es un corrector de estilo de código PHP para minimalistas. Pint está construido sobre PHP-CS-Fixer y hace que sea sencillo asegurarse de que el estilo de su código se mantiene limpio y consistente.
 
-<a name="installation"></a>
-## Installation
+Pint se instala automáticamente con todas las nuevas aplicaciones Laravel, por lo que puede empezar a utilizarlo inmediatamente. Por defecto, Pint no requiere ninguna configuración y corregirá los problemas de estilo de código en su código siguiendo el estilo de codificación de Laravel.
 
-Pint is included in recent releases of the Laravel framework, so installation is typically unnecessary. However, for older applications, you may install Laravel Pint via Composer:
+[]()
+
+## Instalación
+
+Pint se incluye en las versiones recientes del framework Laravel, por lo que su instalación suele ser innecesaria. Sin embargo, para aplicaciones más antiguas, puede instalar Laravel Pint a través de Composer:
 
 ```shell
 composer require laravel/pint --dev
 ```
 
-<a name="running-pint"></a>
-## Running Pint
+[]()
 
-You can instruct Pint to fix code style issues by invoking the `pint` binary that is available in your project's `vendor/bin` directory:
+## Ejecutando Pint
+
+Puedes ordenar a Pint que corrija los problemas de estilo de código invocando el binario `pint` que está disponible en el directorio `vendor/bin` de tu proyecto:
 
 ```shell
 ./vendor/bin/pint
 ```
 
-You may also run Pint on specific files or directories:
+También puede ejecutar Pint en archivos o directorios específicos:
 
 ```shell
 ./vendor/bin/pint app/Models
@@ -41,22 +44,23 @@ You may also run Pint on specific files or directories:
 ./vendor/bin/pint app/Models/User.php
 ```
 
-Pint will display a thorough list of all of the files that it updates. You can view even more detail about Pint's changes by providing the `-v` option when invoking Pint:
+Pint mostrará una lista completa de todos los archivos que actualiza. Puede ver incluso más detalles sobre los cambios de Pint proporcionando la opción `-v` cuando invoque a Pint:
 
 ```shell
 ./vendor/bin/pint -v
 ```
 
-If you would like Pint to simply inspect your code for style errors without actually changing the files, you may use the `--test` option:
+Si desea que Pint simplemente inspeccione su código en busca de errores de estilo sin cambiar realmente los archivos, puede utilizar la opción `--test`:
 
 ```shell
 ./vendor/bin/pint --test
 ```
 
-<a name="configuring-pint"></a>
-## Configuring Pint
+[]()
 
-As previously mentioned, Pint does not require any configuration. However, if you wish to customize the presets, rules, or inspected folders, you may do so by creating a `pint.json` file in your project's root directory:
+## Configurando Pint
+
+Como se mencionó anteriormente, Pint no requiere ninguna configuración. Sin embargo, si desea personalizar los preajustes, reglas o carpetas inspeccionadas, puede hacerlo creando un archivo `pint.json` en el directorio raíz de su proyecto:
 
 ```json
 {
@@ -64,22 +68,23 @@ As previously mentioned, Pint does not require any configuration. However, if yo
 }
 ```
 
-In addition, if you wish to use a `pint.json` from a specific directory, you may provide the `--config` option when invoking Pint:
+Además, si desea utilizar un pint. `json` de un directorio específico, puede proporcionar la opción `--config` al invocar Pint:
 
 ```shell
 pint --config vendor/my-company/coding-style/pint.json
 ```
 
-<a name="presets"></a>
-### Presets
+[]()
 
-Presets defines a set of rules that can be used to fix code style issues in your code. By default, Pint uses the `laravel` preset, which fixes issues by following the opinionated coding style of Laravel. However, you may specify a different preset by providing the `--preset` option to Pint:
+### Preconfiguraciones
+
+Presets define un conjunto de reglas que pueden utilizarse para corregir problemas de estilo en su código. Por defecto, Pint utiliza el preset `laravel`, que corrige los problemas siguiendo el estilo de codificación de Laravel. Sin embargo, puede especificar un preajuste diferente proporcionando la opción `--preset` a Pint:
 
 ```shell
 pint --preset psr12
 ```
 
-If you wish, you may also set the preset in your project's `pint.json` file:
+Si lo desea, también puede establecer el preajuste en el archivo `pint.json` de su proyecto:
 
 ```json
 {
@@ -87,14 +92,15 @@ If you wish, you may also set the preset in your project's `pint.json` file:
 }
 ```
 
-Pint's currently supported presets are: `laravel`, `psr12`, and `symfony`.
+Los preajustes actualmente soportados por Pint son: `laravel`, `psr12`, y `symfony`.
 
-<a name="rules"></a>
-### Rules
+[]()
 
-Rules are style guidelines that Pint will use to fix code style issues in your code. As mentioned above, presets are predefined groups of rules that should be perfect for most PHP projects, so you typically will not need to worry about the individual rules they contain.
+### Reglas
 
-However, if you wish, you may enable or disable specific rules in your `pint.json` file:
+Las reglas son directrices de estilo que Pint utilizará para corregir problemas de estilo en tu código. Como se mencionó anteriormente, los preajustes son grupos predefinidos de reglas que deberían ser perfectas para la mayoría de los proyectos PHP, por lo que normalmente no tendrá que preocuparse por las reglas individuales que contienen.
+
+Sin embargo, si lo desea, puede activar o desactivar reglas específicas en su archivo `pint.json`:
 
 ```json
 {
@@ -110,12 +116,13 @@ However, if you wish, you may enable or disable specific rules in your `pint.jso
 }
 ```
 
-Pint is built on top of [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer). Therefore, you may use any of its rules to fix code style issues in your project: [PHP-CS-Fixer Configurator](https://mlocati.github.io/php-cs-fixer-configurator).
+Pint está construido sobre [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer). Por lo tanto, puede usar cualquiera de sus reglas para arreglar problemas de estilo de código en su proyecto: [Configurador PHP](https://mlocati.github.io/php-cs-fixer-configurator)-CS-Fixer.
 
-<a name="excluding-files-or-folders"></a>
-### Excluding Files / Folders
+[]()
 
-By default, Pint will inspect all `.php` files in your project except those in the `vendor` directory. If you wish to exclude more folders, you may do so using the `exclude` configuration option:
+### Excluyendo Archivos / Carpetas
+
+Por defecto, Pint inspeccionará todos los archivos `.` php de su proyecto excepto los del directorio `vendor`. Si desea excluir más carpetas, puede hacerlo utilizando la opción de configuración `excluir`:
 
 ```json
 {
@@ -125,7 +132,7 @@ By default, Pint will inspect all `.php` files in your project except those in t
 }
 ```
 
-If you wish to exclude all files that contain a given name pattern, you may do so using the `notName` configuration option:
+Si desea excluir todos los archivos que contengan un determinado patrón de nombres, puede hacerlo utilizando la opción de configuración `notName`:
 
 ```json
 {
@@ -135,7 +142,7 @@ If you wish to exclude all files that contain a given name pattern, you may do s
 }
 ```
 
-If you would like to exclude a file by providing an exact path to the file, you may do so using the `notPath` configuration option:
+Si desea excluir un fichero proporcionando una ruta exacta al fichero, puede hacerlo utilizando la opción de configuración `notPath`:
 
 ```json
 {

@@ -1,54 +1,56 @@
 # Laravel Telescope
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-    - [Local Only Installation](#local-only-installation)
-    - [Configuration](#configuration)
-    - [Data Pruning](#data-pruning)
-    - [Dashboard Authorization](#dashboard-authorization)
-- [Upgrading Telescope](#upgrading-telescope)
-- [Filtering](#filtering)
-    - [Entries](#filtering-entries)
-    - [Batches](#filtering-batches)
-- [Tagging](#tagging)
-- [Available Watchers](#available-watchers)
-    - [Batch Watcher](#batch-watcher)
-    - [Cache Watcher](#cache-watcher)
-    - [Command Watcher](#command-watcher)
-    - [Dump Watcher](#dump-watcher)
-    - [Event Watcher](#event-watcher)
-    - [Exception Watcher](#exception-watcher)
-    - [Gate Watcher](#gate-watcher)
-    - [HTTP Client Watcher](#http-client-watcher)
-    - [Job Watcher](#job-watcher)
-    - [Log Watcher](#log-watcher)
-    - [Mail Watcher](#mail-watcher)
-    - [Model Watcher](#model-watcher)
-    - [Notification Watcher](#notification-watcher)
-    - [Query Watcher](#query-watcher)
-    - [Redis Watcher](#redis-watcher)
-    - [Request Watcher](#request-watcher)
-    - [Schedule Watcher](#schedule-watcher)
-    - [View Watcher](#view-watcher)
-- [Displaying User Avatars](#displaying-user-avatars)
+- [Introducción](#introduction)
+- [Instalación](#installation)
+  - [Instalación sólo local](#local-only-installation)
+  - [Configuración](#configuration)
+  - [Poda de datos](#data-pruning)
+  - [Autorización del panel de control](#dashboard-authorization)
+- [Actualización de Telescope](#upgrading-telescope)
+- [Filtrado](#filtering)
+  - [Entradas](#filtering-entries)
+  - [Lotes](#filtering-batches)
+- [Etiquetado](#tagging)
+- [Observadores disponibles](#available-watchers)
+  - [Vigilancia por lotes](#batch-watcher)
+  - [cache-watcher">Vigilancia decache](<#\<glossary variable=>)
+  - [Vigilancia de comandos](#command-watcher)
+  - [Vigilancia de volcados](#dump-watcher)
+  - [Vigilancia de eventos](#event-watcher)
+  - [Vigilancia de excepciones](#exception-watcher)
+  - [gate-watcher">Vigilancia degate](<#\<glossary variable=>)
+  - [Vigilancia de clientes HTTP](#http-client-watcher)
+  - [Vigilancia de trabajos](#job-watcher)
+  - [Vigilancia de registros](#log-watcher)
+  - [Vigilancia de correo](#mail-watcher)
+  - [Vigilancia de modelos](#model-watcher)
+  - [Vigilancia de notificaciones](#notification-watcher)
+  - [Vigilancia de consultas](#query-watcher)
+  - [Vigilancia de Redis](#redis-watcher)
+  - [Vigilancia de solicitudes](#request-watcher)
+  - [Vigilancia de horarios](#schedule-watcher)
+  - [Observación de vistas](#view-watcher)
+- [Visualización de avatares de usuario](#displaying-user-avatars)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-[Laravel Telescope](https://github.com/laravel/telescope) makes a wonderful companion to your local Laravel development environment. Telescope provides insight into the requests coming into your application, exceptions, log entries, database queries, queued jobs, mail, notifications, cache operations, scheduled tasks, variable dumps, and more.
+## Introducción
 
-<img src="https://laravel.com/img/docs/telescope-example.png">
+[Laravel Telescope](https://github.com/laravel/telescope) es un maravilloso compañero para tu entorno de desarrollo local de Laravel. Telescope proporciona información sobre las peticiones que llegan a tu aplicación, excepciones, entradas de registro, consultas a bases de datos, trabajos en cola, correo, notificaciones, operaciones de cache, tareas programadas, volcados de variables y mucho más.
 
-<a name="installation"></a>
-## Installation
+<img src="https://laravel.com/img/docs/telescope-example.png"/>
 
-You may use the Composer package manager to install Telescope into your Laravel project:
+[]()
+
+## Instalación
+
+Puedes utilizar el gestor de paquetes Composer para instalar Telescope en tu proyecto Laravel:
 
 ```shell
 composer require laravel/telescope
 ```
 
-After installing Telescope, publish its assets using the `telescope:install` Artisan command. After installing Telescope, you should also run the `migrate` command in order to create the tables needed to store Telescope's data:
+Después de instalar Telescope, publica sus activos utilizando el comando `telescope:install` Artisan. Después de instalar Telescope, también debes ejecutar el comando `migrate` para crear las tablas necesarias para almacenar los datos de Telescope:
 
 ```shell
 php artisan telescope:install
@@ -56,15 +58,17 @@ php artisan telescope:install
 php artisan migrate
 ```
 
-<a name="migration-customization"></a>
-#### Migration Customization
+[]()
 
-If you are not going to use Telescope's default migrations, you should call the `Telescope::ignoreMigrations` method in the `register` method of your application's `App\Providers\AppServiceProvider` class. You may export the default migrations using the following command: `php artisan vendor:publish --tag=telescope-migrations`
+#### Personalización de la migración
 
-<a name="local-only-installation"></a>
-### Local Only Installation
+Si no vas a utilizar las migraciones por defecto de Telescope, debes llamar al método `Telescope::ignoreMigrations` en el método `register` de la clase `App\Providers\AppServiceProvider` de tu aplicación. Puede exportar las migraciones por defecto utilizando el siguiente comando: `php artisan vendor:publish --tag=telescope-migrations`
 
-If you plan to only use Telescope to assist your local development, you may install Telescope using the `--dev` flag:
+[]()
+
+### Instalación sólo local
+
+Si planea utilizar Telescope únicamente para asistir su desarrollo local, puede instalar Telescope utilizando la bandera `--dev`:
 
 ```shell
 composer require laravel/telescope --dev
@@ -74,7 +78,7 @@ php artisan telescope:install
 php artisan migrate
 ```
 
-After running `telescope:install`, you should remove the `TelescopeServiceProvider` service provider registration from your application's `config/app.php` configuration file. Instead, manually register Telescope's service providers in the `register` method of your `App\Providers\AppServiceProvider` class. We will ensure the current environment is `local` before registering the providers:
+Después de ejecutar `telescope:install`, debe eliminar el registro del proveedor de servicios `TelescopeServiceProvider` del archivo de configuración `config/app.` php de su aplicación. En su lugar, registra manualmente los proveedores de servicios de Telescope en el método `register` de tu clase `App\Providers\AppServiceProvider`. Nos aseguraremos de que el entorno actual es `local` antes de registrar los proveedores:
 
     /**
      * Register any application services.
@@ -89,7 +93,7 @@ After running `telescope:install`, you should remove the `TelescopeServiceProvid
         }
     }
 
-Finally, you should also prevent the Telescope package from being [auto-discovered](/docs/{{version}}/packages#package-discovery) by adding the following to your `composer.json` file:
+Por último, también debe evitar que el paquete Telescope sea [auto-descubierto](/docs/%7B%7Bversion%7D%7D/packages#package-discovery) añadiendo lo siguiente a su archivo `composer.json`:
 
 ```json
 "extra": {
@@ -101,30 +105,33 @@ Finally, you should also prevent the Telescope package from being [auto-discover
 },
 ```
 
-<a name="configuration"></a>
-### Configuration
+[]()
 
-After publishing Telescope's assets, its primary configuration file will be located at `config/telescope.php`. This configuration file allows you to configure your [watcher options](#available-watchers). Each configuration option includes a description of its purpose, so be sure to thoroughly explore this file.
+### Configuración
 
-If desired, you may disable Telescope's data collection entirely using the `enabled` configuration option:
+Después de publicar los activos de Telescope, su archivo de configuración principal se encontrará en `config/telescope.php`. Este archivo de configuración permite configurar las [opciones del observador](#available-watchers). Cada opción de configuración incluye una descripción de su propósito, así que asegúrese de explorar a fondo este archivo.
+
+Si lo desea, puede desactivar por completo la recopilación de datos de Telescope utilizando la opción de configuración `enabled`:
 
     'enabled' => env('TELESCOPE_ENABLED', true),
 
-<a name="data-pruning"></a>
-### Data Pruning
+[]()
 
-Without pruning, the `telescope_entries` table can accumulate records very quickly. To mitigate this, you should [schedule](/docs/{{version}}/scheduling) the `telescope:prune` Artisan command to run daily:
+### Poda de datos
+
+Sin poda, la tabla `telescope_entries` puede acumular registros muy rápidamente. Para mitigar esto, debe [programar](/docs/%7B%7Bversion%7D%7D/scheduling) el comando `telescope:prune` Artisan para que se ejecute diariamente:
 
     $schedule->command('telescope:prune')->daily();
 
-By default, all entries older than 24 hours will be pruned. You may use the `hours` option when calling the command to determine how long to retain Telescope data. For example, the following command will delete all records created over 48 hours ago:
+Por defecto, todas las entradas de más de 24 horas serán eliminadas. Puede utilizar la opción `horas` al llamar al comando para determinar cuánto tiempo se conservarán los datos de Telescope. Por ejemplo, el siguiente comando eliminará todos los registros creados hace más de 48 horas:
 
     $schedule->command('telescope:prune --hours=48')->daily();
 
-<a name="dashboard-authorization"></a>
-### Dashboard Authorization
+[]()
 
-The Telescope dashboard may be accessed at the `/telescope` route. By default, you will only be able to access this dashboard in the `local` environment. Within your `app/Providers/TelescopeServiceProvider.php` file, there is an [authorization gate](/docs/{{version}}/authorization#gates) definition. This authorization gate controls access to Telescope in **non-local** environments. You are free to modify this gate as needed to restrict access to your Telescope installation:
+### Autorización del panel de control
+
+Puede acceder al panel de control de Telescope en la ruta `/telescope`. Por defecto, sólo podrás acceder a este tablero en el entorno `local`. En el archivo `app/Providers/TelescopeServiceProvider.` php hay una definición de [gate](/docs/%7B%7Bversion%7D%7D/authorization#gates) [gate](/docs/%7B%7Bversion%7D%7D/authorization#gates) de [autorización](/docs/%7B%7Bversion%7D%7D/authorization#gates). Esta gate de autorización controla el acceso a Telescope en entornos **no locales**. Usted es libre de modificar esta gate según sea necesario para restringir el acceso a su instalación de Telescope:
 
     /**
      * Register the Telescope gate.
@@ -142,21 +149,22 @@ The Telescope dashboard may be accessed at the `/telescope` route. By default, y
         });
     }
 
-> **Warning**  
-> You should ensure you change your `APP_ENV` environment variable to `production` in your production environment. Otherwise, your Telescope installation will be publicly available.
+> **Advertencia**  
+> Debe asegurarse de cambiar su variable de entorno `APP_ENV` a `producción` en su entorno de producción. De lo contrario, su instalación de Telescope estará a disposición del público.
 
-<a name="upgrading-telescope"></a>
-## Upgrading Telescope
+[]()
 
-When upgrading to a new major version of Telescope, it's important that you carefully review [the upgrade guide](https://github.com/laravel/telescope/blob/master/UPGRADE.md).
+## Actualización de Telescope
 
-In addition, when upgrading to any new Telescope version, you should re-publish Telescope's assets:
+Al actualizar a una nueva versión principal de Telescope, es importante que revise cuidadosamente [la guía de actualización](https://github.com/laravel/telescope/blob/master/UPGRADE.md).
+
+Además, al actualizar a cualquier nueva versión de Telescope, debe volver a publicar los activos de Telescope:
 
 ```shell
 php artisan telescope:publish
 ```
 
-To keep the assets up-to-date and avoid issues in future updates, you may add the `telescope:publish` command to the `post-update-cmd` scripts in your application's `composer.json` file:
+Para mantener los activos actualizados y evitar problemas en futuras actualizaciones, puede añadir el comando `telescope:publish` a los scripts `post-update-cmd` en el archivo `composer.json` de su aplicación:
 
 ```json
 {
@@ -168,13 +176,15 @@ To keep the assets up-to-date and avoid issues in future updates, you may add th
 }
 ```
 
-<a name="filtering"></a>
-## Filtering
+[]()
 
-<a name="filtering-entries"></a>
-### Entries
+## Filtrado
 
-You may filter the data that is recorded by Telescope via the `filter` closure that is defined in your `App\Providers\TelescopeServiceProvider` class. By default, this closure records all data in the `local` environment and exceptions, failed jobs, scheduled tasks, and data with monitored tags in all other environments:
+[]()
+
+### Entradas
+
+Usted puede filtrar los datos que se registran por Telescope a través del closure de `filtro` que se define en su `App\Providers\TelescopeServiceProvider` clase. Por defecto, este closure registra todos los datos en el entorno `local` y las excepciones, los trabajos fallidos, las tareas programadas y los datos con etiquetas supervisadas en todos los demás entornos:
 
     use Laravel\Telescope\IncomingEntry;
     use Laravel\Telescope\Telescope;
@@ -201,10 +211,11 @@ You may filter the data that is recorded by Telescope via the `filter` closure t
         });
     }
 
-<a name="filtering-batches"></a>
-### Batches
+[]()
 
-While the `filter` closure filters data for individual entries, you may use the `filterBatch` method to register a closure that filters all data for a given request or console command. If the closure returns `true`, all of the entries are recorded by Telescope:
+### Lotes
+
+Mientras que el closure `filter` filtra los datos de entradas individuales, puede utilizar el método `filterBatch` para registrar un closure que filtre todos los datos de una solicitud o comando de consola determinados. Si el closure devuelve `true`, todas las entradas son registradas por Telescope:
 
     use Illuminate\Support\Collection;
     use Laravel\Telescope\Telescope;
@@ -233,10 +244,11 @@ While the `filter` closure filters data for individual entries, you may use the 
         });
     }
 
-<a name="tagging"></a>
-## Tagging
+[]()
 
-Telescope allows you to search entries by "tag". Often, tags are Eloquent model class names or authenticated user IDs which Telescope automatically adds to entries. Occasionally, you may want to attach your own custom tags to entries. To accomplish this, you may use the `Telescope::tag` method. The `tag` method accepts a closure which should return an array of tags. The tags returned by the closure will be merged with any tags Telescope would automatically attach to the entry. Typically, you should call the `tag` method within the `register` method of your `App\Providers\TelescopeServiceProvider` class:
+## Etiquetado
+
+Telescope permite buscar entradas por "etiqueta". A menudo, las etiquetas son nombres de clases modelo de Eloquent o ID de usuarios autenticados que Telescope añade automáticamente a las entradas. Ocasionalmente, es posible que desee adjuntar sus propias etiquetas personalizadas a las entradas. Para ello, puede utilizar el método `Telescope::tag`. El método `tag` acepta un closure que debe devolver una array de etiquetas. Las etiquetas devueltas por el closure se combinarán con cualquier etiqueta que Telescope adjunte automáticamente a la entrada. Por lo general, usted debe llamar al método de `la etiqueta` en el método de `registro` de su clase `AppProviders\TelescopeServiceProvider`:
 
     use Laravel\Telescope\IncomingEntry;
     use Laravel\Telescope\Telescope;
@@ -257,10 +269,11 @@ Telescope allows you to search entries by "tag". Often, tags are Eloquent model 
         });
      }
 
-<a name="available-watchers"></a>
-## Available Watchers
+[]()
 
-Telescope "watchers" gather application data when a request or console command is executed. You may customize the list of watchers that you would like to enable within your `config/telescope.php` configuration file:
+## Observadores disponibles
+
+Los "observadores" de Telescope recopilan datos de la aplicación cuando se ejecuta una solicitud o un comando de consola. Puede personalizar la lista de observadores que le gustaría habilitar dentro de su archivo de configuración `config/telescope.php`:
 
     'watchers' => [
         Watchers\CacheWatcher::class => true,
@@ -268,7 +281,7 @@ Telescope "watchers" gather application data when a request or console command i
         ...
     ],
 
-Some watchers also allow you to provide additional customization options:
+Algunos observadores también permiten proporcionar opciones de personalización adicionales:
 
     'watchers' => [
         Watchers\QueryWatcher::class => [
@@ -278,20 +291,23 @@ Some watchers also allow you to provide additional customization options:
         ...
     ],
 
-<a name="batch-watcher"></a>
-### Batch Watcher
+[]()
 
-The batch watcher records information about queued [batches](/docs/{{version}}/queues#job-batching), including the job and connection information.
+### Observador de lotes
 
-<a name="cache-watcher"></a>
-### Cache Watcher
+El observador de lotes registra información sobre [los lotes](/docs/%7B%7Bversion%7D%7D/queues#job-batching) en cola, incluyendo el trabajo y la información de conexión.
 
-The cache watcher records data when a cache key is hit, missed, updated and forgotten.
+[]()
 
-<a name="command-watcher"></a>
-### Command Watcher
+### Vigilancia decache
 
-The command watcher records the arguments, options, exit code, and output whenever an Artisan command is executed. If you would like to exclude certain commands from being recorded by the watcher, you may specify the command in the `ignore` option within your `config/telescope.php` file:
+El observador de cache registra los datos cuando una clave de cache es golpeada, perdida, actualizada y olvidada.
+
+[]()
+
+### Vigilancia de comandos
+
+El observador de comandos registra los argumentos, las opciones, el código de salida y la salida cada vez que se ejecuta un comando de Artisan. Si deseas excluir ciertos comandos de ser registrados por el observador, puedes especificar el comando en la opción `ignorar` dentro de tu archivo `config/telescope.php`:
 
     'watchers' => [
         Watchers\CommandWatcher::class => [
@@ -301,25 +317,29 @@ The command watcher records the arguments, options, exit code, and output whenev
         ...
     ],
 
-<a name="dump-watcher"></a>
-### Dump Watcher
+[]()
 
-The dump watcher records and displays your variable dumps in Telescope. When using Laravel, variables may be dumped using the global `dump` function. The dump watcher tab must be open in a browser for the dump to be recorded, otherwise, the dumps will be ignored by the watcher.
+### Vigilancia de volcados
 
-<a name="event-watcher"></a>
-### Event Watcher
+El observador de volcado registra y muestra tus volcados de variables en Telescope. Cuando se utiliza Laravel, las variables pueden ser volcados utilizando la función de `volcado` global. La pestaña del observador de volcado debe estar abierta en un navegador para que el volcado se registre, de lo contrario, los volcados serán ignorados por el observador.
 
-The event watcher records the payload, listeners, and broadcast data for any [events](/docs/{{version}}/events) dispatched by your application. The Laravel framework's internal events are ignored by the Event watcher.
+[]()
 
-<a name="exception-watcher"></a>
-### Exception Watcher
+### Vigilancia de eventos
 
-The exception watcher records the data and stack trace for any reportable exceptions that are thrown by your application.
+El observador de eventos registra la carga útil, los oyentes y los datos de difusión de los [eventos](/docs/%7B%7Bversion%7D%7D/events) enviados por la aplicación. El observador de eventos ignora los eventos internos del framework Laravel.
 
-<a name="gate-watcher"></a>
-### Gate Watcher
+[]()
 
-The gate watcher records the data and result of [gate and policy](/docs/{{version}}/authorization) checks by your application. If you would like to exclude certain abilities from being recorded by the watcher, you may specify those in the `ignore_abilities` option in your `config/telescope.php` file:
+### Vigilancia de excepciones
+
+El observador de excepciones registra los datos y el seguimiento de pila de cualquier excepción notificable que sea lanzada por su aplicación.
+
+[]()
+
+### Vigilancia degate
+
+El observador de gate registra los datos y el resultado de las comprobaciones de [gate y policy](/docs/%7B%7Bversion%7D%7D/authorization) realizadas por tu aplicación. Si deseas excluir ciertas habilidades de ser registradas por el observador, puedes especificarlas en la opción `ignore_abilities` en tu archivo `config/telescope.php`:
 
     'watchers' => [
         Watchers\GateWatcher::class => [
@@ -329,30 +349,35 @@ The gate watcher records the data and result of [gate and policy](/docs/{{versio
         ...
     ],
 
-<a name="http-client-watcher"></a>
-### HTTP Client Watcher
+[]()
 
-The HTTP client watcher records outgoing [HTTP client requests](/docs/{{version}}/http-client) made by your application.
+### Vigilancia de clientes HTTP
 
-<a name="job-watcher"></a>
-### Job Watcher
+El observador de clientes HTTP registra [las peticiones](/docs/%7B%7Bversion%7D%7D/http-client) salientes [de clientes HTTP](/docs/%7B%7Bversion%7D%7D/http-client) realizadas por su aplicación.
 
-The job watcher records the data and status of any [jobs](/docs/{{version}}/queues) dispatched by your application.
+[]()
 
-<a name="log-watcher"></a>
-### Log Watcher
+### Vigilancia de trabajos
 
-The log watcher records the [log data](/docs/{{version}}/logging) for any logs written by your application.
+El observador de trabajos registra los datos y el estado de los [trabajos](/docs/%7B%7Bversion%7D%7D/queues) enviados por la aplicación.
 
-<a name="mail-watcher"></a>
-### Mail Watcher
+[]()
 
-The mail watcher allows you to view an in-browser preview of [emails](/docs/{{version}}/mail) sent by your application along with their associated data. You may also download the email as an `.eml` file.
+### Vigilancia de registros
 
-<a name="model-watcher"></a>
-### Model Watcher
+El observador de registros registra los [datos](/docs/%7B%7Bversion%7D%7D/logging) de cualquier registro escrito por su aplicación.
 
-The model watcher records model changes whenever an Eloquent [model event](/docs/{{version}}/eloquent#events) is dispatched. You may specify which model events should be recorded via the watcher's `events` option:
+[]()
+
+### Vigilancia de correo
+
+El observador de correo le permite ver una vista previa en el navegador de los [correos electrónicos](/docs/%7B%7Bversion%7D%7D/mail) enviados por su aplicación junto con sus datos asociados. También puede descargar el correo electrónico como un archivo `.eml`.
+
+[]()
+
+### Vigilancia de modelos
+
+El observador del modelo registra los cambios del modelo cada vez que se envía un evento de [modelo](/docs/%7B%7Bversion%7D%7D/eloquent#events) de Eloquent. Puedes especificar qué eventos de modelo deben registrarse a través de la opción de `eventos` del observador:
 
     'watchers' => [
         Watchers\ModelWatcher::class => [
@@ -362,7 +387,7 @@ The model watcher records model changes whenever an Eloquent [model event](/docs
         ...
     ],
 
-If you would like to record the number of models hydrated during a given request, enable the `hydrations` option:
+Si desea registrar el número de modelos hidratados durante una petición determinada, active la opción de `hidratación`:
 
     'watchers' => [
         Watchers\ModelWatcher::class => [
@@ -373,15 +398,17 @@ If you would like to record the number of models hydrated during a given request
         ...
     ],
 
-<a name="notification-watcher"></a>
-### Notification Watcher
+[]()
 
-The notification watcher records all [notifications](/docs/{{version}}/notifications) sent by your application. If the notification triggers an email and you have the mail watcher enabled, the email will also be available for preview on the mail watcher screen.
+### Vigilancia de notificaciones
 
-<a name="query-watcher"></a>
-### Query Watcher
+El observador de notificaciones registra todas las [notificaciones](/docs/%7B%7Bversion%7D%7D/notifications) enviadas por su aplicación. Si la notificación desencadena un correo electrónico y tienes habilitado el observador de correo, el correo electrónico también estará disponible para su previsualización en la pantalla del observador de correo.
 
-The query watcher records the raw SQL, bindings, and execution time for all queries that are executed by your application. The watcher also tags any queries slower than 100 milliseconds as `slow`. You may customize the slow query threshold using the watcher's `slow` option:
+[]()
+
+### Vigilancia de consultas
+
+El observador de consultas registra el SQL sin procesar, los enlaces y el tiempo de ejecución de todas las consultas ejecutadas por la aplicación. El observador también etiqueta como `lenta` cualquier consulta que sea más lenta de 100 milisegundos. Puede personalizar el umbral de consultas lentas utilizando la opción `slow` del observador:
 
     'watchers' => [
         Watchers\QueryWatcher::class => [
@@ -391,15 +418,17 @@ The query watcher records the raw SQL, bindings, and execution time for all quer
         ...
     ],
 
-<a name="redis-watcher"></a>
-### Redis Watcher
+[]()
 
-The Redis watcher records all [Redis](/docs/{{version}}/redis) commands executed by your application. If you are using Redis for caching, cache commands will also be recorded by the Redis watcher.
+### Vigilancia de Redis
 
-<a name="request-watcher"></a>
-### Request Watcher
+El observador de Redis registra todos los comandos [de Redis](/docs/%7B%7Bversion%7D%7D/redis) ejecutados por su aplicación. Si está utilizando Redis para el almacenamiento en caché, los comandos de cache también serán registrados por el observador de Redis.
 
-The request watcher records the request, headers, session, and response data associated with any requests handled by the application. You may limit your recorded response data via the `size_limit` (in kilobytes) option:
+[]()
+
+### Vigilancia de solicitudes
+
+El observador de peticiones registra la petición, las cabeceras, la sesión y los datos de respuesta asociados a cualquier petición gestionada por la aplicación. Puede limitar los datos de respuesta registrados mediante la opción `size_limit` (en kilobytes):
 
     'watchers' => [
         Watchers\RequestWatcher::class => [
@@ -409,20 +438,23 @@ The request watcher records the request, headers, session, and response data ass
         ...
     ],
 
-<a name="schedule-watcher"></a>
-### Schedule Watcher
+[]()
 
-The schedule watcher records the command and output of any [scheduled tasks](/docs/{{version}}/scheduling) run by your application.
+### Vigilancia de horarios
 
-<a name="view-watcher"></a>
-### View Watcher
+El observador de programación registra el comando y la salida de cualquier [tarea programada](/docs/%7B%7Bversion%7D%7D/scheduling) ejecutada por su aplicación.
 
-The view watcher records the [view](/docs/{{version}}/views) name, path, data, and "composers" used when rendering views.
+[]()
 
-<a name="displaying-user-avatars"></a>
-## Displaying User Avatars
+### Observación de vistas
 
-The Telescope dashboard displays the user avatar for the user that was authenticated when a given entry was saved. By default, Telescope will retrieve avatars using the Gravatar web service. However, you may customize the avatar URL by registering a callback in your `App\Providers\TelescopeServiceProvider` class. The callback will receive the user's ID and email address and should return the user's avatar image URL:
+El observador de vistas registra el nombre de [la vista](/docs/%7B%7Bversion%7D%7D/views), la ruta, los datos y los "compositores" utilizados al renderizar las vistas.
+
+[]()
+
+## Visualización de avatares de usuario
+
+El panel de control de Telescope muestra el avatar del usuario que se autenticó cuando se guardó una entrada determinada. Por defecto, Telescope recuperará los avatares utilizando el servicio web Gravatar. Sin embargo, puede personalizar la URL del avatar mediante el registro de una devolución de llamada en su clase `AppProviders\TelescopeServiceProvider`. El callback recibirá el ID del usuario y la dirección de correo electrónico y debe devolver la URL de la imagen de avatar del usuario:
 
     use App\Models\User;
     use Laravel\Telescope\Telescope;

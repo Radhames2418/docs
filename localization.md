@@ -1,22 +1,23 @@
-# Localization
+# Localización
 
-- [Introduction](#introduction)
-    - [Configuring The Locale](#configuring-the-locale)
-    - [Pluralization Language](#pluralization-language)
-- [Defining Translation Strings](#defining-translation-strings)
-    - [Using Short Keys](#using-short-keys)
-    - [Using Translation Strings As Keys](#using-translation-strings-as-keys)
-- [Retrieving Translation Strings](#retrieving-translation-strings)
-    - [Replacing Parameters In Translation Strings](#replacing-parameters-in-translation-strings)
-    - [Pluralization](#pluralization)
-- [Overriding Package Language Files](#overriding-package-language-files)
+- [Introducción](#introduction)
+  - [Configuración regional](#configuring-the-locale)
+  - [Pluralización del lenguaje](#pluralization-language)
+- [Definición de cadenas de traducción](#defining-translation-strings)
+  - [Uso de claves abreviadas](#using-short-keys)
+  - [Uso de cadenas de traducción como claves](#using-translation-strings-as-keys)
+- [Recuperación de cadenas de traducción](#retrieving-translation-strings)
+  - [Sustitución de parámetros en cadenas de traducción](#replacing-parameters-in-translation-strings)
+  - [Pluralización](#pluralization)
+- [Anulación de los archivos de idioma del paquete](#overriding-package-language-files)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-Laravel's localization features provide a convenient way to retrieve strings in various languages, allowing you to easily support multiple languages within your application.
+## Introducción
 
-Laravel provides two ways to manage translation strings. First, language strings may be stored in files within the `lang` directory. Within this directory, there may be subdirectories for each language supported by the application. This is the approach Laravel uses to manage translation strings for built-in Laravel features such as validation error messages:
+Las características de localización de Laravel proporcionan una forma conveniente de recuperar cadenas en varios idiomas, permitiéndote soportar fácilmente múltiples idiomas dentro de tu aplicación.
+
+Laravel proporciona dos formas de gestionar las cadenas de traducción. En primer lugar, las cadenas de idioma se pueden almacenar en archivos dentro del directorio `lang`. Dentro de este directorio, puede haber subdirectorios para cada idioma soportado por la aplicación. Este es el enfoque que Laravel utiliza para gestionar las cadenas de traducción para las características integradas de Laravel, como los mensajes de error de validación:
 
     /lang
         /en
@@ -24,20 +25,21 @@ Laravel provides two ways to manage translation strings. First, language strings
         /es
             messages.php
 
-Or, translation strings may be defined within JSON files that are placed within the `lang` directory. When taking this approach, each language supported by your application would have a corresponding JSON file within this directory. This approach is recommended for applications that have a large number of translatable strings:
+O bien, las cadenas de traducción se pueden definir dentro de archivos JSON que se colocan dentro del directorio `lang`. Cuando se adopta este enfoque, cada idioma soportado por su aplicación tendría un archivo JSON correspondiente dentro de este directorio. Este enfoque se recomienda para aplicaciones que tienen un gran número de cadenas traducibles:
 
     /lang
         en.json
         es.json
 
-We'll discuss each approach to managing translation strings within this documentation.
+Discutiremos cada aproximación a la gestión de cadenas de traducción dentro de esta documentación.
 
-<a name="configuring-the-locale"></a>
-### Configuring The Locale
+[]()
 
-The default language for your application is stored in the `config/app.php` configuration file's `locale` configuration option. You are free to modify this value to suit the needs of your application.
+### Configuración de la localización
 
-You may modify the default language for a single HTTP request at runtime using the `setLocale` method provided by the `App` facade:
+El idioma predeterminado para su aplicación se almacena en la opción de configuración `regional` del archivo de configuración `config/app.` php. Usted es libre de modificar este valor para adaptarlo a las necesidades de su aplicación.
+
+Puede modificar el idioma predeterminado para una única petición HTTP en tiempo de ejecución utilizando el método `setLocale` proporcionado por la facade `App`:
 
     use Illuminate\Support\Facades\App;
 
@@ -51,14 +53,15 @@ You may modify the default language for a single HTTP request at runtime using t
         //
     });
 
-You may configure a "fallback language", which will be used when the active language does not contain a given translation string. Like the default language, the fallback language is also configured in the `config/app.php` configuration file:
+Puede configurar un "idioma alternativo", que se utilizará cuando el idioma activo no contenga una cadena de traducción determinada. Al igual que el idioma por defecto, el idioma alternativo también se configura en el archivo de configuración `config/app.php`:
 
     'fallback_locale' => 'en',
 
-<a name="determining-the-current-locale"></a>
-#### Determining The Current Locale
+[]()
 
-You may use the `currentLocale` and `isLocale` methods on the `App` facade to determine the current locale or check if the locale is a given value:
+#### Determinación de la configuración regional actual
+
+Puede utilizar los métodos `currentLocale` e `isLocale` en la facade `App` para determinar la configuración regional actual o comprobar si la configuración regional es un valor dado:
 
     use Illuminate\Support\Facades\App;
 
@@ -68,10 +71,11 @@ You may use the `currentLocale` and `isLocale` methods on the `App` facade to de
         //
     }
 
-<a name="pluralization-language"></a>
-### Pluralization Language
+[]()
 
-You may instruct Laravel's "pluralizer", which is used by Eloquent and other portions of the framework to convert singular strings to plural strings, to use a language other than English. This may be accomplished by invoking the `useLanguage` method within the `boot` method of one of your application's service providers. The pluralizer's currently supported languages are: `french`, `norwegian-bokmal`, `portuguese`, `spanish`, and `turkish`:
+### Pluralización Idioma
+
+Puedes indicar al "pluralizador" de Laravel, que es utilizado por Eloquent y otras partes del framework para convertir cadenas singulares en plurales, que utilice un idioma distinto del inglés. Esto puede lograrse invocando el método `useLanguage` dentro del método `boot` de uno de los proveedores de servicio de tu aplicación. Los idiomas actualmente soportados por el pluralizador son: `francés`, `noruego-bokmal`, `portugués`, `español` y `turco`:
 
     use Illuminate\Support\Pluralizer;
 
@@ -87,16 +91,18 @@ You may instruct Laravel's "pluralizer", which is used by Eloquent and other por
         // ...     
     }
 
-> **Warning**  
-> If you customize the pluralizer's language, you should explicitly define your Eloquent model's [table names](/docs/{{version}}/eloquent#table-names).
+> **Advertencia**  
+> Si personalizas el idioma del pluralizador, deberás definir explícitamente los [nombres de las tablas](/docs/%7B%7Bversion%7D%7D/eloquent#table-names) de tu modelo Eloquent.
 
-<a name="defining-translation-strings"></a>
-## Defining Translation Strings
+[]()
 
-<a name="using-short-keys"></a>
-### Using Short Keys
+## Definición de cadenas de traducción
 
-Typically, translation strings are stored in files within the `lang` directory. Within this directory, there should be a subdirectory for each language supported by your application. This is the approach Laravel uses to manage translation strings for built-in Laravel features such as validation error messages:
+[]()
+
+### Uso de claves abreviadas
+
+Normalmente, las cadenas de traducción se almacenan en archivos dentro del directorio `lang`. Dentro de este directorio, debería haber un subdirectorio para cada idioma soportado por tu aplicación. Este es el enfoque que Laravel utiliza para gestionar las cadenas de traducción para las características integradas de Laravel, como los mensajes de error de validación:
 
     /lang
         /en
@@ -104,7 +110,7 @@ Typically, translation strings are stored in files within the `lang` directory. 
         /es
             messages.php
 
-All language files return an array of keyed strings. For example:
+Todos los archivos de idioma devuelven una array de cadenas con claves. Por ejemplo:
 
     <?php
 
@@ -114,15 +120,16 @@ All language files return an array of keyed strings. For example:
         'welcome' => 'Welcome to our application!',
     ];
 
-> **Warning**  
-> For languages that differ by territory, you should name the language directories according to the ISO 15897. For example, "en_GB" should be used for British English rather than "en-gb".
+> **Advertencia**  
+> En el caso de los idiomas que difieren según el territorio, debes nombrar los directorios de idioma según la norma ISO 15897. Por ejemplo, para el inglés británico debería utilizarse "en_GB" en lugar de "en-gb".
 
-<a name="using-translation-strings-as-keys"></a>
-### Using Translation Strings As Keys
+[]()
 
-For applications with a large number of translatable strings, defining every string with a "short key" can become confusing when referencing the keys in your views and it is cumbersome to continually invent keys for every translation string supported by your application.
+### Uso de cadenas de traducción como claves
 
-For this reason, Laravel also provides support for defining translation strings using the "default" translation of the string as the key. Translation files that use translation strings as keys are stored as JSON files in the `lang` directory. For example, if your application has a Spanish translation, you should create a `lang/es.json` file:
+Para aplicaciones con un gran número de cadenas traducibles, definir cada cadena con una "clave corta" puede resultar confuso a la hora de referenciar las claves en tus vistas y es engorroso inventar continuamente claves para cada cadena de traducción soportada por tu aplicación.
+
+Por esta razón, Laravel también proporciona soporte para definir cadenas de traducción utilizando la traducción "por defecto" de la cadena como clave. Los archivos de traducción que utilizan cadenas de traducción como claves se almacenan como archivos JSON en el directorio `lang`. Por ejemplo, si tu aplicación tiene una traducción al español, debes crear un archivo `lang/es.json`:
 
 ```json
 {
@@ -130,53 +137,56 @@ For this reason, Laravel also provides support for defining translation strings 
 }
 ```
 
-#### Key / File Conflicts
+#### Conflictos de Clave / Archivo
 
-You should not define translation string keys that conflict with other translation filenames. For example, translating `__('Action')` for the "NL" locale while a `nl/action.php` file exists but a `nl.json` file does not exist will result in the translator returning the contents of `nl/action.php`.
+No debe definir claves de cadenas de traducción que entren en conflicto con otros nombres de archivos de traducción. Por ejemplo, si traduce `__('Acción')` para la configuración regional "NL" mientras existe un archivo `nl/action.` php pero no existe un archivo `nl.j` son, el traductor devolverá el contenido de `nl/action.php`.
 
-<a name="retrieving-translation-strings"></a>
-## Retrieving Translation Strings
+[]()
 
-You may retrieve translation strings from your language files using the `__` helper function. If you are using "short keys" to define your translation strings, you should pass the file that contains the key and the key itself to the `__` function using "dot" syntax. For example, let's retrieve the `welcome` translation string from the `lang/en/messages.php` language file:
+## Recuperación de cadenas de traducción
+
+Puede recuperar cadenas de traducción de sus archivos de idioma utilizando la función de ayuda `__`. Si utiliza "claves cortas" para definir sus cadenas de traducción, debe pasar el archivo que contiene la clave y la propia clave a la función `__` utilizando la sintaxis "dot". Por ejemplo, recuperemos la cadena de traducción de `bienvenida` del archivo de idioma `lang/es/messages.php`:
 
     echo __('messages.welcome');
 
-If the specified translation string does not exist, the `__` function will return the translation string key. So, using the example above, the `__` function would return `messages.welcome` if the translation string does not exist.
+Si la cadena de traducción especificada no existe, la función `__` devolverá la clave de la cadena de traducción. Así, utilizando el ejemplo anterior, la función `__` devolvería `messages.welcome` si la cadena de traducción no existe.
 
- If you are using your [default translation strings as your translation keys](#using-translation-strings-as-keys), you should pass the default translation of your string to the `__` function;
+Si está utilizando sus cadenas [de traducción predeterminadas como sus claves de traducción](#using-translation-strings-as-keys), debe pasar la traducción predeterminada de su cadena a la función `__`;
 
     echo __('I love programming.');
 
-Again, if the translation string does not exist, the `__` function will return the translation string key that it was given.
+De nuevo, si la cadena de traducción no existe, la función `__` devolverá la clave de la cadena de traducción que se le haya dado.
 
-If you are using the [Blade templating engine](/docs/{{version}}/blade), you may use the `{{ }}` echo syntax to display the translation string:
+Si está utilizando el [motor de plantillas Blade](/docs/%7B%7Bversion%7D%7D/blade), puede utilizar la sintaxis `{{ }}` echo para mostrar la cadena de traducción:
 
     {{ __('messages.welcome') }}
 
-<a name="replacing-parameters-in-translation-strings"></a>
-### Replacing Parameters In Translation Strings
+[]()
 
-If you wish, you may define placeholders in your translation strings. All placeholders are prefixed with a `:`. For example, you may define a welcome message with a placeholder name:
+### Sustitución de parámetros en cadenas de traducción
+
+Si lo desea, puede definir marcadores de posición en sus cadenas de traducción. Todos los marcadores de posición llevan el prefijo `:`. Por ejemplo, puede definir un mensaje de bienvenida con un nombre de marcador de posición:
 
     'welcome' => 'Welcome, :name',
 
-To replace the placeholders when retrieving a translation string, you may pass an array of replacements as the second argument to the `__` function:
+Para sustituir los marcadores de posición al recuperar una cadena de traducción, puede pasar una array de sustituciones como segundo argumento a la función `__`:
 
     echo __('messages.welcome', ['name' => 'dayle']);
 
-If your placeholder contains all capital letters, or only has its first letter capitalized, the translated value will be capitalized accordingly:
+Si su marcador de posición contiene todas las letras mayúsculas, o sólo tiene su primera letra en mayúscula, el valor traducido se escribirá en mayúsculas en consecuencia:
 
     'welcome' => 'Welcome, :NAME', // Welcome, DAYLE
     'goodbye' => 'Goodbye, :Name', // Goodbye, Dayle
 
-<a name="pluralization"></a>
-### Pluralization
+[]()
 
-Pluralization is a complex problem, as different languages have a variety of complex rules for pluralization; however, Laravel can help you translate strings differently based on pluralization rules that you define. Using a `|` character, you may distinguish singular and plural forms of a string:
+### Pluralización
+
+La pluralización es un problema complejo, ya que los diferentes idiomas tienen una variedad de reglas complejas para la pluralización; sin embargo, Laravel puede ayudarle a traducir cadenas de forma diferente basándose en las reglas de pluralización que usted defina. Usando un carácter `|`, puede distinguir formas singulares y plurales de una cadena:
 
     'apples' => 'There is one apple|There are many apples',
 
-Of course, pluralization is also supported when using [translation strings as keys](#using-translation-strings-as-keys):
+Por supuesto, también se admite la pluralización cuando se utilizan cadenas de traducción [como claves](#using-translation-strings-as-keys):
 
 ```json
 {
@@ -184,27 +194,28 @@ Of course, pluralization is also supported when using [translation strings as ke
 }
 ```
 
-You may even create more complex pluralization rules which specify translation strings for multiple ranges of values:
+Incluso puede crear reglas de pluralización más complejas que especifiquen cadenas de traducción para múltiples rangos de valores:
 
     'apples' => '{0} There are none|[1,19] There are some|[20,*] There are many',
 
-After defining a translation string that has pluralization options, you may use the `trans_choice` function to retrieve the line for a given "count". In this example, since the count is greater than one, the plural form of the translation string is returned:
+Después de definir una cadena de traducción que tiene opciones de pluralización, puede utilizar la función `trans_choice` para recuperar la línea para un "recuento" dado. En este ejemplo, como la cuenta es mayor que uno, se devuelve la forma plural de la cadena de traducción:
 
     echo trans_choice('messages.apples', 10);
 
-You may also define placeholder attributes in pluralization strings. These placeholders may be replaced by passing an array as the third argument to the `trans_choice` function:
+También puede definir atributos de marcador de posición en las cadenas de pluralización. Estos marcadores de posición pueden sustituirse pasando una array como tercer argumento a la función `trans_choice`:
 
     'minutes_ago' => '{1} :value minute ago|[2,*] :value minutes ago',
 
     echo trans_choice('time.minutes_ago', 5, ['value' => 5]);
 
-If you would like to display the integer value that was passed to the `trans_choice` function, you may use the built-in `:count` placeholder:
+Si desea mostrar el valor entero que se pasó a la función `trans_choice`, puede utilizar el marcador de posición `:count` incorporado:
 
     'apples' => '{0} There are none|{1} There is one|[2,*] There are :count',
 
-<a name="overriding-package-language-files"></a>
-## Overriding Package Language Files
+[]()
 
-Some packages may ship with their own language files. Instead of changing the package's core files to tweak these lines, you may override them by placing files in the `lang/vendor/{package}/{locale}` directory.
+## Anulación de archivos de idioma de paquetes
 
-So, for example, if you need to override the English translation strings in `messages.php` for a package named `skyrim/hearthfire`, you should place a language file at: `lang/vendor/hearthfire/en/messages.php`. Within this file, you should only define the translation strings you wish to override. Any translation strings you don't override will still be loaded from the package's original language files.
+Algunos paquetes pueden incluir sus propios archivos de idioma. En lugar de cambiar los archivos principales del paquete para modificar estas líneas, puede anularlas colocando los archivos en el directorio `lang/vendor/{paquete}/{locale}`.
+
+Así, por ejemplo, si necesitas anular las cadenas de traducción al inglés en `messages.php` para un paquete llamado `skyrim/hearthfire`, debes colocar un archivo de idioma en: `lang/vendor/hearthfire/en/messages.php`. Dentro de este archivo, sólo debes definir las cadenas de traducción que deseas anular. Cualquier cadena de traducción que no anules seguirá siendo cargada desde los archivos de idioma originales del paquete.

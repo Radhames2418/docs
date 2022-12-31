@@ -1,129 +1,137 @@
-# Upgrade Guide
+# Guía de actualización
 
-- [Upgrading To 9.0 From 8.x](#upgrade-9.0)
+- [Actualización a 9.0 desde 8.x](#upgrade-9.0)
 
-<a name="high-impact-changes"></a>
-## High Impact Changes
+[]()
 
-<div class="content-list" markdown="1">
+## Cambios de alto impacto
 
-- [Updating Dependencies](#updating-dependencies)
+<div class="content-list" markdown="1"/>
+
+- [Actualización de dependencias](#updating-dependencies)
 - [Flysystem 3.x](#flysystem-3)
 - [Symfony Mailer](#symfony-mailer)
 
-</div>
+[object Object]
 
-<a name="medium-impact-changes"></a>
-## Medium Impact Changes
+[]()
 
-<div class="content-list" markdown="1">
+## Cambios de impacto medio
 
-- [Belongs To Many `firstOrNew`, `firstOrCreate`, and `updateOrCreate` methods](#belongs-to-many-first-or-new)
-- [Custom Casts & `null`](#custom-casts-and-null)
-- [Default HTTP Client Timeout](#http-client-default-timeout)
-- [PHP Return Types](#php-return-types)
-- [Postgres "Schema" Configuration](#postgres-schema-configuration)
-- [The `assertDeleted` Method](#the-assert-deleted-method)
-- [The `lang` Directory](#the-lang-directory)
-- [The `password` Rule](#the-password-rule)
-- [The `when` / `unless` Methods](#when-and-unless-methods)
-- [Unvalidated Array Keys](#unvalidated-array-keys)
+<div class="content-list" markdown="1"/>
 
-</div>
+- [Pertenece a muchos métodos `firstOrNew`, `firstOrCreate` y `updateOrCreate`](#belongs-to-many-first-or-new)
+- [Casts personalizados y `null`](#custom-casts-and-null)
+- [Tiempo de espera del cliente HTTP por defecto](#http-client-default-timeout)
+- [Tipos de retorno PHP](#php-return-types)
+- [Configuración del "Esquema" Postgres](#postgres-schema-configuration)
+- [El método `assertDeleted`](#the-assert-deleted-method)
+- [El Directorio `lang`](#the-lang-directory)
+- [La regla `password`](#the-password-rule)
+- [Los métodos `when` / `unless`](#when-and-unless-methods)
+- [array-keys">Claves de array no validadas](<#unvalidated-\<glossary variable=>)
 
-<a name="upgrade-9.0"></a>
-## Upgrading To 9.0 From 8.x
+[object Object]
 
-<a name="estimated-upgrade-time-30-minutes"></a>
-#### Estimated Upgrade Time: 30 Minutes
+[]()
 
-> **Note**  
-> We attempt to document every possible breaking change. Since some of these breaking changes are in obscure parts of the framework only a portion of these changes may actually affect your application. Want to save time? You can use [Laravel Shift](https://laravelshift.com/) to help automate your application upgrades.
+## Actualización a 9.0 desde 8.x
 
-<a name="updating-dependencies"></a>
-### Updating Dependencies
+[]()
 
-**Likelihood Of Impact: High**
+#### Tiempo estimado de actualización: 30 minutos
 
-#### PHP 8.0.2 Required
+> **Nota**  
+> Intentamos documentar todos los cambios de última hora posibles. Dado que algunos de estos cambios están en partes oscuras del framework, sólo una parte de estos cambios pueden afectar realmente a su aplicación. ¿Quieres ahorrar tiempo? Puede utilizar [Laravel Shift](https://laravelshift.com/) para ayudar a automatizar las actualizaciones de su aplicación.
 
-Laravel now requires PHP 8.0.2 or greater.
+[]()
 
-#### Composer Dependencies
+### Actualización de dependencias
 
-You should update the following dependencies in your application's `composer.json` file:
+**Probabilidad de impacto: Alta**
 
-<div class="content-list" markdown="1">
+#### Se requiere PHP 8.0.2
 
-- `laravel/framework` to `^9.0`
-- `nunomaduro/collision` to `^6.1`
+Laravel ahora requiere PHP 8.0.2 o superior.
 
-</div>
+#### Dependencias de Composer
 
-In addition, please replace `facade/ignition` with `"spatie/laravel-ignition": "^1.0"` and `pusher/pusher-php-server` (if applicable) with `"pusher/pusher-php-server": "^5.0"` in your application's `composer.json` file.
+Debe actualizar las siguientes dependencias en el archivo `composer.json` de su aplicación:
 
-Furthermore, the following first-party packages have received new major releases to support Laravel 9.x. If applicable, you should read their individual upgrade guides before upgrading:
+<div class="content-list" markdown="1"/>
 
-<div class="content-list" markdown="1">
+- `laravel/framework` a `^9.`0
+- `nunomaduro/collision` a `^6.`1
 
-- [Vonage Notification Channel (v3.0)](https://github.com/laravel/vonage-notification-channel/blob/3.x/UPGRADE.md) (Replaces Nexmo)
+[object Object]
 
-</div>
+Además, por favor sustituye `facade` por `"spatie/laravel-ignition":` "^1 `.` 0" y `pusher/pusher-php-server` (si procede) por " `pusher/pusher-php-server":` "^5 `.` 0" en el archivo `composer.json` de tu aplicación.
 
-Finally, examine any other third-party packages consumed by your application and verify you are using the proper version for Laravel 9 support.
+Además, los siguientes paquetes de terceros han recibido nuevas versiones principales para dar soporte a Laravel 9.x. Si procede, deberías leer sus guías de actualización individuales antes de actualizar:
 
-<a name="php-return-types"></a>
-#### PHP Return Types
+<div class="content-list" markdown="1"/>
 
-PHP is beginning to transition to requiring return type definitions on PHP methods such as `offsetGet`, `offsetSet`, etc. In light of this, Laravel 9 has implemented these return types in its code base. Typically, this should not affect user written code; however, if you are overriding one of these methods by extending Laravel's core classes, you will need to add these return types to your own application or package code:
+- [Canal de notificaciones de Vonage (v3.0)](https://github.com/laravel/vonage-notification-channel/blob/3.x/UPGRADE.md) (sustituye a Nexmo)
 
-<div class="content-list" markdown="1">
+[object Object]
+
+Por último, examine cualquier otro paquete de terceros consumido por su aplicación y verifique que está utilizando la versión adecuada para la compatibilidad con Laravel 9.
+
+[]()
+
+#### Tipos de retorno PHP
+
+PHP está empezando a requerir definiciones de tipo de retorno en métodos PHP como `offsetGet`, `offsetSet`, etc. En vista de ello, Laravel 9 ha implementado estos tipos de retorno en su código base. Normalmente, esto no debería afectar al código escrito por el usuario; sin embargo, si estás sobrescribiendo uno de estos métodos extendiendo las clases del núcleo de Laravel, necesitarás añadir estos tipos de retorno al código de tu propia aplicación o paquete:
+
+<div class="content-list" markdown="1"/>
 
 - `count(): int`
 - `getIterator(): Traversable`
 - `getSize(): int`
 - `jsonSerialize(): array`
-- `offsetExists($key): bool`
-- `offsetGet($key): mixed`
-- `offsetSet($key, $value): void`
-- `offsetUnset($key): void`
+- `offsetExists($clave): bool`
+- `offsetGet($clave): mixto`
+- `offsetSet($clave, $valor): void`
+- `offsetUnset($clave): void`
 
-</div>
+[object Object]
 
-In addition, return types were added to methods implementing PHP's `SessionHandlerInterface`. Again, it is unlikely that this change affects your own application or package code:
+Además, se han añadido tipos de retorno a los métodos que implementan la `SessionHandlerInterface` de PHP. De nuevo, es poco probable que este cambio afecte al código de su propia aplicación o paquete:
 
-<div class="content-list" markdown="1">
+<div class="content-list" markdown="1"/>
 
-- `open($savePath, $sessionName): bool`
+- `open($rutaGuarda, $nombreSesión): bool`
 - `close(): bool`
-- `read($sessionId): string|false`
-- `write($sessionId, $data): bool`
-- `destroy($sessionId): bool`
-- `gc($lifetime): int`
+- `read($id_sesión): string|false`
+- `write($id_sesión, $datos): bool`
+- `destroy($id_sesión): bool`
+- `gc($tiempo de vida): int`
 
-</div>
+[object Object]
 
-<a name="application"></a>
-### Application
+[]()
 
-<a name="the-application-contract"></a>
-#### The `Application` Contract
+### Aplicación
 
-**Likelihood Of Impact: Low**
+[]()
 
-The `storagePath` method of the `Illuminate\Contracts\Foundation\Application` interface has been updated to accept a `$path` argument. If you are implementing this interface you should update your implementation accordingly:
+#### Contrato de `aplicación`
+
+**Probabilidad de impacto: Baja**
+
+El método `storagePath` de la interfaz `Illuminate\Contracts\Foundation\Application` se ha actualizado para aceptar un argumento `$path`. Si implementa esta interfaz, debe actualizar su implementación en consecuencia:
 
     public function storagePath($path = '');
-    
-Similarly, the `langPath` method of the `Illuminate\Foundation\Application` class has been updated to accept a `$path` argument: 
+
+Del mismo modo, el método `langPath` de la clase `Illuminate\Foundation\Application` se ha actualizado para aceptar un argumento `$path`:
 
     public function langPath($path = '');
 
-#### Exception Handler `ignore` Method
+#### Método `ignore` del manejador de excepciones
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto: Baja**
 
-The exception handler's `ignore` method is now `public` instead of `protected`. This method is not included in the default application skeleton; however, if you have manually defined this method you should update its visibility to `public`:
+El método `ignore` del manejador de excepciones es ahora `público` en lugar de `protegido`. Este método no está incluido en el esqueleto de la aplicación por defecto; sin embargo, si ha definido manualmente este método debe actualizar su visibilidad a `public`:
 
 ```php
 public function ignore(string $class);
@@ -131,86 +139,89 @@ public function ignore(string $class);
 
 #### Exception Handler Contract Binding
 
-**Likelihood Of Impact: Very Low**
+**Probabilidad de impacto: Muy baja**
 
-Previously, in order to override the default Laravel exception handler, custom implementations were bound into the service container using the `\App\Exceptions\Handler::class` type. However, you should now bind custom implementations using the `\Illuminate\Contracts\Debug\ExceptionHandler::class` type.
+Anteriormente, con el fin de reemplazar el gestor de excepciones predeterminado de Laravel, las implementaciones personalizadas se vinculaban al contenedor de servicios utilizando el tipo `\App\Exceptions\Handler::class`. Sin embargo, ahora debe enlazar implementaciones personalizadas utilizando el tipo `\Illuminate\Contracts\Debug\ExceptionHandler`::class.
 
-### Blade
+### Hoja
 
-#### Lazy Collections & The `$loop` Variable
+#### Colecciones perezosas y la variable `$loop`
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-When iterating over a `LazyCollection` instance within a Blade template, the `$loop` variable is no longer available, as accessing this variable causes the entire `LazyCollection` to be loaded into memory, thus rendering the usage of lazy collections pointless in this scenario.
+Cuando se itera sobre una instancia de `LazyCollection` dentro de una plantilla Blade, la variable `$loop` ya no está disponible, ya que acceder a esta variable hace que toda la `LazyCollection` se cargue en memoria, lo que hace que el uso de colecciones perezosas no tenga sentido en este escenario.
 
-#### Checked / Disabled / Selected Blade Directives
+#### Directivas Checked / Disabled / Selected Blade
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-The new `@checked`, `@disabled`, and `@selected` Blade directives may conflict with Vue events of the same name. You may use `@@` to escape the directives and avoid this conflict: `@@selected`.
+Las nuevas directivas `@checked`, `@disabled` y `@selected` de Blade pueden entrar en conflicto con eventos Vue del mismo nombre. Puedes usar `@@` para escapar las directivas y evitar este conflicto: `@@selected`.
 
-### Collections
+### Colecciones
 
-#### The `Enumerable` Contract
+#### El contrato `Enumerable`
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-The `Illuminate\Support\Enumerable` contract now defines a `sole` method. If you are manually implementing this interface, you should update your implementation to reflect this new method:
+El contrato `Illuminate\Support\Enumerable` ahora define un `único` método. Si está implementando manualmente esta interfaz, debe actualizar su implementación para reflejar este nuevo método:
 
 ```php
 public function sole($key = null, $operator = null, $value = null);
 ```
 
-#### The `reduceWithKeys` Method
+#### El método `reduceWithKeys`
 
-The `reduceWithKeys` method has been removed as the `reduce` method provides the same functionality. You may simply update your code to call `reduce` instead of `reduceWithKeys`.
+El método `reduceWithKeys` ha sido eliminado ya que el método `reduce` proporciona la misma funcionalidad. Puede simplemente actualizar su código para llamar a `reduce` en lugar de a `reduceWithKeys`.
 
-#### The `reduceMany` Method
+#### Método `reduceMany`
 
-The `reduceMany` method has been renamed to `reduceSpread` for naming consistency with other similar methods.
+El método `reduceMany` ha sido renombrado a `reduceSpread` por coherencia con otros métodos similares.
 
-### Container
+### Contenedor
 
-#### The `Container` Contract
+#### El contrato `Container`
 
-**Likelihood Of Impact: Very Low**
+**Probabilidad de impacto: Muy baja**
 
-The `Illuminate\Contracts\Container\Container` contract has received two method definitions: `scoped` and `scopedIf`. If you are manually implementing this contract, you should update your implementation to reflect these new methods.
+El contrato `Illuminate\Contracts\Container\Container` ha recibido dos definiciones de método: `scoped` y `scopedIf`. Si está implementando manualmente este contrato, debe actualizar su implementación para reflejar estos nuevos métodos.
 
-#### The `ContextualBindingBuilder` Contract
+#### El contrato `ContextualBindingBuilder`
 
-**Likelihood Of Impact: Very Low**
+**Probabilidad de impacto Muy baja**
 
-The `Illuminate\Contracts\Container\ContextualBindingBuilder` contract now defines a `giveConfig` method. If you are manually implementing this interface, you should update your implementation to reflect this new method:
+El contrato `Illuminate\Contracts\Container\ContextualBindingBuilder` define ahora un método `giveConfig`. Si implementa manualmente esta interfaz, debe actualizar su implementación para reflejar este nuevo método:
 
 ```php
 public function giveConfig($key, $default = null);
 ```
 
-### Database
+### Base de datos
 
-<a name="postgres-schema-configuration"></a>
-#### Postgres "Schema" Configuration
+[]()
 
-**Likelihood Of Impact: Medium**
+#### Configuración del "esquema" Postgres
 
-The `schema` configuration option used to configure Postgres connection search paths in your application's `config/database.php` configuration file should be renamed to `search_path`.
+**Probabilidad de impacto: Media**
 
-<a name="schema-builder-doctrine-method"></a>
-#### Schema Builder `registerCustomDoctrineType` Method
+La opción de configuración de `esquemas` utilizada para configurar las rutas de búsqueda de conexiones Postgres en el archivo de configuración `config/database.` php de su aplicación debe renombrarse a `search_path`.
 
-**Likelihood Of Impact: Low**
+[]()
 
-The `registerCustomDoctrineType` method has been removed from the `Illuminate\Database\Schema\Builder` class. You may use the `registerDoctrineType` method on the `DB` facade instead, or register custom Doctrine types in the `config/database.php` configuration file.
+#### Método `registerCustomDoctrineType` del generador de esquemas
+
+**Probabilidad de impacto Baja**
+
+Se ha eliminado el método `registerCustomDoctrineType` de la clase `Illuminate\Database\Schema\Builder`. En su lugar, puede utilizar el método `registerDoctrineType` en la facade `DB`, o registrar tipos Doctrine personalizados en el archivo de configuración `config/database.php`.
 
 ### Eloquent
 
-<a name="custom-casts-and-null"></a>
-#### Custom Casts & `null`
+[]()
 
-**Likelihood Of Impact: Medium**
+#### Casts personalizados y `null`
 
-In previous releases of Laravel, the `set` method of custom cast classes was not invoked if the cast attribute was being set to `null`. However, this behavior was inconsistent with the Laravel documentation. In Laravel 9.x, the `set` method of the cast class will be invoked with `null` as the provided `$value` argument. Therefore, you should ensure your custom casts are able to sufficiently handle this scenario:
+**Probabilidad de impacto: Media**
+
+En versiones anteriores de Laravel, el método `set` de las clases cast personalizadas no se invocaba si el atributo cast se establecía en `null`. Sin embargo, este comportamiento era inconsistente con la documentación de Laravel. En Laravel 9.x, el método `set` de la clase cast será invocado con `null` como argumento `$value`. Por tanto, debes asegurarte de que tus cast personalizados son capaces de manejar suficientemente este escenario:
 
 ```php
 /**
@@ -235,14 +246,15 @@ public function set($model, $key, $value, $attributes)
 }
 ```
 
-<a name="belongs-to-many-first-or-new"></a>
-#### Belongs To Many `firstOrNew`, `firstOrCreate`, and `updateOrCreate` Methods
+[]()
 
-**Likelihood Of Impact: Medium**
+#### Pertenece a muchos métodos `firstOrNew`, `firstOrCreate` y `updateOrCreate`
 
-The `belongsToMany` relationship's `firstOrNew`, `firstOrCreate`, and `updateOrCreate` methods all accept an array of attributes as their first argument. In previous releases of Laravel, this array of attributes was compared against the "pivot" / intermediate table for existing records.
+**Probabilidad de impacto Media**
 
-However, this behavior was unexpected and typically unwanted. Instead, these methods now compare the array of attributes against the table of the related model:
+Los métodos `firstOrNew`, `firstOrCreate` y `updateOrCreate` de la relación `belongsToMany` aceptan un array de atributos como primer argumento. En versiones anteriores de Laravel, esta array de atributos se comparaba con el "pivote" / tabla intermedia para los registros existentes.
+
+Sin embargo, este comportamiento era inesperado y normalmente no deseado. En su lugar, estos métodos comparan ahora la array de atributos con la tabla del modelo relacionado:
 
 ```php
 $user->roles()->updateOrCreate([
@@ -250,7 +262,7 @@ $user->roles()->updateOrCreate([
 ]);
 ```
 
-In addition, the `firstOrCreate` method now accepts a `$values` array as its second argument. This array will be merged with the first argument to the method (`$attributes`) when creating the related model if one does not already exist. This change makes this method consistent with the `firstOrCreate` methods offered by other relationship types:
+Además, el método `firstOrCreate` acepta ahora un array `$values` como segundo argumento. Esta array se fusionará con el primer argumento del método`($attributes`) al crear el modelo relacionado si no existe ya uno. Este cambio hace que este método sea consistente con los métodos `firstOrCreate` ofrecidos por otros tipos de relación:
 
 ```php
 $user->roles()->firstOrCreate([
@@ -260,35 +272,35 @@ $user->roles()->firstOrCreate([
 ]);
 ```
 
-#### The `touch` Method
+#### El método `touch`
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-The `touch` method now accepts an attribute to touch. If you were previously overwriting this method, you should update your method signature to reflect this new argument:
+El método `touch` ahora acepta un atributo para tocar. Si anteriormente sobrescribía este método, debe actualizar la firma del método para reflejar este nuevo argumento:
 
 ```php
 public function touch($attribute = null);
 ```
 
-### Encryption
+### Cifrado
 
-#### The Encrypter Contract
+#### El contrato Encrypter
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-The `Illuminate\Contracts\Encryption\Encrypter` contract now defines a `getKey` method. If you are manually implementing this interface, you should update your implementation accordingly:
+El contrato `Illuminate\Contracts\Encryption\Encrypter` ahora define un método `getKey`. Si está implementando manualmente esta interfaz, debe actualizar su implementación en consecuencia:
 
 ```php
 public function getKey();
 ```
 
-### Facades
+### facades
 
-#### The `getFacadeAccessor` Method
+#### El método `getFacadeAccessor`
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-The `getFacadeAccessor` method must always return a container binding key. In previous releases of Laravel, this method could return an object instance; however, this behavior is no longer supported. If you have written your own facades, you should ensure that this method returns a container binding string:
+El método `getFacadeAccessor` debe devolver siempre una clave de enlace de contenedor. En versiones anteriores de Laravel, este método podía devolver una instancia de objeto; sin embargo, este comportamiento ya no está soportado. Si has escrito tus propias facades, debes asegurarte de que este método devuelve una cadena de enlace de contenedor:
 
 ```php
 /**
@@ -302,42 +314,43 @@ protected static function getFacadeAccessor()
 }
 ```
 
-### Filesystem
+### Sistema de Archivos
 
-#### The `FILESYSTEM_DRIVER` Environment Variable
+#### Variable de entorno `FILESYSTEM_DRIVER`
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-The `FILESYSTEM_DRIVER` environment variable has been renamed to `FILESYSTEM_DISK` to more accurately reflect its usage. This change only affects the application skeleton; however, you are welcome to update your own application's environment variables to reflect this change if you wish.
+La variable de entorno `FILESYSTEM_DRIVER` ha sido renombrada a `FILESYSTEM_DISK` para reflejar mejor su uso. Este cambio sólo afecta al esqueleto de la aplicación; sin embargo, si lo desea, puede actualizar las variables de entorno de su propia aplicación para reflejar este cambio.
 
-#### The "Cloud" Disk
+#### El Disco "Nube
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-The `cloud` disk configuration option was removed from the default application skeleton in November of 2020. This change only affects the application skeleton. If you are using the `cloud` disk within your application, you should leave this configuration value in your own application's skeleton.
+La opción de configuración del disco `en la nube` se eliminó del esqueleto de la aplicación por defecto en noviembre de 2020. Este cambio solo afecta al esqueleto de la aplicación. Si está utilizando el disco en `la` nube dentro de su aplicación, debe dejar este valor de configuración en el esqueleto de su propia aplicación.
 
-<a name="flysystem-3"></a>
+[]()
+
 ### Flysystem 3.x
 
-**Likelihood Of Impact: High**
+**Probabilidad de impacto: Alta**
 
-Laravel 9.x has migrated from [Flysystem](https://flysystem.thephpleague.com/v2/docs/) 1.x to 3.x. Under the hood, Flysystem powers all of the file manipulation methods provided by the `Storage` facade. In light of this, some changes may be required within your application; however, we have tried to make this transition as seamless as possible.
+Laravel 9.x ha migrado de [Flysystem](https://flysystem.thephpleague.com/v2/docs/) 1.x a 3.x. Bajo el capó, Flysystem potencia todos los métodos de manipulación de ficheros proporcionados por la facade `Storage`. A la luz de esto, algunos cambios pueden ser necesarios dentro de su aplicación, sin embargo, hemos tratado de hacer esta transición lo más fluida posible.
 
-#### Driver Prerequisites
+#### Requisitos previos del controlador
 
-Before using the S3, FTP, or SFTP drivers, you will need to install the appropriate package via the Composer package manager:
+Antes de utilizar los controladores S3, FTP o SFTP, deberá instalar el paquete adecuado a través del gestor de paquetes Composer:
 
-- Amazon S3: `composer require -W league/flysystem-aws-s3-v3 "^3.0"`
-- FTP: `composer require league/flysystem-ftp "^3.0"`
-- SFTP: `composer require league/flysystem-sftp-v3 "^3.0"`
+- Amazon S3: composer require `-W league/flysystem-aws-s3-v3 "^3.0"`
+- FTP: composer require `league/flysystem-ftp "^3.`0"
+- SFTP: composer require `liga/flysystem-sftp-v3 "^3.`0"
 
-#### Overwriting Existing Files
+#### Sobrescribir archivos existentes
 
-Write operations such as `put`, `write`, and `writeStream` now overwrite existing files by default. If you do not want to overwrite existing files, you should manually check for the file's existence before performing the write operation.
+Las operaciones de escritura como `put`, `write` y `writeStream` ahora sobrescriben los archivos existentes por defecto. Si no desea sobrescribir archivos existentes, debe comprobar manualmente la existencia del archivo antes de realizar la operación de escritura.
 
-#### Write Exceptions
+#### Excepciones de escritura
 
-Write operations such as `put`, `write`, and `writeStream` no longer throw an exception when a write operation fails. Instead, `false` is returned. If you would like to preserve the previous behavior which threw exceptions, you may define the `throw` option within a filesystem disk's configuration array:
+Las operaciones de escritura como `put`, `write` y `writeStream` ya no lanzan una excepción cuando falla una operación de escritura. En su lugar, se devuelve `false`. Si desea conservar el comportamiento anterior, que lanzaba excepciones, puede definir la opción `throw` en la array configuración de un disco del sistema de archivos:
 
 ```php
 'public' => [
@@ -347,23 +360,23 @@ Write operations such as `put`, `write`, and `writeStream` no longer throw an ex
 ],
 ```
 
-#### Reading Missing Files
+#### Lectura de ficheros perdidos
 
-Attempting to read from a file that does not exist now returns `null`. In previous releases of Laravel, an `Illuminate\Contracts\Filesystem\FileNotFoundException` would have been thrown.
+Al intentar leer de un archivo que no existe ahora devuelve `null`. En versiones anteriores de Laravel, un `Illuminate\Contracts\Filesystem\FileNotFoundException` habría sido lanzado.
 
-#### Deleting Missing Files
+#### Borrado de ficheros perdidos
 
-Attempting to `delete` a file that does not exist now returns `true`.
+Al intentar `eliminar` un archivo que no existe, ahora se devuelve `true`.
 
-#### Cached Adapters
+#### Adaptadores en caché
 
-Flysystem no longer supports "cached adapters". Thus, they have been removed from Laravel and any relevant configuration (such as the `cache` key within disk configurations) can be removed.
+Flysystem ya no soporta "adaptadores en caché". Por lo tanto, se han eliminado de Laravel y cualquier configuración relevante (como la clave de `cache` dentro de las configuraciones de disco) se puede eliminar.
 
-#### Custom Filesystems
+#### Sistemas de archivos personalizados
 
-Slight changes have been made to the steps required to register custom filesystem drivers. Therefore, if you were defining your own custom filesystem drivers, or using packages that define custom drivers, you should update your code and dependencies.
+Se han introducido ligeros cambios en los pasos necesarios para registrar controladores de sistemas de archivos personalizados. Por lo tanto, si estabas definiendo tus propios controladores de sistema de ficheros personalizados, o usando paquetes que definen controladores personalizados, deberías actualizar tu código y dependencias.
 
-For example, in Laravel 8.x, a custom filesystem driver might be registered like so:
+Por ejemplo, en Laravel 8.x, un controlador de sistema de archivos personalizado podría registrarse así:
 
 ```php
 use Illuminate\Support\Facades\Storage;
@@ -380,7 +393,7 @@ Storage::extend('dropbox', function ($app, $config) {
 });
 ```
 
-However, in Laravel 9.x, the callback given to the `Storage::extend` method should return an instance of `Illuminate\Filesystem\FilesystemAdapter` directly:
+Sin embargo, en Laravel 9.x, la devolución de llamada dada al método `Storage::extend` debería devolver directamente una instancia de `Illuminate\Filesystem\FilesystemAdapter`:
 
 ```php
 use Illuminate\Filesystem\FilesystemAdapter;
@@ -402,28 +415,31 @@ Storage::extend('dropbox', function ($app, $config) {
 });
 ```
 
-### Helpers
+### Ayudantes
 
-<a name="data-get-function"></a>
-#### The `data_get` Helper & Iterable Objects
+[]()
 
-**Likelihood Of Impact: Very Low**
+#### El ayudante `data_get` y los objetos iterables
 
-Previously, the `data_get` helper could be used to retrieve nested data on arrays and `Collection` instances; however, this helper can now retrieve nested data on all iterable objects.
+**Probabilidad de impacto Muy baja**
 
-<a name="str-function"></a>
-#### The `str` Helper
+Anteriormente, el ayudante `data_get` podía utilizarse para recuperar datos anidados en arrays e instancias de `Collection`; sin embargo, ahora este ayudante puede recuperar datos anidados en todos los objetos iterables.
 
-**Likelihood Of Impact: Very Low**
+[]()
 
-Laravel 9.x now includes a global `str` [helper function](/docs/{{version}}/helpers#method-str). If you are defining a global `str` helper in your application, you should rename or remove it so that it does not conflict with Laravel's own `str` helper.
+#### El ayudante `str`
 
-<a name="when-and-unless-methods"></a>
-#### The `when` / `unless` Methods
+**Probabilidad de impacto Muy baja**
 
-**Likelihood Of Impact: Medium**
+Laravel 9.x incluye ahora una [función](/docs/%7B%7Bversion%7D%7D/helpers#method-str) `str` helper global. Si está definiendo un helper `str` global en su aplicación, debería renombrarlo o eliminarlo para que no entre en conflicto con el propio helper `str` de Laravel.
 
-As you may know, `when` and `unless` methods are offered by various classes throughout the framework. These methods can be used to conditionally perform an action if the boolean value of the first argument to the method evaluates to `true` or `false`:
+[]()
+
+#### Los métodos `when` / `unless`
+
+**Probabilidad de impacto Media**
+
+Como ya sabrás, varias clases del framework ofrecen los métodos `when` y `unless`. Estos métodos se pueden utilizar para realizar condicionalmente una acción si el valor booleano del primer argumento del método se evalúa como `verdadero` o `falso`:
 
 ```php
 $collection->when(true, function ($collection) {
@@ -431,9 +447,9 @@ $collection->when(true, function ($collection) {
 });
 ```
 
-Therefore, in previous releases of Laravel, passing a closure to the `when` or `unless` methods meant that the conditional operation would always execute, since a loose comparison against a closure object (or any other object) always evaluates to `true`. This often led to unexpected outcomes because developers expect the **result** of the closure to be used as the boolean value that determines if the conditional action executes.
+Por lo tanto, en versiones anteriores de Laravel, pasar un closure a los métodos `when` o `unless` significaba que la operación condicional siempre se ejecutaría, ya que una comparación suelta contra un objeto de closure (o cualquier otro objeto) siempre se evalúa a `true`. Esto a menudo conducía a resultados inesperados porque los desarrolladores esperaban que el **resultado** del closure se utilizara como el valor booleano que determinaba si la acción condicional se ejecutaba.
 
-So, in Laravel 9.x, any closures passed to the `when` or `unless` methods will be executed and the value returned by the closure will be considered the boolean value used by the `when` and `unless` methods:
+Así, en Laravel 9.x, cualquier closures pasado a los métodos `when` o `unless` se ejecutará y el valor devuelto por el closure se considerará el valor booleano utilizado por los métodos `when` y `unless`:
 
 ```php
 $collection->when(function ($collection) {
@@ -445,59 +461,61 @@ $collection->when(function ($collection) {
 });
 ```
 
-### HTTP Client
+### Cliente HTTP
 
-<a name="http-client-default-timeout"></a>
-#### Default Timeout
+[]()
 
-**Likelihood Of Impact: Medium**
+#### Tiempo de espera por defecto
 
-The [HTTP client](/docs/{{version}}/http-client) now has a default timeout of 30 seconds. In other words, if the server does not respond within 30 seconds, an exception will be thrown. Previously, no default timeout length was configured on the HTTP client, causing requests to sometimes "hang" indefinitely.
+**Probabilidad de impacto Media**
 
-If you wish to specify a longer timeout for a given request, you may do so using the `timeout` method:
+El [cliente HTTP](/docs/%7B%7Bversion%7D%7D/http-client) tiene ahora un tiempo de espera por defecto de 30 segundos. En otras palabras, si el servidor no responde en 30 segundos, se lanzará una excepción. Anteriormente, no se había configurado ningún tiempo de espera por defecto en el cliente HTTP, lo que provocaba que las peticiones a veces se "colgaran" indefinidamente.
+
+Si desea especificar un tiempo de espera más largo para una petición determinada, puede hacerlo utilizando el método `timeout`:
 
     $response = Http::timeout(120)->get(/* ... */);
 
-#### HTTP Fake & Middleware
+#### HTTP Fake y middleware
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-Previously, Laravel would not execute any provided Guzzle HTTP middleware when the [HTTP client](/docs/{{version}}/http-client) was "faked". However, in Laravel 9.x, Guzzle HTTP middleware will be executed even when the HTTP client is faked.
+Anteriormente, Laravel no ejecutaba ningún middleware Guzzle HTTP cuando el cliente [HTTP](/docs/%7B%7Bversion%7D%7D/http-client) era "falso". Sin embargo, en Laravel 9.x, middleware middleware Guzzle HTTP se ejecutará incluso cuando el cliente HTTP esté falseado.
 
-#### HTTP Fake & Dependency Injection
+#### HTTP Fake e Inyección de Dependencia
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-In previous releases of Laravel, invoking the `Http::fake()` method would not affect instances of the `Illuminate\Http\Client\Factory` that were injected into class constructors. However, in Laravel 9.x, `Http::fake()` will ensure fake responses are returned by HTTP clients injected into other services via dependency injection. This behavior is more consistent with the behavior of other facades and fakes.
+En versiones anteriores de Laravel, la invocación del método `Http::fake(` ) no afectaba a las instancias de `Illuminate\Http\Client\Factory` que se inyectaban en los constructores de clase. Sin embargo, en Laravel 9.x, Http::fake( `)` garantizará que los clientes HTTP inyectados en otros servicios mediante inyección de dependencias devuelvan respuestas falsas. Este comportamiento es más coherente con el de otras facades y falsificaciones.
 
-<a name="symfony-mailer"></a>
+[]()
+
 ### Symfony Mailer
 
-**Likelihood Of Impact: High**
+**Probabilidad de impacto: Alta**
 
-One of the largest changes in Laravel 9.x is the transition from SwiftMailer, which is no longer maintained as of December 2021, to Symfony Mailer. However, we have tried to make this transition as seamless as possible for your applications. That being said, please thoroughly review the list of changes below to ensure your application is fully compatible.
+Uno de los mayores cambios en Laravel 9.x es la transición de SwiftMailer, que ya no se mantiene a partir de diciembre de 2021, a Symfony Mailer. Sin embargo, hemos tratado de hacer esta transición lo más fluida posible para tus aplicaciones. Dicho esto, revisa detenidamente la lista de cambios que aparece a continuación para asegurarte de que tu aplicación es totalmente compatible.
 
-#### Driver Prerequisites
+#### Requisitos previos del controlador
 
-To continue using the Mailgun transport, your application should require the `symfony/mailgun-mailer` and `symfony/http-client` Composer packages:
+Para seguir utilizando el transporte Mailgun, su aplicación debe requerir los paquetes `symfony/mailgun-mailer` y `symfony/http-client` Composer:
 
 ```shell
 composer require symfony/mailgun-mailer symfony/http-client
 ```
 
-The `wildbit/swiftmailer-postmark` Composer package should be removed from your application. Instead, your application should require the `symfony/postmark-mailer` and `symfony/http-client` Composer packages:
+El paquete `wildbit/swiftmailer-postmark` Composer debe eliminarse de la aplicación. En su lugar, su aplicación debe requerir los paquetes `symfony/postmark-mailer` y `symfony/http-client` Composer:
 
 ```shell
 composer require symfony/postmark-mailer symfony/http-client
 ```
 
-#### Updated Return Types
+#### Tipos de retorno actualizados
 
-The `send`, `html`, `raw`, and `plain` methods on `Illuminate\Mail\Mailer` no longer return `void`. Instead, an instance of `Illuminate\Mail\SentMessage` is returned. This object contains an instance of `Symfony\Component\Mailer\SentMessage` that is accessible via the `getSymfonySentMessage` method or by dynamically invoking methods on the object.
+Los métodos `send`, `html`, `raw` y `plain` de `Illuminate\Mail\Mailer` ya no devuelven `void`. En su lugar, se devuelve una instancia de `Illuminate\Mail\SentMessage`. Este objeto contiene una instancia de `Symfony\Component\Mailer\SentMessage` que es accesible a través del método `getSymfonySentMessage` o invocando dinámicamente métodos en el objeto.
 
-#### Renamed "Swift" Methods
+#### Métodos "Swift" renombrados
 
-Various SwiftMailer related methods, some of which were undocumented, have been renamed to their Symfony Mailer counterparts. For example, the `withSwiftMessage` method has been renamed to `withSymfonyMessage`:
+Varios métodos relacionados con SwiftMailer, algunos de los cuales no estaban documentados, han sido renombrados a sus homólogos de Symfony Mailer. Por ejemplo, el método `withSwiftMessage` ha pasado a llamarse `withSymfonyMessage`:
 
     // Laravel 8.x...
     $this->withSwiftMessage(function ($message) {
@@ -515,10 +533,10 @@ Various SwiftMailer related methods, some of which were undocumented, have been 
         );
     });
 
-> **Warning**  
-> Please thoroughly review the [Symfony Mailer documentation](https://symfony.com/doc/6.0/mailer.html#creating-sending-messages) for all possible interactions with the `Symfony\Component\Mime\Email` object.
+> **Advertencia**  
+> Revise detenidamente la [documentación de Symfony Mailer](https://symfony.com/doc/6.0/mailer.html#creating-sending-messages) para conocer todas las interacciones posibles con el objeto `Symfony\Component\Mime\Email`.
 
-The list below contains a more thorough overview of renamed methods. Many of these methods are low-level methods used to interact with SwiftMailer / Symfony Mailer directly, so may not be commonly used within most Laravel applications:
+La siguiente lista contiene una descripción más detallada de los métodos renombrados. Muchos de estos métodos son métodos de bajo nivel utilizados para interactuar con SwiftMailer / Symfony Mailer directamente, por lo que puede no ser de uso común dentro de la mayoría de las aplicaciones Laravel:
 
     Message::getSwiftMessage();
     Message::getSymfonyMessage();
@@ -538,11 +556,11 @@ The list below contains a more thorough overview of renamed methods. Many of the
     MailManager::createTransport($config);
     MailManager::createSymfonyTransport($config);
 
-#### Proxied `Illuminate\Mail\Message` Methods
+#### Métodos Proxied `Illuminate\Mail\Message`
 
-The `Illuminate\Mail\Message` typically proxied missing methods to the underlying `Swift_Message` instance. However, missing methods are now proxied to an instance of `Symfony\Component\Mime\Email` instead. So, any code that was previously relying on missing methods to be proxied to SwiftMailer should be updated to their corresponding Symfony Mailer counterparts.
+El `Illuminate\Mail\Message` normalmente proxy métodos que faltan a la instancia `Swift_Message` subyacente. Sin embargo, los métodos que faltan ahora se proxy a una instancia de `Symfony\Component\Mime\Email` en su lugar. Por lo tanto, cualquier código que anteriormente dependía de los métodos que faltan para ser proxy a SwiftMailer debe actualizarse a sus correspondientes contrapartes Symfony Mailer.
 
-Again, many applications may not be interacting with these methods, as they are not documented within the Laravel documentation:
+Una vez más, muchas aplicaciones pueden no estar interactuando con estos métodos, ya que no están documentados dentro de la documentación de Laravel:
 
     // Laravel 8.x...
     $message
@@ -560,23 +578,23 @@ Again, many applications may not be interacting with these methods, as they are 
         ->html('<h1>HTML</h1>')
         ->text('Plain Text');
 
-#### Generated Messages IDs
+#### IDs de Mensajes Generados
 
-SwiftMailer offered the ability to define a custom domain to include in generated Message IDs via the `mime.idgenerator.idright` configuration option. This is not supported by Symfony Mailer. Instead, Symfony Mailer will automatically generate a Message ID based on the sender.
+SwiftMailer ofrece la posibilidad de definir un dominio personalizado para incluir en los IDs de mensajes generados a través de la opción de configuración `mime.idgenerator.idright`. Symfony Mailer no admite esta opción. En su lugar, Symfony Mailer generará automáticamente un ID de mensaje basado en el remitente.
 
-#### `MessageSent` Event Changes
+#### Cambios en el evento`MessageSent`
 
-The `message` property of the `Illuminate\Mail\Events\MessageSent` event now contains an instance of `Symfony\Component\Mime\Email` instead of an instance of `Swift_Message`. This message represents the email **before** it is sent.
+La propiedad `message` del evento `Illuminate\Mail\Events\MessageSent` ahora contiene una instancia de `Symfony\Component\Mime\Email` en lugar de una instancia de `Swift_Message`. Este mensaje representa el correo electrónico **antes de** ser enviado.
 
-Additionally, a new `sent` property has been added to the `MessageSent` event. This property contains an instance of `Illuminate\Mail\SentMessage` and contains information about the sent email, such as the message ID.
+Además, se ha añadido una nueva propiedad `sent` al evento `MessageSent`. Esta propiedad contiene una instancia de `Illuminate\Mail\SentMessage` y contiene información sobre el correo electrónico enviado, como el ID del mensaje.
 
-#### Forced Reconnections
+#### Reconexiones forzadas
 
-It is no longer possible to force a transport reconnection (for example when the mailer is running via a daemon process). Instead, Symfony Mailer will attempt to reconnect to the transport automatically and throw an exception if the reconnection fails.
+Ya no es posible forzar una reconexión de transporte (por ejemplo, cuando el Mailer se ejecuta a través de un proceso daemon). En su lugar, Symfony Mailer intentará reconectarse al transporte automáticamente y lanzará una excepción si la reconexión falla.
 
-#### SMTP Stream Options
+#### Opciones de flujo SMTP
 
-Defining stream options for the SMTP transport is no longer supported. Instead, you must define the relevant options directly within the configuration if they are supported. For example, to disable TLS peer verification:
+Ya no es posible definir opciones de flujo para el transporte SMTP. En su lugar, debe definir las opciones relevantes directamente dentro de la configuración si son compatibles. Por ejemplo, para desactivar la verificación de pares TLS:
 
     'smtp' => [
         // Laravel 8.x...
@@ -590,76 +608,80 @@ Defining stream options for the SMTP transport is no longer supported. Instead, 
         'verify_peer' => false,
     ],
 
-To learn more about the available configuration options, please review the [Symfony Mailer documentation](https://symfony.com/doc/6.0/mailer.html#transport-setup).
+Para obtener más información sobre las opciones de configuración disponibles, consulte la [documentación de Symfony Mailer](https://symfony.com/doc/6.0/mailer.html#transport-setup).
 
-> **Warning**  
-> In spite of the example above, you are not generally advised to disable SSL verification since it introduces the possibility of "man-in-the-middle" attacks.
+> **Advertencia**  
+> A pesar del ejemplo anterior, generalmente no se aconseja desactivar la verificación SSL ya que introduce la posibilidad de ataques "man-in-the-middle".
 
 #### SMTP `auth_mode`
 
-Defining the SMTP `auth_mode` in the `mail` configuration file is no longer required. The authentication mode will be automatically negotiated between Symfony Mailer and the SMTP server.
+Ya no es necesario definir el SMTP `auth_mode` en el archivo de configuración de `correo`. El modo de autenticación se negociará automáticamente entre Symfony Mailer y el servidor SMTP.
 
-#### Failed Recipients
+#### Destinatarios fallidos
 
-It is no longer possible to retrieve a list of failed recipients after sending a message. Instead, a `Symfony\Component\Mailer\Exception\TransportExceptionInterface` exception will be thrown if a message fails to send. Instead of relying on retrieving invalid email addresses after sending a message, we recommend that you validate email addresses before sending the message instead.
+Ya no es posible recuperar una lista de destinatarios fallidos después de enviar un mensaje. En su lugar, se lanzará una excepción `Symfony\Component\Mailer\Exception\TransportExceptionInterface` si falla el envío de un mensaje. En lugar de confiar en la recuperación de direcciones de correo electrónico no válidas después de enviar un mensaje, le recomendamos que valide las direcciones de correo electrónico antes de enviar el mensaje.
 
-### Packages
+### Paquetes
 
-<a name="the-lang-directory"></a>
-#### The `lang` Directory
+[]()
 
-**Likelihood Of Impact: Medium**
+#### El Directorio `lang`
 
-In new Laravel applications, the `resources/lang` directory is now located in the root project directory (`lang`). If your package is publishing language files to this directory, you should ensure that your package is publishing to `app()->langPath()` instead of a hard-coded path.
+**Probabilidad de impacto Media**
 
-<a name="queue"></a>
-### Queue
+En las nuevas aplicaciones Laravel, el directorio `resources/lang` ahora se encuentra en el directorio raíz del proyecto`(lang`). Si tu paquete está publicando archivos de idioma a este directorio, debes asegurarte de que tu paquete está publicando a `app()->langPath()` en lugar de una ruta codificada.
 
-<a name="the-opis-closure-library"></a>
-#### The `opis/closure` Library
+[]()
 
-**Likelihood Of Impact: Low**
+### Cola
 
-Laravel's dependency on `opis/closure` has been replaced by `laravel/serializable-closure`. This should not cause any breaking change in your application unless you are interacting with the `opis/closure` library directly. In addition, the previously deprecated `Illuminate\Queue\SerializableClosureFactory` and `Illuminate\Queue\SerializableClosure` classes have been removed. If you are interacting with `opis/closure` library directly or using any of the removed classes, you may use [Laravel Serializable Closure](https://github.com/laravel/serializable-closure) instead.
+[closure-library">]()
 
-#### The Failed Job Provider `flush` Method
+#### La librería `opis/closure`
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-The `flush` method defined by the `Illuminate\Queue\Failed\FailedJobProviderInterface` interface now accepts an `$hours` argument which determines how old a failed job must be (in hours) before it is flushed by the `queue:flush` command. If you are manually implementing the `FailedJobProviderInterface` you should ensure that your implementation is updated to reflect this new argument:
+La dependencia de Laravel de `opis/closure` ha sido sustituida por `laravel/serializable-closure`. Esto no debería causar ningún cambio en su aplicación a menos que esté interactuando con la biblioteca `opis/closure` directamente. Además, las clases `Illuminate\Queue\SerializableClosureFactory` e `Illuminate\Queue\SerializableClosure`, anteriormente obsoletas, han sido eliminadas. Si está interactuando con la biblioteca `opis/closure` directamente o utilizando cualquiera de las clases eliminadas, puede utilizar [Laravel Serializable closure](https://github.com/laravel/serializable-closure) en su lugar.
+
+#### El método `flush` del proveedor de trabajos fallidos
+
+**Probabilidad de impacto Baja**
+
+El método `flush` definido por la interfaz `Illuminate\Queue\Failed\FailedJobProviderInterface` ahora acepta un argumento `$hours` que determina cuántos años debe tener un trabajo fallido (en horas) antes de que sea vaciado por el comando `queue:flush`. Si estás implementando manualmente la `FailedJobProviderInterface` debes asegurarte de que tu implementación se actualiza para reflejar este nuevo argumento:
 
 ```php
 public function flush($hours = null);
 ```
 
-### Session
+### Sesión
 
-#### The `getSession` Method
+#### El método `getSession`
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-The `Symfony\Component\HttpFoundaton\Request` class that is extended by Laravel's own `Illuminate\Http\Request` class offers a `getSession` method to get the current session storage handler. This method is not documented by Laravel as most Laravel applications interact with the session through Laravel's own `session` method.
+La clase `Symfony\Component\HttpFoundaton\Request` que es extendida por la propia clase `Illuminate\Http\Request` de Laravel ofrece un método `getSession` para obtener el manejador de almacenamiento de sesión actual. Este método no está documentado por Laravel ya que la mayoría de las aplicaciones Laravel interactúan con la sesión a través del propio método `session` de Laravel.
 
-The `getSession` method previously returned an instance of `Illuminate\Session\Store` or `null`; however, due to the Symfony 6.x release enforcing a return type of `Symfony\Component\HttpFoundation\Session\SessionInterface`, the `getSession` now correctly returns a `SessionInterface` implementation or throws an `\Symfony\Component\HttpFoundation\Exception\SessionNotFoundException` exception when no session is available.
+El método `getSession` anteriormente devolvía una instancia de `Illuminate\Session\Store` o `null`; sin embargo, debido a que la versión Symfony 6.x impone un tipo de retorno de `Symfony\Component\HttpFoundation\Session\SessionInterface`, `getSession` ahora devuelve correctamente una implementación de `SessionInterface` o lanza una excepción `\Symfony\Component\HttpFoundation\Exception\SessionNotFoundException` cuando no hay sesión disponible.
 
-### Testing
+### Pruebas
 
-<a name="the-assert-deleted-method"></a>
-#### The `assertDeleted` Method
+[]()
 
-**Likelihood Of Impact: Medium**
+#### El método `assertDeleted`
 
-All calls to the `assertDeleted` method should be updated to `assertModelMissing`.
+**Probabilidad de impacto Media**
 
-### Trusted Proxies
+Todas las llamadas al método `assertDeleted` deberían actualizarse a `assertModelMissing`.
 
-**Likelihood Of Impact: Low**
+### Proxies de confianza
 
-If you are upgrading your Laravel 8 project to Laravel 9 by importing your existing application code into a totally new Laravel 9 application skeleton, you may need to update your application's "trusted proxy" middleware.
+**Probabilidad de impacto Baja**
 
-Within your `app/Http/Middleware/TrustProxies.php` file, update `use Fideloper\Proxy\TrustProxies as Middleware` to `use Illuminate\Http\Middleware\TrustProxies as Middleware`.
+Si está actualizando su proyecto Laravel 8 a Laravel 9 importando el código de su aplicación existente en un esqueleto de aplicación Laravel 9 totalmente nuevo, puede que necesite actualizar el middleware"proxy de confianza" de su aplicación.
 
-Next, within `app/Http/Middleware/TrustProxies.php`, you should update the `$headers` property definition:
+Dentro de tu archivo `app/Http/middleware/TrustProxies.` php, actualiza el `uso` de `Fideloper\Proxy\TrustProxies` `como` `middleware` para `usar Illuminate\Http\middleware\TrustProxies como middleware`.
+
+A continuación, dentro de `app/Http/middleware/TrustProxies.`php, debería actualizar la definición de la propiedad `$headers`:
 
 ```php
 // Before...
@@ -674,41 +696,43 @@ protected $headers =
     Request::HEADER_X_FORWARDED_AWS_ELB;
 ```
 
-Finally, you can remove the `fideloper/proxy` Composer dependency from your application:
+Finalmente, puedes eliminar la dependencia `fideloper/proxy` Composer de tu aplicación:
 
 ```shell
 composer remove fideloper/proxy
 ```
 
-### Validation
+### Validación
 
-#### Form Request `validated` Method
+#### Método `validado` de petición de formulario
 
-**Likelihood Of Impact: Low**
+**Probabilidad de impacto Baja**
 
-The `validated` method offered by form requests now accepts `$key` and `$default` arguments. If you are manually overwriting the definition of this method, you should update your method's signature to reflect these new arguments:
+El método `validado` que ofrecen las peticiones de formulario acepta ahora los argumentos `$key` y `$default`. Si está sobrescribiendo manualmente la definición de este método, debería actualizar la firma de su método para reflejar estos nuevos argumentos:
 
 ```php
 public function validated($key = null, $default = null)
 ```
 
-<a name="the-password-rule"></a>
-#### The `password` Rule
+[]()
 
-**Likelihood Of Impact: Medium**
+#### La regla `password`
 
-The `password` rule, which validates that the given input value matches the authenticated user's current password, has been renamed to `current_password`.
+**Probabilidad de impacto Media**
 
-<a name="unvalidated-array-keys"></a>
-#### Unvalidated Array Keys
+La regla `password`, que valida que el valor de entrada dado coincide con la contraseña actual del usuario autenticado, ha sido renombrada a `current_password`.
 
-**Likelihood Of Impact: Medium**
+[array-keys">]()
 
-In previous releases of Laravel, you were required to manually instruct Laravel's validator to exclude unvalidated array keys from the "validated" data it returns, especially in combination with an `array` rule that does not specify a list of allowed keys.
+#### Claves de array no validadas
 
-However, in Laravel 9.x, unvalidated array keys are always excluded from the "validated" data even when no allowed keys have been specified via the `array` rule. Typically, this behavior is the most expected behavior and the previous `excludeUnvalidatedArrayKeys` method was only added to Laravel 8.x as a temporary measure in order to preserve backwards compatibility.
+**Probabilidad de impacto Media**
 
-Although it is not recommended, you may opt-in to the previous Laravel 8.x behavior by invoking a new `includeUnvalidatedArrayKeys` method within the `boot` method of one of your application's service providers:
+En versiones anteriores de Laravel, era necesario indicar manualmente al validador de Laravel que excluyera las claves de array no validadas de los datos "validados" que devuelve, especialmente en combinación con una regla de `array` que no especifica una lista de claves permitidas.
+
+Sin embargo, en Laravel 9.x, las claves de array no validadas son siempre excluidas de los datos "validados" incluso cuando no se han especificado claves permitidas mediante la regla de `array`. Normalmente, este comportamiento es el más esperado y el método anterior `excludeUnvalidatedArrayKeys` sólo se añadió a Laravel 8.x como medida temporal para preservar la compatibilidad con versiones anteriores.
+
+Aunque no es recomendable, puedes optar por el comportamiento anterior de Laravel 8.x invocando un nuevo método `includeUnvalidatedArrayKeys` dentro del método `boot` de uno de los proveedores de servicio de tu aplicación:
 
 ```php
 use Illuminate\Support\Facades\Validator;
@@ -724,7 +748,8 @@ public function boot()
 }
 ```
 
-<a name="miscellaneous"></a>
-### Miscellaneous
+[]()
 
-We also encourage you to view the changes in the `laravel/laravel` [GitHub repository](https://github.com/laravel/laravel). While many of these changes are not required, you may wish to keep these files in sync with your application. Some of these changes will be covered in this upgrade guide, but others, such as changes to configuration files or comments, will not be. You can easily view the changes with the [GitHub comparison tool](https://github.com/laravel/laravel/compare/8.x...9.x) and choose which updates are important to you.
+### Varios
+
+También le animamos a ver los cambios en el [repositorio](https://github.com/laravel/laravel) `laravel/laravel` [GitHub](https://github.com/laravel/laravel). Aunque muchos de estos cambios no son necesarios, es posible que desee mantener estos archivos sincronizados con su aplicación. Algunos de estos cambios serán cubiertos en esta guía de actualización, pero otros, como los cambios en los archivos de configuración o comentarios, no lo serán. Puedes ver fácilmente los cambios con la [herramienta de comparación de GitHub](https://github.com/laravel/laravel/compare/8.x...9.x) y elegir qué actualizaciones son importantes para ti.

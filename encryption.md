@@ -1,26 +1,30 @@
-# Encryption
+# Cifrado
 
-- [Introduction](#introduction)
-- [Configuration](#configuration)
-- [Using The Encrypter](#using-the-encrypter)
+- [Introducción](#introduction)
+- [Configuración](#configuration)
+- [Uso del encriptador](#using-the-encrypter)
 
-<a name="introduction"></a>
-## Introduction
+[]()
 
-Laravel's encryption services provide a simple, convenient interface for encrypting and decrypting text via OpenSSL using AES-256 and AES-128 encryption. All of Laravel's encrypted values are signed using a message authentication code (MAC) so that their underlying value can not be modified or tampered with once encrypted.
+## Introducción
 
-<a name="configuration"></a>
-## Configuration
+Los servicios de cifrado de Laravel proporcionan una interfaz sencilla y cómoda para cifrar y descifrar texto a través de OpenSSL utilizando cifrado AES-256 y AES-128. Todos los valores cifrados de Laravel se firman utilizando un código de autenticación de mensajes (MAC) para que su valor subyacente no pueda ser modificado o manipulado una vez cifrado.
 
-Before using Laravel's encrypter, you must set the `key` configuration option in your `config/app.php` configuration file. This configuration value is driven by the `APP_KEY` environment variable. You should use the `php artisan key:generate` command to generate this variable's value since the `key:generate` command will use PHP's secure random bytes generator to build a cryptographically secure key for your application. Typically, the value of the `APP_KEY` environment variable will be generated for you during [Laravel's installation](/docs/{{version}}/installation).
+[]()
 
-<a name="using-the-encrypter"></a>
-## Using The Encrypter
+## Configuración
 
-<a name="encrypting-a-value"></a>
-#### Encrypting A Value
+Antes de utilizar el encriptador de Laravel, debes establecer la opción de configuración de `clave` en tu fichero de configuración `config/app.` php. Este valor de configuración es controlado por la variable de entorno `APP_KEY`. Debes usar el comando `php artisan key:generate` para generar el valor de esta variable ya que el comando `key:` generate usará el generador seguro de bytes aleatorios de PHP para construir una clave criptográficamente segura para tu aplicación. Típicamente, el valor de la variable de entorno `APP_KEY` será generado por ti durante [la instalación de Laravel](/docs/%7B%7Bversion%7D%7D/installation).
 
-You may encrypt a value using the `encryptString` method provided by the `Crypt` facade. All encrypted values are encrypted using OpenSSL and the AES-256-CBC cipher. Furthermore, all encrypted values are signed with a message authentication code (MAC). The integrated message authentication code will prevent the decryption of any values that have been tampered with by malicious users:
+[]()
+
+## Uso del cifrador
+
+[]()
+
+#### Cifrar un valor
+
+Puedes encriptar un valor utilizando el método `encryptString` proporcionado por la facade `Crypt`. Todos los valores cifrados se cifran utilizando OpenSSL y el cifrado AES-256-CBC. Además, todos los valores cifrados se firman con un código de autenticación de mensajes (MAC). El código de autenticación de mensajes integrado impedirá el descifrado de cualquier valor que haya sido manipulado por usuarios malintencionados:
 
     <?php
 
@@ -47,10 +51,11 @@ You may encrypt a value using the `encryptString` method provided by the `Crypt`
         }
     }
 
-<a name="decrypting-a-value"></a>
-#### Decrypting A Value
+[]()
 
-You may decrypt values using the `decryptString` method provided by the `Crypt` facade. If the value can not be properly decrypted, such as when the message authentication code is invalid, an `Illuminate\Contracts\Encryption\DecryptException` will be thrown:
+#### Descifrar un valor
+
+Puedes descifrar los valores utilizando el método `decryptString` proporcionado por la facade `Crypt`. Si el valor no puede ser descifrado correctamente, como cuando el código de autenticación del mensaje no es válido, se lanzará una `Illuminate\Contracts\Encryption\DecryptException`:
 
     use Illuminate\Contracts\Encryption\DecryptException;
     use Illuminate\Support\Facades\Crypt;
