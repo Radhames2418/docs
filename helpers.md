@@ -1,4 +1,4 @@
-# Ayudantes
+# Funciones de ayuda
 
 - [Introducción](#introduction)
 - [Métodos disponibles](#available-methods)

@@ -33,7 +33,7 @@
   - [Interfaces](/docs/{{version}}/contracts)
   - [Eventos](/docs/{{version}}/events)
   - [Almacenamiento de archivos](/docs/{{version}}/filesystem)
-  - [Ayudantes](/docs/{{version}}/helpers)
+  - [Funciones de ayuda](/docs/{{version}}/helpers)
   - [Cliente HTTP](/docs/{{version}}/http-client)
   - [Multi-Idioma](/docs/{{version}}/localization)
   - [Correo](/docs/{{version}}/mail)
