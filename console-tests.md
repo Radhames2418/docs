@@ -1,18 +1,18 @@
-# Console Tests
+# tests consola
 
-- [Introduction](#introduction)
-- [Success / Failure Expectations](#success-failure-expectations)
-- [Input / Output Expectations](#input-output-expectations)
+- [Introducción](#introduction)
+- [Expectativas de éxito / fracaso](#success-failure-expectations)
+- [Expectativas de Entrada / Salida](#input-output-expectations)
 
 <a name="introduction"></a>
-## Introduction
+## Introducción
 
-In addition to simplifying HTTP testing, Laravel provides a simple API for testing your application's [custom console commands](/docs/{{version}}/artisan).
+Además de simplificar los tests HTTP, Laravel proporciona una API sencilla para testear los [comandos de consola](/docs/{{version}}/artisan) de su aplicación.
 
 <a name="success-failure-expectations"></a>
-## Success / Failure Expectations
+## Expectativas de éxito / fracaso
 
-To get started, let's explore how to make assertions regarding an Artisan command's exit code. To accomplish this, we will use the `artisan` method to invoke an Artisan command from our test. Then, we will use the `assertExitCode` method to assert that the command completed with a given exit code:
+Para comenzar, veamos cómo hacer aserciones al código de salida de un comando Artisan. Para lograr esto, utilizaremos el método `artisan` para invocar un comando Artisan desde nuestro test. Luego, utilizaremos el método `assertExitCode` para afirmar que el comando se completó con un código de salida esperado:
 
     /**
      * Test a console command.
@@ -24,20 +24,20 @@ To get started, let's explore how to make assertions regarding an Artisan comman
         $this->artisan('inspire')->assertExitCode(0);
     }
 
-You may use the `assertNotExitCode` method to assert that the command did not exit with a given exit code:
+Puede utilizar el método `assertNotExitCode` para afirmar que el comando no terminó con un código de salida dado:
 
     $this->artisan('inspire')->assertNotExitCode(1);
 
-Of course, all terminal commands typically exit with a status code of `0` when they are successful and a non-zero exit code when they are not successful. Therefore, for convenience, you may utilize the `assertSuccessful` and `assertFailed` assertions to assert that a given command exited with a successful exit code or not:
+Generalmente, todos los comandos de terminal finalizan con un código de salida `0` cuando tienen éxito y un código de salida distinto de cero cuando no tienen éxito. Por lo tanto, por conveniencia, puede utilizar las aserciones `assertSuccessful` y `assertFailed` para afirmar que un comando dado terminó con un código de salida exitoso o no:
 
     $this->artisan('inspire')->assertSuccessful();
 
     $this->artisan('inspire')->assertFailed();
 
 <a name="input-output-expectations"></a>
-## Input / Output Expectations
+## Expectativas de entrada/salida
 
-Laravel allows you to easily "mock" user input for your console commands using the `expectsQuestion` method. In addition, you may specify the exit code and text that you expect to be output by the console command using the `assertExitCode` and `expectsOutput` methods. For example, consider the following console command:
+Laravel le permite fácilmente "simular" (mock) la entrada de datos por parte del usuario para sus comandos de consola utilizando el método `expectsQuestion`. Además, puedes especificar el código de salida y el texto que esperas que salga por el comando de consola utilizando los métodos `assertExitCode` y `expectsOutput`. Por ejemplo, considere el siguiente comando de consola:
 
     Artisan::command('question', function () {
         $name = $this->ask('What is your name?');
@@ -51,7 +51,7 @@ Laravel allows you to easily "mock" user input for your console commands using t
         $this->line('Your name is '.$name.' and you prefer '.$language.'.');
     });
 
-You may test this command with the following test which utilizes the `expectsQuestion`, `expectsOutput`, `doesntExpectOutput`, `expectsOutputToContain`, `doesntExpectOutputToContain`, and `assertExitCode` methods:
+Puede probar este test de comando que utiliza los métodos `expectsQuestion`, `expectsOutput`, `doesntExpectOutput`, `expectsOutputToContain`, `doesntExpectOutputToContain`, y `assertExitCode`:
 
     /**
      * Test a console command.
@@ -71,18 +71,18 @@ You may test this command with the following test which utilizes the `expectsQue
     }
 
 <a name="confirmation-expectations"></a>
-#### Confirmation Expectations
+#### Expectativas de confirmación
 
-When writing a command which expects confirmation in the form of a "yes" or "no" answer, you may utilize the `expectsConfirmation` method:
+Cuando escribas un comando que espera confirmación en forma de respuesta "sí" o "no", puedes utilizar el método `expectsConfirmation`:
 
     $this->artisan('module:import')
         ->expectsConfirmation('Do you really wish to run this command?', 'no')
         ->assertExitCode(1);
 
 <a name="table-expectations"></a>
-#### Table Expectations
+#### Expectativas de tabla
 
-If your command displays a table of information using Artisan's `table` method, it can be cumbersome to write output expectations for the entire table. Instead, you may use the `expectsTable` method. This method accepts the table's headers as its first argument and the table's data as its second argument:
+Si su comando muestra una tabla de información utilizando el método de `table` de Artisan, puede ser engorroso escribir expectativas de salida para toda la tabla. En su lugar, puede utilizar el método `expectsTable`. Este método acepta las cabeceras de la tabla como primer argumento y los datos de la tabla como segundo argumento:
 
     $this->artisan('users:all')
         ->expectsTable([
