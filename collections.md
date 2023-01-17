@@ -413,7 +413,7 @@ El método `contains` determina si la colección contiene un elemento dado. Pued
 
     // false
 
-Alternativamente, puede pasar una cadena al método `contains` para determinar si la colección contiene un valor de elemento dado:
+De manera alternativa, puede pasar una cadena al método `contains` para determinar si la colección contiene un valor de elemento dado:
 
     $collection = collect(['name' => 'Desk', 'price' => 100]);
 
@@ -635,7 +635,7 @@ El método `doesntContain` determina si la colección no contiene un elemento da
 
     // false
 
-Alternativamente, puede pasar una cadena al método `doesntContain` para determinar si la colección no contiene un valor de elemento dado:
+De manera alternativa, puede pasar una cadena al método `doesntContain` para determinar si la colección no contiene un valor de elemento dado:
 
     $collection = collect(['name' => 'Desk', 'price' => 100]);
 
@@ -2042,7 +2042,7 @@ La búsqueda se realiza utilizando una comparación "flexible" (loose), lo que s
 
     // false
 
-Alternativamente, puede proporcionar su propio closure para buscar el primer elemento que pase una condición dada:
+De manera alternativa, puede proporcionar su propio closure para buscar el primer elemento que pase una condición dada:
 
     collect([2, 4, 6, 8])->search(function ($item, $key) {
         return $item > 5;
@@ -2223,7 +2223,7 @@ También puede pasar un par clave/valor al método `sole`, que devolverá el pri
 
     // ['product' => 'Chair', 'price' => 100]
 
-Alternativamente, también puede llamar al método `sole` sin ningún argumento para obtener el primer elemento de la colección si sólo hay un elemento:
+De manera alternativa, también puede llamar al método `sole` sin ningún argumento para obtener el primer elemento de la colección si sólo hay un elemento:
 
     $collection = collect([
         ['product' => 'Desk', 'price' => 200],
@@ -2301,7 +2301,7 @@ El método `sortBy` acepta [sort flags](https://www.php.net/manual/en/function.s
         ]
     */
 
-Alternativamente, puede pasar su propio closure para determinar cómo ordenar los valores de la colección:
+De manera alternativa, puede pasar su propio closure para determinar cómo ordenar los valores de la colección:
 
     $collection = collect([
         ['name' => 'Desk', 'colors' => ['Black', 'Mahogany']],

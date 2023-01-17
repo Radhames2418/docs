@@ -55,7 +55,7 @@ Si desea interactuar manualmente con el limitador, dispone de otros métodos. Po
         return 'Too many attempts!';
     }
 
-Alternativamente, puede utilizar el método `remaining` para recuperar el número de intentos restantes de una clave dada. Si una clave tiene reintentos restantes, puede invocar el método `hit` para incrementar el número de intentos totales:
+De manera alternativa, puede utilizar el método `remaining` para recuperar el número de intentos restantes de una clave dada. Si una clave tiene reintentos restantes, puede invocar el método `hit` para incrementar el número de intentos totales:
 
     use Illuminate\Support\Facades\RateLimiter;
 

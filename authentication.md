@@ -141,7 +141,7 @@ Después de instalar un kit de inicio de autenticación y permitir a los usuario
     // Retrieve the currently authenticated user's ID...
     $id = Auth::id();
 
-Alternativamente, una vez autenticado un usuario, puede acceder al usuario autenticado a través de una instancia `Illuminate\Http\Request`. Recuerde, las clases tipadas se inyectarán automáticamente en los métodos de su controlador. Mediante el tipado del objeto `Illuminate\Http\Request`, podrá acceder cómodamente al usuario autenticado desde cualquier método controlador de su aplicación a través del método `user` de la petición:
+De manera alternativa, una vez autenticado un usuario, puede acceder al usuario autenticado a través de una instancia `Illuminate\Http\Request`. Recuerde, las clases tipadas se inyectarán automáticamente en los métodos de su controlador. Mediante el tipado del objeto `Illuminate\Http\Request`, podrá acceder cómodamente al usuario autenticado desde cualquier método controlador de su aplicación a través del método `user` de la petición:
 
     <?php
 

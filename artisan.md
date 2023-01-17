@@ -447,7 +447,7 @@ El método `anticipate` puede utilizarse para proporcionar autocompletado para l
 
     $name = $this->anticipate('What is your name?', ['Taylor', 'Dayle']);
 
-Alternativamente, puede pasar un closure como segundo argumento al método `anticipar`. El closure será llamado cada vez que el usuario introduzca un carácter. El closure debe aceptar un parámetro de cadena que contenga la entrada del usuario hasta el momento, y devolver una array de opciones para el autocompletado:
+De manera alternativa, puede pasar un closure como segundo argumento al método `anticipar`. El closure será llamado cada vez que el usuario introduzca un carácter. El closure debe aceptar un parámetro de cadena que contenga la entrada del usuario hasta el momento, y devolver una array de opciones para el autocompletado:
 
     $name = $this->anticipate('What is your address?', function ($input) {
         // Return auto-completion options...
