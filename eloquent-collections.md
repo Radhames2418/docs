@@ -1,15 +1,15 @@
-# Eloquent: Collections
+# Eloquent: Colecciones
 
-- [Introduction](#introduction)
-- [Available Methods](#available-methods)
-- [Custom Collections](#custom-collections)
+- [Introducción](#introduction)
+- [Métodos disponibles](#available-methods)
+- [Colecciones personalizadas](#custom-collections)
 
 <a name="introduction"></a>
-## Introduction
+## Introducción
 
-All Eloquent methods that return more than one model result will return instances of the `Illuminate\Database\Eloquent\Collection` class, including results retrieved via the `get` method or accessed via a relationship. The Eloquent collection object extends Laravel's [base collection](/docs/{{version}}/collections), so it naturally inherits dozens of methods used to fluently work with the underlying array of Eloquent models. Be sure to review the Laravel collection documentation to learn all about these helpful methods!
+Todos los métodos de Eloquent que devuelven más de un resultado de modelo devolverán instancias de la clase `Illuminate\Database\Eloquent\Collection`, incluidos los resultados recuperados mediante el método `get` o a los que se accede mediante una relación. El objeto de colección Eloquent extiende la [colección base](/docs/{{version}}/collections) de Laravel, por lo que hereda de forma natural docenas de métodos utilizados para trabajar de forma fluida con la array subyacente de modelos Eloquent. Asegúrate de revisar la documentación de la colección de Laravel para aprender todo sobre estos útiles métodos.
 
-All collections also serve as iterators, allowing you to loop over them as if they were simple PHP arrays:
+Todas las colecciones sirven también como iteradores, permitiéndote hacer bucles sobre ellas como si fueran simples arrays PHP:
 
     use App\Models\User;
 
@@ -19,7 +19,7 @@ All collections also serve as iterators, allowing you to loop over them as if th
         echo $user->name;
     }
 
-However, as previously mentioned, collections are much more powerful than arrays and expose a variety of map / reduce operations that may be chained using an intuitive interface. For example, we may remove all inactive models and then gather the first name for each remaining user:
+Sin embargo, como se mencionó anteriormente, las colecciones son mucho más poderosas que los arrays y exponen una variedad de operaciones de mapeo / reducción que pueden ser encadenadas usando una interfaz intuitiva. Por ejemplo, podemos eliminar todos los modelos inactivos y luego recopilar el nombre de pila de cada usuario restante:
 
     $names = User::all()->reject(function ($user) {
         return $user->active === false;
@@ -28,16 +28,16 @@ However, as previously mentioned, collections are much more powerful than arrays
     });
 
 <a name="eloquent-collection-conversion"></a>
-#### Eloquent Collection Conversion
+#### Conversión de colecciones Eloquent
 
-While most Eloquent collection methods return a new instance of an Eloquent collection, the `collapse`, `flatten`, `flip`, `keys`, `pluck`, and `zip` methods return a [base collection](/docs/{{version}}/collections) instance. Likewise, if a `map` operation returns a collection that does not contain any Eloquent models, it will be converted to a base collection instance.
+Mientras que la mayoría de los métodos de colección Eloquent devuelven una nueva instancia de una colección Eloquent, los métodos `collapse`, `flatten`, `flip`, `keys`, `pluck` y `zip` devuelven una instancia de [colección base](/docs/{{version}}/collections). Del mismo modo, si una operación `map` devuelve una colección que no contiene ningún modelo Eloquent, se convertirá en una instancia de colección base.
 
 <a name="available-methods"></a>
-## Available Methods
+## Métodos disponibles
 
-All Eloquent collections extend the base [Laravel collection](/docs/{{version}}/collections#available-methods) object; therefore, they inherit all of the powerful methods provided by the base collection class.
+Todas las colecciones Eloquent extienden el objeto de [colección base de Laravel](/docs/{{version}}/collections#available-methods); por lo tanto, heredan todos los potentes métodos proporcionados por la clase de colección base.
 
-In addition, the `Illuminate\Database\Eloquent\Collection` class provides a superset of methods to aid with managing your model collections. Most methods return `Illuminate\Database\Eloquent\Collection` instances; however, some methods, like `modelKeys`, return an `Illuminate\Support\Collection` instance.
+Además, la clase `Illuminate\Database\Eloquent\Collection` proporciona un superconjunto de métodos para ayudar con la gestión de sus colecciones modelo. La mayoría de los métodos devuelven instancias `Illuminate\Database\Eloquent\Collection`; sin embargo, algunos métodos, como `modelKeys`, devuelven una instancia `Illuminate\Support\Collection`.
 
 <style>
     .collection-method-list > p {
@@ -83,16 +83,16 @@ In addition, the `Illuminate\Database\Eloquent\Collection` class provides a supe
 <a name="method-append"></a>
 #### `append($attributes)` {.collection-method .first-collection-method}
 
-The `append` method may be used to indicate that an attribute should be [appended](/docs/{{version}}/eloquent-serialization#appending-values-to-json) for every model in the collection. This method accepts an array of attributes or a single attribute:
+El método `append` puede utilizarse para indicar que se [añada](/docs/{{version}}/eloquent-serialization#appending-values-to-json) un atributo a cada modelo de la colección. Este método acepta una array de atributos o un único atributo:
 
     $users->append('team');
-    
+
     $users->append(['team', 'is_admin']);
 
 <a name="method-contains"></a>
 #### `contains($key, $operator = null, $value = null)` {.collection-method}
 
-The `contains` method may be used to determine if a given model instance is contained by the collection. This method accepts a primary key or a model instance:
+El método `contains` puede utilizarse para determinar si una instancia de modelo dada está contenida en la colección. Este método acepta una clave primaria o una instancia del modelo:
 
     $users->contains(1);
 
@@ -101,7 +101,7 @@ The `contains` method may be used to determine if a given model instance is cont
 <a name="method-diff"></a>
 #### `diff($items)` {.collection-method}
 
-The `diff` method returns all of the models that are not present in the given collection:
+El método `diff` devuelve todos los modelos que no están presentes en la colección dada:
 
     use App\Models\User;
 
@@ -110,14 +110,14 @@ The `diff` method returns all of the models that are not present in the given co
 <a name="method-except"></a>
 #### `except($keys)` {.collection-method}
 
-The `except` method returns all of the models that do not have the given primary keys:
+El método `except` devuelve todos los modelos que no tienen las claves primarias dadas:
 
     $users = $users->except([1, 2, 3]);
 
 <a name="method-find"></a>
 #### `find($key)` {.collection-method}
 
-The `find` method returns the model that has a primary key matching the given key. If `$key` is a model instance, `find` will attempt to return a model matching the primary key. If `$key` is an array of keys, `find` will return all models which have a primary key in the given array:
+El método `find` devuelve el modelo que tiene una clave primaria que coincide con la clave dada. Si `$key` es una instancia de modelo, `find` intentará devolver un modelo que coincida con la clave primaria. Si `$key` es un array de claves, `find` devolverá todos los modelos que tengan una clave primaria en el array dado:
 
     $users = User::all();
 
@@ -126,7 +126,7 @@ The `find` method returns the model that has a primary key matching the given ke
 <a name="method-fresh"></a>
 #### `fresh($with = [])` {.collection-method}
 
-The `fresh` method retrieves a fresh instance of each model in the collection from the database. In addition, any specified relationships will be eager loaded:
+El método `fresh` recupera de la base de datos una instancia nueva de cada modelo de la colección. Además, las relaciones especificadas se cargarán de forma inmediata:
 
     $users = $users->fresh();
 
@@ -135,7 +135,7 @@ The `fresh` method retrieves a fresh instance of each model in the collection fr
 <a name="method-intersect"></a>
 #### `intersect($items)` {.collection-method}
 
-The `intersect` method returns all of the models that are also present in the given collection:
+El método `intersect` devuelve todos los modelos que también están presentes en la colección dada:
 
     use App\Models\User;
 
@@ -144,18 +144,18 @@ The `intersect` method returns all of the models that are also present in the gi
 <a name="method-load"></a>
 #### `load($relations)` {.collection-method}
 
-The `load` method eager loads the given relationships for all models in the collection:
+El método `load` carga las relaciones de todos los modelos de la colección:
 
     $users->load(['comments', 'posts']);
 
     $users->load('comments.author');
-    
+
     $users->load(['comments', 'posts' => fn ($query) => $query->where('active', 1)]);
 
 <a name="method-loadMissing"></a>
 #### `loadMissing($relations)` {.collection-method}
 
-The `loadMissing` method eager loads the given relationships for all models in the collection if the relationships are not already loaded:
+El método `loadMissing` carga las relaciones dadas para todos los modelos de la colección si las relaciones no están ya cargadas:
 
     $users->loadMissing(['comments', 'posts']);
 
@@ -166,7 +166,7 @@ The `loadMissing` method eager loads the given relationships for all models in t
 <a name="method-modelKeys"></a>
 #### `modelKeys()` {.collection-method}
 
-The `modelKeys` method returns the primary keys for all models in the collection:
+El método `modelKeys` devuelve las claves primarias de todos los modelos de la colección:
 
     $users->modelKeys();
 
@@ -175,28 +175,28 @@ The `modelKeys` method returns the primary keys for all models in the collection
 <a name="method-makeVisible"></a>
 #### `makeVisible($attributes)` {.collection-method}
 
-The `makeVisible` method [makes attributes visible](/docs/{{version}}/eloquent-serialization#hiding-attributes-from-json) that are typically "hidden" on each model in the collection:
+El método `makeVisible` [hace visibles los atributos](/docs/{{version}}/eloquent-serialization#hiding-attributes-from-json)  que normalmente están "ocultos" en cada modelo de la colección:
 
     $users = $users->makeVisible(['address', 'phone_number']);
 
 <a name="method-makeHidden"></a>
 #### `makeHidden($attributes)` {.collection-method}
 
-The `makeHidden` method [hides attributes](/docs/{{version}}/eloquent-serialization#hiding-attributes-from-json) that are typically "visible" on each model in the collection:
+El método `makeHidden` [oculta los atributos](/docs/{{version}}/eloquent-serialization#hiding-attributes-from-json) que normalmente están "visibles" en cada modelo de la colección:
 
     $users = $users->makeHidden(['address', 'phone_number']);
 
 <a name="method-only"></a>
 #### `only($keys)` {.collection-method}
 
-The `only` method returns all of the models that have the given primary keys:
+El método `only` devuelve todos los modelos que tienen las claves primarias dadas:
 
     $users = $users->only([1, 2, 3]);
 
 <a name="method-toquery"></a>
 #### `toQuery()` {.collection-method}
 
-The `toQuery` method returns an Eloquent query builder instance containing a `whereIn` constraint on the collection model's primary keys:
+El método `toQuery` devuelve una instancia del constructor de consultas Eloquent que contiene una restricción `whereIn` sobre las claves primarias del modelo de colección:
 
     use App\Models\User;
 
@@ -209,14 +209,14 @@ The `toQuery` method returns an Eloquent query builder instance containing a `wh
 <a name="method-unique"></a>
 #### `unique($key = null, $strict = false)` {.collection-method}
 
-The `unique` method returns all of the unique models in the collection. Any models of the same type with the same primary key as another model in the collection are removed:
+El método `unique` devuelve todos los modelos únicos de la colección. Se eliminan todos los modelos del mismo tipo con la misma clave primaria que otro modelo de la colección:
 
     $users = $users->unique();
 
 <a name="custom-collections"></a>
 ## Custom Collections
 
-If you would like to use a custom `Collection` object when interacting with a given model, you may define a `newCollection` method on your model:
+Si desea utilizar un objeto `Collection` personalizado al interactuar con un modelo determinado, puede definir un método `newCollection` en su modelo:
 
     <?php
 
@@ -239,4 +239,4 @@ If you would like to use a custom `Collection` object when interacting with a gi
         }
     }
 
-Once you have defined a `newCollection` method, you will receive an instance of your custom collection anytime Eloquent would normally return an `Illuminate\Database\Eloquent\Collection` instance. If you would like to use a custom collection for every model in your application, you should define the `newCollection` method on a base model class that is extended by all of your application's models.
+Una vez que haya definido un método `newCollection`, recibirá una instancia de su colección personalizada en cualquier momento en que Eloquent devolvería normalmente una instancia `Illuminate\Database\Eloquent\Collection`. Si desea utilizar una colección personalizada para cada modelo de su aplicación, debe definir el método `newCollection` en una clase modelo base que sea extendida por todos los modelos de su aplicación.
