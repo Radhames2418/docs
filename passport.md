@@ -1,7 +1,7 @@
 # Laravel Passport
 
 - [Introducción](#introduction)
-  - [¿Pasaporte o santuario?](#passport-or-sanctum)
+  - [¿Passport o Sanctum?](#passport-or-sanctum)
 - [Instalación](#installation)
   - [Despliegue de Passport](#deploying-passport)
   - [Personalización de la migración](#migration-customization)
